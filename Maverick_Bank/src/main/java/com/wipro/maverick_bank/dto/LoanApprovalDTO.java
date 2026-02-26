@@ -9,11 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class LoanApprovalDTO {
 
-	private Long userId;
-	private String name;
-	private String email;
-	private String role;
+	private Long applicationId;
 	private String status;
+	private String remarks;
 }

@@ -1,8 +1,7 @@
 package com.wipro.maverick_bank.entity;
 
-import javax.management.relation.Role;
+import java.time.LocalDate;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,20 +19,26 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="users")
-public class User {
+@Table(name="loan_applications")
+public class LoanApplication {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long userId;
-	private String name;
-	
-	@Column(unique=true, nullable=false)
-	private String email; //LOGIN-ID
-	private String password;
-	private String status; //ACTIVE, INACTIVE
+	private Long applicationId;
 	
 	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;  //CUSTOMER, EMPLOYEE, ADMIN
+	@JoinColumn(name="loan_id", nullable=false)
+	private Loan loan;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	private User customer;
+	
+	private double amount;
+	private String purpose;
+	private String status; //PENDING, APPROVED, REJECTED
+	private LocalDate appliedDate;
+	private LocalDate approvedDate;
+	private String remarks;
+	
 }

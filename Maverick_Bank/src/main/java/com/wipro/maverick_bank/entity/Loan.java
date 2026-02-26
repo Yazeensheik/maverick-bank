@@ -16,13 +16,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="roles")
-public class Role{
-	
+@Table(name="loans")
+public class Loan {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long roleId;
+	private long loanId;
 	
-	@Column(unique=true, nullable=false)
-	private String roleName; //CUSTOMER, EMPLOYEE, ADMIN
+	@Column(nullable=false)
+	private String loanType;  //HOME, PERSONAL, EDUCATION
+	private double interestRate;
+	private double minAmount;
+	private double maxAmount;
+	private int tenureInMonths;
 }
