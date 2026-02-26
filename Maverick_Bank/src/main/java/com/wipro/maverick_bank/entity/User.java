@@ -29,6 +29,7 @@ public class User {
 	
 	@Column(unique=true, nullable=false)
 	private String email; //LOGIN-ID
+	@Column(nullable=false)
 	private String password;
 	private String status; //ACTIVE, INACTIVE
 	

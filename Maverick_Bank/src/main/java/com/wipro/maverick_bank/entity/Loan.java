@@ -1,10 +1,13 @@
 package com.wipro.maverick_bank.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,4 +32,7 @@ public class Loan {
 	private double minAmount;
 	private double maxAmount;
 	private int tenureInMonths;
+	
+	@OneToMany(mappedBy="loan")
+	private List<LoanApplication> loanApplication;
 }
