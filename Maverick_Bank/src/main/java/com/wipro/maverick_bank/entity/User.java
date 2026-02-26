@@ -1,7 +1,6 @@
 package com.wipro.maverick_bank.entity;
 
-import javax.management.relation.Role;
-
+import com.wipro.maverick_bank.entity.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
