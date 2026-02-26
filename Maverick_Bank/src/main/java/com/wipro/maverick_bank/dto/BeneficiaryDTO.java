@@ -16,4 +16,6 @@ public class BeneficiaryDTO {
 	private String bankName;
 	private String branchName;
 	private String ifscCode;
+
+	private Long accountId;
 }
