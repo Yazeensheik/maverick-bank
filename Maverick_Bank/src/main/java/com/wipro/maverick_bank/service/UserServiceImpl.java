@@ -1,6 +1,6 @@
-package com.wipro.maverick_bank.service.impl;
+package com.wipro.maverick_bank.service;
 
-<<<<<<< HEAD
+
 import java.util.List;
 import java.util.stream.Collectors;
 

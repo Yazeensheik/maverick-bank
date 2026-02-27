@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service.interfaces;
+package com.wipro.maverick_bank.service;
 
 import java.util.List;
 
