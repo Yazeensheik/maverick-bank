@@ -1,7 +1,24 @@
 package com.wipro.maverick_bank.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
+<<<<<<< HEAD
+	private Long userId;
+	private String name;
+	private String email;
+	private String role;
+	private String status;
+}
+=======
 	private Long id;
 	private String username;
 	private String role;
@@ -49,3 +66,4 @@ public class UserDTO {
 		this.active = active;
 	}
 }
+>>>>>>> 381ada5458f058c6444d65892a1fc73057053185
