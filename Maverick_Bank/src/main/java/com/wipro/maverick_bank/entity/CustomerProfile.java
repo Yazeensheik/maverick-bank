@@ -11,15 +11,18 @@ public class CustomerProfile {
     private Long id;
 
     private String fullName;
-    private String email;
-    private String mobile;
 
-    /* ONE customer → ONE user */
+    @Column(unique = true)
+    private String email;
+
+    private String phone;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    public CustomerProfile() {}
+    public CustomerProfile() {
+    }
 
     public Long getId() {
         return id;
@@ -41,12 +44,12 @@ public class CustomerProfile {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
     
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public User getUser() {
