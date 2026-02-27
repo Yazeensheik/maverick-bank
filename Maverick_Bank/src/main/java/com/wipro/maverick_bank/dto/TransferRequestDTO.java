@@ -1,7 +1,5 @@
 package com.wipro.maverick_bank.dto;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class StatementRequestDTO {
+public class TransferRequestDTO {
 
-    private Long accountId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Long fromAccountId;
+    private Long toAccountId;
+    private Double amount;
 }

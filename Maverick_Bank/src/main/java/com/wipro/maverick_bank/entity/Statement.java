@@ -1,83 +1,48 @@
 package com.wipro.maverick_bank.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "statements")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Statement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long statementId;
 
+    @Column(nullable = false)
     private Long accountId;
 
+    @Column(nullable = false)
     private LocalDate startDate;
 
+    @Column(nullable = false)
     private LocalDate endDate;
 
-    private LocalDate generatedDate;
+    @Column(nullable = false)
+    private Double totalCredit;
 
-    public Statement() {
-    	
-    }
+    @Column(nullable = false)
+    private Double totalDebit;
 
-	public Long getStatementId() {
-		return statementId;
-	}
-
-	public void setStatementId(Long statementId) {
-		this.statementId = statementId;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
-
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
-	}
-
-	public LocalDate getGeneratedDate() {
-		return generatedDate;
-	}
-
-	public void setGeneratedDate(LocalDate generatedDate) {
-		this.generatedDate = generatedDate;
-	}
-
-	public Statement(Long statementId, Long accountId, LocalDate startDate, LocalDate endDate,
-			LocalDate generatedDate) {
-		super();
-		this.statementId = statementId;
-		this.accountId = accountId;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.generatedDate = generatedDate;
-	}
-    
-    
-    
+    @Column(nullable = false)
+    private LocalDateTime generatedDate;
 }
