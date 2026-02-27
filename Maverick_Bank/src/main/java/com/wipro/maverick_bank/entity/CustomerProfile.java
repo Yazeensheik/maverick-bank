@@ -12,14 +12,14 @@ public class CustomerProfile {
 
     private String fullName;
     private String email;
-    private String mobile;
+    private String phone;
 
-    /* ONE customer → ONE user */
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    public CustomerProfile() {}
+    public CustomerProfile() {
+    }
 
     public Long getId() {
         return id;
@@ -28,7 +28,7 @@ public class CustomerProfile {
     public String getFullName() {
         return fullName;
     }
-    
+
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -41,12 +41,12 @@ public class CustomerProfile {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
     
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public User getUser() {

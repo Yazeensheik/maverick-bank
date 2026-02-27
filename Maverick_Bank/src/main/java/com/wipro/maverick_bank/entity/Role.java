@@ -10,10 +10,11 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String name; // CUSTOMER, EMPLOYEE, ADMIN
 
-    public Role() {}
+    public Role() {
+    }
 
     public Role(String name) {
         this.name = name;

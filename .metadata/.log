@@ -145,3 +145,69 @@ Binding(CTRL+SHIFT+U,
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2026-02-25 17:08:45.944
 !MESSAGE Plugin is modifying testCompileSourceRoots through add(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+
+!ENTRY org.eclipse.egit.ui 4 0 2026-02-27 15:16:06.394
+!MESSAGE Stash create error
+!STACK 1
+org.eclipse.team.core.TeamException: Exception caught during execution of reset command. Could not rename file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\._0.log16869128839309877728.tmp to C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+	at org.eclipse.egit.core.op.StashCreateOperation$1.run(StashCreateOperation.java:99)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2533)
+	at org.eclipse.egit.core.op.StashCreateOperation.execute(StashCreateOperation.java:108)
+	at org.eclipse.egit.ui.internal.stash.StashCreateUI$1.runInWorkspace(StashCreateUI.java:82)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.IOException: Could not rename file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\._0.log16869128839309877728.tmp to C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+	at org.eclipse.jgit.dircache.Checkout.checkout(Checkout.java:235)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:595)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:493)
+	at org.eclipse.jgit.api.ResetCommand.checkoutIndex(ResetCommand.java:414)
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:182)
+	at org.eclipse.jgit.api.StashCreateCommand.call(StashCreateCommand.java:374)
+	at org.eclipse.egit.core.op.StashCreateOperation$1.run(StashCreateOperation.java:97)
+	... 6 more
+Caused by: java.io.IOException: Could not delete file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+	at org.eclipse.jgit.util.FileUtils.handleDeleteException(FileUtils.java:233)
+	at org.eclipse.jgit.util.FileUtils.delete(FileUtils.java:226)
+	at org.eclipse.jgit.dircache.Checkout.checkout(Checkout.java:230)
+	... 12 more
+Caused by: java.nio.file.FileSystemException: C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log: The process cannot access the file because it is being used by another process
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:273)
+	at java.base/sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105)
+	at java.base/java.nio.file.Files.delete(Files.java:1153)
+	at org.eclipse.jgit.util.FileUtils.delete(FileUtils.java:192)
+	... 13 more
+!SUBENTRY 1 org.eclipse.team.core 4 0 2026-02-27 15:16:06.395
+!MESSAGE Exception caught during execution of reset command. Could not rename file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\._0.log16869128839309877728.tmp to C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+!STACK 0
+java.io.IOException: Could not rename file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\._0.log16869128839309877728.tmp to C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+	at org.eclipse.jgit.dircache.Checkout.checkout(Checkout.java:235)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:595)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:493)
+	at org.eclipse.jgit.api.ResetCommand.checkoutIndex(ResetCommand.java:414)
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:182)
+	at org.eclipse.jgit.api.StashCreateCommand.call(StashCreateCommand.java:374)
+	at org.eclipse.egit.core.op.StashCreateOperation$1.run(StashCreateOperation.java:97)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2533)
+	at org.eclipse.egit.core.op.StashCreateOperation.execute(StashCreateOperation.java:108)
+	at org.eclipse.egit.ui.internal.stash.StashCreateUI$1.runInWorkspace(StashCreateUI.java:82)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.io.IOException: Could not delete file C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log
+	at org.eclipse.jgit.util.FileUtils.handleDeleteException(FileUtils.java:233)
+	at org.eclipse.jgit.util.FileUtils.delete(FileUtils.java:226)
+	at org.eclipse.jgit.dircache.Checkout.checkout(Checkout.java:230)
+	... 12 more
+Caused by: java.nio.file.FileSystemException: C:\Users\ASUS\Maverick Bank\.metadata\.plugins\org.eclipse.m2e.logback\0.log: The process cannot access the file because it is being used by another process
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:92)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103)
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108)
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.implDelete(WindowsFileSystemProvider.java:273)
+	at java.base/sun.nio.fs.AbstractFileSystemProvider.delete(AbstractFileSystemProvider.java:105)
+	at java.base/java.nio.file.Files.delete(Files.java:1153)
+	at org.eclipse.jgit.util.FileUtils.delete(FileUtils.java:192)
+	... 13 more

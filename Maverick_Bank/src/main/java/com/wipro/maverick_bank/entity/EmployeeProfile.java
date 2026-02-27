@@ -10,28 +10,26 @@ public class EmployeeProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String employeeCode;
-
+    private String fullName;
     private String department;
 
-    /* ONE employee → ONE user */
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    public EmployeeProfile() {}
+    public EmployeeProfile() {
+    }
 
     public Long getId() {
         return id;
     }
 
-    public String getEmployeeCode() {
-        return employeeCode;
+    public String getFullName() {
+        return fullName;
     }
     
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getDepartment() {

@@ -1,16 +1,6 @@
 package com.wipro.maverick_bank.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -20,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -28,26 +18,17 @@ public class User {
 
     private boolean active = true;
 
-    /* MANY users → ONE role */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    /* ONE user → ONE customer profile */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private CustomerProfile customerProfile;
 
-    /* ONE user → ONE employee profile */
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private EmployeeProfile employeeProfile;
 
-    public User() {}
-
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.active = true;
+    public User() {
     }
 
     public Long getId() {
@@ -70,27 +51,19 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-    
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public boolean isActive() {
         return active;
     }
-    
+
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    public CustomerProfile getCustomerProfile() {
-        return customerProfile;
+    public Role getRole() {
+        return role;
     }
 
-    public EmployeeProfile getEmployeeProfile() {
-        return employeeProfile;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
