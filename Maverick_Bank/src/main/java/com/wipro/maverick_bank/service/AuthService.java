@@ -5,5 +5,6 @@ import com.wipro.maverick_bank.dto.LoginResponseDTO;
 
 public interface AuthService {
 
-	LoginResponseDTO login(LoginRequestDTO loginRequest);
+    // Login and generate JWT token
+    LoginResponseDTO login(LoginRequestDTO loginRequest);
 }
