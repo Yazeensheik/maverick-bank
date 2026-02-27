@@ -1,7 +1,7 @@
-# Eclipse / IDE files
+# Eclipse / IDE
 .metadata/
-.settings/
 .project
+.settings/
 .classpath
 
 # Maven
