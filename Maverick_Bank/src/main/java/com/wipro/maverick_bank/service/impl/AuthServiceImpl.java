@@ -1,5 +1,6 @@
 package com.wipro.maverick_bank.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,12 @@ import com.wipro.maverick_bank.service.AuthService;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
-	// JwtUtil will be injected later
+	@Autowired
+	private UserRepository userRepository;
 
-	public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	// JwtUtil will be injected later
 
 	@Override
 	public LoginResponseDTO login(LoginRequestDTO loginRequest) {
@@ -34,6 +33,10 @@ public class AuthServiceImpl implements AuthService {
 		// JWT generation will come here
 		String token = "JWT_TOKEN_PLACEHOLDER";
 
-		return new LoginResponseDTO(token, user.getId(), user.getRole().getName());
+		return new LoginResponseDTO(
+				token,
+				user.getId(),
+				user.getRole().getName()
+		);
 	}
 }
