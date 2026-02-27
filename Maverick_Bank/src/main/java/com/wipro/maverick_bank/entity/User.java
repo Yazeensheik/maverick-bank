@@ -1,6 +1,16 @@
 package com.wipro.maverick_bank.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -18,12 +28,20 @@ public class User {
 
     private boolean active = true;
 
+    /* MANY users → ONE role */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    public User() {
-    }
+    /* ONE user → ONE customer profile */
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private CustomerProfile customerProfile;
+
+    /* ONE user → ONE employee profile */
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private EmployeeProfile employeeProfile;
+
+    public User() {}
 
     public User(String username, String password, Role role) {
         this.username = username;
@@ -63,8 +81,16 @@ public class User {
     public boolean isActive() {
         return active;
     }
-
+    
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public CustomerProfile getCustomerProfile() {
+        return customerProfile;
+    }
+
+    public EmployeeProfile getEmployeeProfile() {
+        return employeeProfile;
     }
 }

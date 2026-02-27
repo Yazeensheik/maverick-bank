@@ -1,12 +1,6 @@
 package com.wipro.maverick_bank.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer_profiles")
@@ -20,12 +14,12 @@ public class CustomerProfile {
     private String email;
     private String mobile;
 
+    /* ONE customer → ONE user */
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    public CustomerProfile() {
-    }
+    public CustomerProfile() {}
 
     public Long getId() {
         return id;
@@ -34,7 +28,7 @@ public class CustomerProfile {
     public String getFullName() {
         return fullName;
     }
-
+    
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
