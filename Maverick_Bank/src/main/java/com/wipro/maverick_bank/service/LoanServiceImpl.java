@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service.impl;
+package com.wipro.maverick_bank.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.wipro.maverick_bank.dto.LoanDTO;
 import com.wipro.maverick_bank.entity.Loan;
 import com.wipro.maverick_bank.repository.LoanRepository;
-import com.wipro.maverick_bank.service.interfaces.LoanService;
+import com.wipro.maverick_bank.service.LoanService;
 
 @Service
 public class LoanServiceImpl implements LoanService {

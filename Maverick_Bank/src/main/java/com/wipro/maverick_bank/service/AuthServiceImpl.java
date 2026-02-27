@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service.impl;
+package com.wipro.maverick_bank.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,7 +8,6 @@ import com.wipro.maverick_bank.dto.LoginRequestDTO;
 import com.wipro.maverick_bank.dto.LoginResponseDTO;
 import com.wipro.maverick_bank.entity.User;
 import com.wipro.maverick_bank.repository.UserRepository;
-import com.wipro.maverick_bank.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService {

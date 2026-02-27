@@ -11,18 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserDTO {
 
-<<<<<<< HEAD
+
 	private Long userId;
 	private String name;
 	private String email;
 	private String role;
 	private String status;
-}
-=======
-	private Long id;
-	private String username;
-	private String role;
-	private boolean active;
+
 
 	public UserDTO() {
 	}
@@ -66,4 +61,3 @@ public class UserDTO {
 		this.active = active;
 	}
 }
->>>>>>> 381ada5458f058c6444d65892a1fc73057053185

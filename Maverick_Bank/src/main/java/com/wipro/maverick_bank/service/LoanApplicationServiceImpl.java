@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service.impl;
+package com.wipro.maverick_bank.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +14,6 @@ import com.wipro.maverick_bank.entity.User;
 import com.wipro.maverick_bank.repository.LoanApplicationRepository;
 import com.wipro.maverick_bank.repository.LoanRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
-import com.wipro.maverick_bank.service.interfaces.LoanApplicationService;
 
 @Service
 public class LoanApplicationServiceImpl implements LoanApplicationService {
