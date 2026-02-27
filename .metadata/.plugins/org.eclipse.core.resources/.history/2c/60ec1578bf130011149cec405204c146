@@ -1,0 +1,39 @@
+package com.wipro.maverick_bank.service.impl;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.wipro.maverick_bank.dto.LoginRequestDTO;
+import com.wipro.maverick_bank.dto.LoginResponseDTO;
+import com.wipro.maverick_bank.entity.User;
+import com.wipro.maverick_bank.repository.UserRepository;
+import com.wipro.maverick_bank.service.AuthService;
+
+@Service
+public class AuthServiceImpl implements AuthService {
+
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+	// JwtUtil will be injected later
+
+	public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	@Override
+	public LoginResponseDTO login(LoginRequestDTO loginRequest) {
+
+		User user = userRepository.findByUsername(loginRequest.getUsername())
+				.orElseThrow(() -> new RuntimeException("Invalid username"));
+
+		if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+			throw new RuntimeException("Invalid password");
+		}
+
+		// JWT generation will come here
+		String token = "JWT_TOKEN_PLACEHOLDER";
+
+		return new LoginResponseDTO(token, user.getId(), user.getRole().getName());
+	}
+}
