@@ -38,4 +38,6 @@ public class Beneficiary {
 	@ManyToOne
 	@JoinColumn(name = "account_id", nullable = false)
 	private Account account;
+	
+	
 }
