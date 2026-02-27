@@ -1,0 +1,13 @@
+# Eclipse
+.metadata/
+.settings/
+.project
+.classpath
+
+# Maven / Java
+target/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
