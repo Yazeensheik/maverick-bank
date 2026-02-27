@@ -6,4 +6,5 @@ import com.wipro.maverick_bank.dto.LoginResponseDTO;
 public interface AuthService {
 
     LoginResponseDTO login(LoginRequestDTO loginRequest);
+
 }

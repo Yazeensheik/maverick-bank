@@ -3,13 +3,16 @@ package com.wipro.maverick_bank.dto;
 public class LoginResponseDTO {
 
     private String token;
+    private Long userId;
     private String role;
 
     public LoginResponseDTO() {
     }
 
-    public LoginResponseDTO(String token, String role) {
+    // ✅ THIS CONSTRUCTOR IS MISSING
+    public LoginResponseDTO(String token, Long userId, String role) {
         this.token = token;
+        this.userId = userId;
         this.role = role;
     }
 
@@ -19,6 +22,14 @@ public class LoginResponseDTO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getRole() {
