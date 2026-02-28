@@ -10,6 +10,6 @@ import com.wipro.maverick_bank.entity.LoanApplication;
 @Repository
 public interface LoanApplicationRepository extends JpaRepository<LoanApplication, Long> {
 
-	List<LoanApplication> findByCustomer_UserId(Long userId);
+	List<LoanApplication> findByCustomer_Id(Long userId);
 	List<LoanApplication> findByStatus(String status);
 }
