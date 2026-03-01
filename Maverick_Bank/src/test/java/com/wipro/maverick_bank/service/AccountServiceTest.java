@@ -1,9 +1,6 @@
 package com.wipro.maverick_bank.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
@@ -24,81 +21,108 @@ import com.wipro.maverick_bank.repository.CustomerProfileRepository;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountServiceTest {
 
-	@Autowired
-	private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
-	@Autowired
-	private CustomerProfileRepository customerProfileRepository;
+    @Autowired
+    private CustomerProfileRepository customerProfileRepository;
 
-	static Long accountId;
-	static Long customerProfileId;
+    static Long accountId;
+    static Long customerProfileId;
 
-	private Long createCustomerProfile() {
 
-		CustomerProfile cp = new CustomerProfile();
-		cp.setFullName("Rahul Kumar");
-		cp.setEmail("rahul@email.com");
-		cp.setPhone("9999999999");
+    private Long createCustomerProfile() {
 
-		cp = customerProfileRepository.save(cp);
+        CustomerProfile cp = new CustomerProfile();
+        cp.setFullName("Rahul Kumar");
+        cp.setEmail("rahul@email.com");
+        cp.setPhone("9999999999");
 
-		return cp.getId();
-	}
+        cp = customerProfileRepository.save(cp);
 
-	@Test
-	@Order(1)
-	void testCreateAccount() {
+        return cp.getId();
+    }
 
-		customerProfileId = createCustomerProfile();
 
-		AccountDTO dto = new AccountDTO("ACC10001", "SAVINGS", 5000.0, "ACTIVE", null, id);
+    @Test
+    @Order(1)
+    void testCreateAccount() {
 
-		AccountDTO saved = accountService.createAccount(dto);
+        customerProfileId = createCustomerProfile();
 
-		assertNotNull(saved);
-		assertEquals("ACC10001", saved.getAccountNumber());
+        AccountDTO dto =
+                new AccountDTO(
+                        "ACC10001",
+                        "SAVINGS",
+                        5000.0,
+                        "ACTIVE",
+                        null,
+                        customerProfileId
+                );
 
-		accountId = saved.getAccountId();
-	}
+        AccountDTO saved = accountService.createAccount(dto);
 
-	@Test
-	@Order(2)
-	void testGetAccountById() {
+        assertNotNull(saved);
+        assertEquals("ACC10001", saved.getAccountNumber());
 
-		AccountDTO account = accountService.getAccountById(accountId);
+        accountId = saved.getAccountId();
+    }
 
-		assertNotNull(account);
-		assertEquals("SAVINGS", account.getAccountType());
-	}
 
-	@Test
-	@Order(3)
-	void testGetAllAccounts() {
+    @Test
+    @Order(2)
+    void testGetAccountById() {
 
-		List<AccountDTO> list = accountService.getAllAccounts();
+        AccountDTO account =
+                accountService.getAccountById(accountId);
 
-		assertFalse(list.isEmpty());
-	}
+        assertNotNull(account);
+        assertEquals("SAVINGS", account.getAccountType());
+    }
 
-	@Test
-	@Order(4)
-	void testUpdateAccount() {
 
-		AccountDTO dto = new AccountDTO("ACC10001", "CURRENT", 10000.0, "ACTIVE", accountId, id);
+    @Test
+    @Order(3)
+    void testGetAllAccounts() {
 
-		AccountDTO updated = accountService.updateAccount(accountId, dto);
+        List<AccountDTO> list =
+                accountService.getAllAccounts();
 
-		assertEquals("CURRENT", updated.getAccountType());
-	}
+        assertFalse(list.isEmpty());
+    }
 
-	@Test
-	@Order(5)
-	void testDeleteAccount() {
 
-		accountService.deleteAccount(accountId);
+    @Test
+    @Order(4)
+    void testUpdateAccount() {
 
-		Exception ex = assertThrows(RuntimeException.class, () -> accountService.getAccountById(accountId));
+        AccountDTO dto =
+                new AccountDTO(
+                        "ACC10001",
+                        "CURRENT",
+                        10000.0,
+                        "ACTIVE",
+                        accountId,
+                        customerProfileId
+                );
 
-		assertEquals("Account not found", ex.getMessage());
-	}
+        AccountDTO updated =
+                accountService.updateAccount(accountId, dto);
+
+        assertEquals("CURRENT", updated.getAccountType());
+    }
+
+
+    @Test
+    @Order(5)
+    void testDeleteAccount() {
+
+        accountService.deleteAccount(accountId);
+
+        Exception ex =
+                assertThrows(RuntimeException.class,
+                        () -> accountService.getAccountById(accountId));
+
+        assertEquals("Account not found", ex.getMessage());
+    }
 }
