@@ -23,15 +23,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Statement {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long statementId;
-
-	@Column(nullable = false)
-	private Long accountId;
 
 	@Column(nullable = false)
 	private LocalDate startDate;
@@ -49,7 +45,7 @@ public class Statement {
 	private LocalDateTime generatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "account_id", nullable=false)
 	private Account account;
 	
 }

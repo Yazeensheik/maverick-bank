@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.StatementRequestDTO;
 import com.wipro.maverick_bank.dto.StatementResponseDTO;
+import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.Statement;
 import com.wipro.maverick_bank.entity.Transaction;
 import com.wipro.maverick_bank.repository.StatementRepository;
@@ -53,8 +54,11 @@ public class StatementServiceImpl implements StatementService {
             }
         }
 
+        Account account = new Account();
+        account.setAccountId(accountId);
+
         Statement statement = new Statement();
-        statement.setAccountId(accountId);
+        statement.setAccount(account);
         statement.setStartDate(request.getStartDate());
         statement.setEndDate(request.getEndDate());
         statement.setTotalCredit(totalCredit);
@@ -69,7 +73,7 @@ public class StatementServiceImpl implements StatementService {
     @Override
     public List<StatementResponseDTO> getStatements(Long accountId) {
 
-        List<Statement> list = statementRepository.findByAccountId(accountId);
+        List<Statement> list = statementRepository.findByAccount_AccountId(accountId);
         List<StatementResponseDTO> responseList = new ArrayList<>();
 
         for (Statement s : list) {
@@ -83,7 +87,7 @@ public class StatementServiceImpl implements StatementService {
 
         StatementResponseDTO dto = new StatementResponseDTO();
         dto.setStatementId(s.getStatementId());
-        dto.setAccountId(s.getAccountId());
+        dto.setAccountId(s.getAccount().getAccountId());
         dto.setStartDate(s.getStartDate());
         dto.setEndDate(s.getEndDate());
         dto.setTotalCredit(s.getTotalCredit());

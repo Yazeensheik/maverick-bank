@@ -40,17 +40,16 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 		User user = userRepository.findById(userID)
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
-		LoanApplication application = new LoanApplication(
-				null, //applicationID
-				loan,
-				user,
-				dto.getAmount(),
-				dto.getPurpose(),
-				"PENDING",
-				LocalDate.now(),
-				null, //approvedDate
-				null //remarks
-		);
+		LoanApplication application = new LoanApplication();
+				application.setLoan(loan);
+				application.setCustomer(user); // or setCustomerProfile if that's your entity
+				application.setAmount(dto.getAmount());
+				application.setPurpose(dto.getPurpose());
+				application.setStatus("PENDING");
+				application.setAppliedDate(LocalDate.now());
+				application.setApprovedDate(null);
+				application.setRemarks(null);
+		
 
 		loanApplicationRepository.save(application);
 

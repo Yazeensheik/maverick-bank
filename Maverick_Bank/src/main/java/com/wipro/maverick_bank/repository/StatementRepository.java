@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface StatementRepository extends JpaRepository<Statement, Long> {
 
-    List<Statement> findByAccountId(Long accountId);
+    List<Statement> findByAccount_AccountId(Long accountId);
 }
