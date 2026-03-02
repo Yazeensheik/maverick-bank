@@ -1,5 +1,7 @@
 package com.wipro.maverick_bank.controller;
 
+import java.util.List;
+
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class UserController {
     }
 
     /**
-     * Get User Details
+     * Get User by ID
      * Accessible by: ADMIN, EMPLOYEE
      */
     @GetMapping("/{id}")
@@ -53,7 +55,7 @@ public class UserController {
     }
 
     /**
-     * Deactivate User 
+     * Deactivate User
      * Accessible by: ADMIN
      */
     @PutMapping("/{id}/deactivate")
@@ -61,5 +63,16 @@ public class UserController {
 
         userService.deactivateUser(id);
         return ResponseEntity.ok("User deactivated successfully");
+    }
+
+    /**
+     * ✅ Get All Users
+     * Accessible by: ADMIN
+     */
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

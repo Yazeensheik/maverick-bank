@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wipro.maverick_bank.dto.AdminCreateUserDTO;
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 import com.wipro.maverick_bank.entity.Role;
@@ -30,9 +29,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO createCustomer(CreateUserRequestDTO request) {
 
-        Role role = roleRepository.findByName("CUSTOMER")
+        Role role = roleRepository.findByName("ROLE_CUSTOMER")
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Role CUSTOMER not found"));
+                        new ResourceNotFoundException("Role ROLE_CUSTOMER not found"));
 
         User user = new User();
         user.setUsername(request.getUsername());
@@ -42,20 +41,15 @@ public class UserServiceImpl implements UserService {
 
         user = userRepository.save(user);
 
-        return new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                role.getName(),
-                user.isActive()
-        );
+        return mapToDTO(user);
     }
 
     @Override
     public UserDTO createEmployee(CreateUserRequestDTO request) {
 
-        Role role = roleRepository.findByName("EMPLOYEE")
+        Role role = roleRepository.findByName("ROLE_EMPLOYEE")
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Role EMPLOYEE not found"));
+                        new ResourceNotFoundException("Role ROLE_EMPLOYEE not found"));
 
         User user = new User();
         user.setUsername(request.getUsername());
@@ -65,12 +59,7 @@ public class UserServiceImpl implements UserService {
 
         user = userRepository.save(user);
 
-        return new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                role.getName(),
-                user.isActive()
-        );
+        return mapToDTO(user);
     }
 
     @Override
@@ -80,12 +69,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found"));
 
-        return new UserDTO(
-                user.getId(),
-                user.getUsername(),
-                user.getRole().getName(),
-                user.isActive()
-        );
+        return mapToDTO(user);
     }
 
     @Override
@@ -98,37 +82,25 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         userRepository.save(user);
     }
-    
-    @Override
-    public UserDTO createUser(AdminCreateUserDTO dto) {
 
-        CreateUserRequestDTO request = new CreateUserRequestDTO();
-        request.setUsername(dto.getName());
-        request.setPassword(dto.getPassword());
-        request.setEmail(dto.getEmail());
-
-        if ("CUSTOMER".equalsIgnoreCase(dto.getRole())) {
-            return createCustomer(request);
-        } 
-        else if ("EMPLOYEE".equalsIgnoreCase(dto.getRole())) {
-            return createEmployee(request);
-        } 
-        else {
-            throw new IllegalArgumentException("Invalid role provided");
-        }
-    }
-        
+    // ✅ NEW METHOD – GET ALL USERS
     @Override
     public List<UserDTO> getAllUsers() {
+
         return userRepository.findAll()
                 .stream()
-                .map(user -> new UserDTO(
-                        user.getId(),
-                        user.getUsername(),
-                        user.getRole().getName(),
-                        user.isActive()))
+                .map(this::mapToDTO)
                 .toList();
     }
-}
 
-	
+    // 🔹 PRIVATE MAPPER (BEST PRACTICE)
+    private UserDTO mapToDTO(User user) {
+
+        return new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getRole().getName(),   // ROLE_ADMIN / ROLE_CUSTOMER / ROLE_EMPLOYEE
+                user.isActive()
+        );
+    }
+}
