@@ -18,7 +18,7 @@ public class LoanDTO {
 	private Long loanId;
 	
 	@NotBlank(message = "Loan type is required")
-	private String LoanType;
+	private String loanType;
 	
 	@NotNull(message = "Interest rate is required")
     @DecimalMin(value = "0.1", message = "Interest rate must be greater than 0")

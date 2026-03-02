@@ -1,9 +1,12 @@
 package com.wipro.maverick_bank.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.wipro.maverick_bank.dto.AdminCreateUserDTO;
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 import com.wipro.maverick_bank.entity.Role;
@@ -91,4 +94,37 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         userRepository.save(user);
     }
+    
+    @Override
+    public UserDTO createUser(AdminCreateUserDTO dto) {
+
+        CreateUserRequestDTO request = new CreateUserRequestDTO();
+        request.setUsername(dto.getName());
+        request.setPassword(dto.getPassword());
+        request.setEmail(dto.getEmail());
+
+        if ("CUSTOMER".equalsIgnoreCase(dto.getRole())) {
+            return createCustomer(request);
+        } 
+        else if ("EMPLOYEE".equalsIgnoreCase(dto.getRole())) {
+            return createEmployee(request);
+        } 
+        else {
+            throw new IllegalArgumentException("Invalid role provided");
+        }
+    }
+        
+    @Override
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> new UserDTO(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getRole().getName(),
+                        user.isActive()))
+                .toList();
+    }
 }
+
+	

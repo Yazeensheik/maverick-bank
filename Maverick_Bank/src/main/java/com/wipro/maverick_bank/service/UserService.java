@@ -1,5 +1,8 @@
 package com.wipro.maverick_bank.service;
 
+import java.util.List;
+
+import com.wipro.maverick_bank.dto.AdminCreateUserDTO;
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 
@@ -16,4 +19,7 @@ public interface UserService {
 
     // Deactivate a user (soft delete)
     void deactivateUser(Long userId);
+    
+    UserDTO createUser(AdminCreateUserDTO dto);
+    List<UserDTO> getAllUsers();
 }

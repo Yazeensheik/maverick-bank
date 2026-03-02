@@ -32,12 +32,12 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 	}
 
 	@Override
-	public LoanApplicationDTO applyForLoan(Long userID, LoanApplicationDTO dto) {
+	public LoanApplicationDTO applyForLoan(Long userId, LoanApplicationDTO dto) {
 
 		Loan loan = loanRepository.findById(dto.getLoanId())
 				.orElseThrow(() -> new RuntimeException("Loan not found"));
 
-		User user = userRepository.findById(userID)
+		User user = userRepository.findById(userId)
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		LoanApplication application = new LoanApplication();
