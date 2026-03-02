@@ -29,26 +29,22 @@ public class Beneficiary {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long beneficiaryId;
+	@NotBlank(message = "Beneficiary name is required")
+	private String beneficiaryName;
 
 	@NotBlank(message = "Account number is required")
 	@Size(min = 8, max = 20)
-	@Column(nullable = false, unique = true)
 	private String accountNumber;
 
-	@NotBlank(message = "Account type is required")
-	@Column(nullable = false)
-	private String accountType;
+	@NotBlank(message = "Bank name is required")
+	private String bankName;
 
+	@NotBlank(message = "Branch name is required")
+	private String branchName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@NotNull(message = "Balance is required")
-	@PositiveOrZero(message = "Balance cannot be negative")
-	@Column(nullable = false)
-	private Double balance;
-
-	@NotBlank(message = "Status is required")
-	@Column(nullable = false)
-	private String status;
+	@NotBlank(message = "IFSC code is required")
+	@Size(min = 5, max = 15)
+	private String ifscCode;
 	
 	@ManyToOne
 	@JoinColumn(name = "account_id", nullable = false)

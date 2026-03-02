@@ -24,7 +24,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public BeneficiaryDTO addBeneficiary(BeneficiaryDTO dto) {
 
-		// fetch Account for mapping
+		
 		Account account = accountRepository.findById(dto.getAccountId())
 				.orElseThrow(() -> new RuntimeException("Account not found"));
 

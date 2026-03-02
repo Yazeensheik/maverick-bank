@@ -29,7 +29,7 @@ public class AccountDTO {
 	@NotNull(message = "Account ID is required")
 
 	private Long accountId;
-	private Long customerProfileId;
+	
 
 	public AccountDTO() {
 	}
