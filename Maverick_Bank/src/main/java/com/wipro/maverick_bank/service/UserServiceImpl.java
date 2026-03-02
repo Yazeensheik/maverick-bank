@@ -8,9 +8,9 @@ import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 import com.wipro.maverick_bank.entity.Role;
 import com.wipro.maverick_bank.entity.User;
+import com.wipro.maverick_bank.exception.ResourceNotFoundException;
 import com.wipro.maverick_bank.repository.RoleRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
-import com.wipro.maverick_bank.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO createCustomer(CreateUserRequestDTO request) {
 
         Role role = roleRepository.findByName("CUSTOMER")
-                .orElseThrow(() -> new RuntimeException("Role CUSTOMER not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role CUSTOMER not found"));
 
         User user = new User();
         user.setUsername(request.getUsername());
@@ -50,7 +51,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO createEmployee(CreateUserRequestDTO request) {
 
         Role role = roleRepository.findByName("EMPLOYEE")
-                .orElseThrow(() -> new RuntimeException("Role EMPLOYEE not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Role EMPLOYEE not found"));
 
         User user = new User();
         user.setUsername(request.getUsername());
@@ -72,7 +74,8 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserById(Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
 
         return new UserDTO(
                 user.getId(),
@@ -86,7 +89,8 @@ public class UserServiceImpl implements UserService {
     public void deactivateUser(Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
 
         user.setActive(false);
         userRepository.save(user);
