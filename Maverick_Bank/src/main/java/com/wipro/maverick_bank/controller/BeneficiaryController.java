@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wipro.maverick_bank.dto.BeneficiaryDTO;
 import com.wipro.maverick_bank.service.BeneficiaryService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,28 +25,32 @@ public class BeneficiaryController {
 
 	private final BeneficiaryService beneficiaryService;
 
-	// Add Beneficiary (Customer Use Case)
-	@PostMapping
-	public ResponseEntity<BeneficiaryDTO> addBeneficiary(@RequestBody BeneficiaryDTO beneficiaryDTO) {
+	// Add Beneficiary
+	@PostMapping("/add")
+	public ResponseEntity<BeneficiaryDTO> addBeneficiary(@Valid @RequestBody BeneficiaryDTO beneficiaryDTO) {
+
 		BeneficiaryDTO createdBeneficiary = beneficiaryService.addBeneficiary(beneficiaryDTO);
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdBeneficiary);
 	}
 
 	// View Beneficiary Details
-	@GetMapping("/{id}")
+	@GetMapping("/getById/{id}")
 	public ResponseEntity<BeneficiaryDTO> getBeneficiaryById(@PathVariable Long id) {
+
 		return ResponseEntity.ok(beneficiaryService.getBeneficiaryById(id));
 	}
 
 	// View All Beneficiaries
-	@GetMapping
+	@GetMapping("/getAll")
 	public ResponseEntity<List<BeneficiaryDTO>> getAllBeneficiaries() {
 		return ResponseEntity.ok(beneficiaryService.getAllBeneficiaries());
 	}
 
 	// Delete Beneficiary
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteBeneficiary(@PathVariable Long id) {
+
 		beneficiaryService.deleteBeneficiary(id);
 		return ResponseEntity.ok("Beneficiary deleted successfully");
 	}

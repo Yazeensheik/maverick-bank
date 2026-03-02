@@ -93,7 +93,5 @@ public class AccountDTO {
 		this.customerProfileId = customerProfileId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "customer_profile_id")
-	private CustomerProfile customerProfile;
+	
 }
