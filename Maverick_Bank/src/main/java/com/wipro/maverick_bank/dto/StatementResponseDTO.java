@@ -3,8 +3,8 @@ package com.wipro.maverick_bank.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,10 +13,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class StatementResponseDTO {
 
     private Long statementId;
+    @NotNull(message = "Account ID is required")
     private Long accountId;
     private LocalDate startDate;
     private LocalDate endDate;
