@@ -1,5 +1,6 @@
 package com.wipro.maverick_bank.dto;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,7 @@ public class LoanApprovalDTO {
 
 	private Long applicationId;
 	private String status;
+	
+	@Size(max = 255, message = "Remarks cannot exceed 255 characters")
 	private String remarks;
 }
