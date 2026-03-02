@@ -3,7 +3,6 @@ package com.wipro.maverick_bank.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
@@ -23,67 +22,66 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    // =====================================================
+    // CREATE USER (CUSTOMER / EMPLOYEE)
+    // =====================================================
     @Override
-    public UserDTO createCustomer(CreateUserRequestDTO request) {
+    public UserDTO createUser(CreateUserRequestDTO request, String roleName) {
 
-        Role role = roleRepository.findByName("ROLE_CUSTOMER")
+        // Check if user already exists
+        if (userRepository.existsByUsername(request.getEmail())) {
+            throw new RuntimeException("User with this email already exists");
+        }
+
+        // Fetch role
+        Role role = roleRepository.findByName(roleName)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Role ROLE_CUSTOMER not found"));
+                        new ResourceNotFoundException("Role " + roleName + " not found"));
 
+        // Create user entity
         User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUsername(request.getEmail());   // email used as username
+        user.setPassword(request.getPassword()); // PLAIN TEXT PASSWORD
         user.setRole(role);
         user.setActive(true);
 
+        // Save user
         user = userRepository.save(user);
 
+        // Return DTO
         return mapToDTO(user);
     }
 
-    @Override
-    public UserDTO createEmployee(CreateUserRequestDTO request) {
-
-        Role role = roleRepository.findByName("ROLE_EMPLOYEE")
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Role ROLE_EMPLOYEE not found"));
-
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(role);
-        user.setActive(true);
-
-        user = userRepository.save(user);
-
-        return mapToDTO(user);
-    }
-
+    // =====================================================
+    // GET USER BY ID
+    // =====================================================
     @Override
     public UserDTO getUserById(Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                        new ResourceNotFoundException("User not found with id: " + userId));
 
         return mapToDTO(user);
     }
 
+    // =====================================================
+    // DEACTIVATE USER (SOFT DELETE)
+    // =====================================================
     @Override
     public void deactivateUser(Long userId) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                        new ResourceNotFoundException("User not found with id: " + userId));
 
         user.setActive(false);
         userRepository.save(user);
     }
 
-    // ✅ NEW METHOD – GET ALL USERS
+    // =====================================================
+    // GET ALL USERS
+    // =====================================================
     @Override
     public List<UserDTO> getAllUsers() {
 
@@ -93,13 +91,15 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
-    // 🔹 PRIVATE MAPPER (BEST PRACTICE)
+    // =====================================================
+    // ENTITY → DTO MAPPER
+    // =====================================================
     private UserDTO mapToDTO(User user) {
 
         return new UserDTO(
                 user.getId(),
-                user.getUsername(),
-                user.getRole().getName(),   // ROLE_ADMIN / ROLE_CUSTOMER / ROLE_EMPLOYEE
+                user.getUsername(),        // email
+                user.getRole().getName(),  // CUSTOMER / EMPLOYEE / ADMIN
                 user.isActive()
         );
     }
