@@ -14,6 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,16 +35,22 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountId;
 
-	@Column(nullable = false, unique = true, length = 20)
+	@NotBlank(message = "Account number is required")
+	@Size(min = 8, max = 20)
+	@Column(nullable = false, unique = true)
 	private String accountNumber;
 
-	@Column(nullable = false, length = 20)
+	@NotBlank(message = "Account type is required")
+	@Column(nullable = false)
 	private String accountType;
 
+	@NotNull(message = "Balance is required")
+	@PositiveOrZero(message = "Balance cannot be negative")
 	@Column(nullable = false)
-	private Double balance = 0.0;
+	private Double balance;
 
-	@Column(nullable = false, length = 20)
+	@NotBlank(message = "Status is required")
+	@Column(nullable = false)
 	private String status;
 
 	@Column(nullable = false, updatable = false)
@@ -48,6 +58,7 @@ public class Account {
 
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	private List<Beneficiary> beneficiaries;
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_profile_id", nullable = false)
@@ -58,5 +69,6 @@ public class Account {
 
 	@OneToMany(mappedBy = "account")
 	private List<Statement> statements;
+
 
 }

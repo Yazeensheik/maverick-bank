@@ -4,15 +4,32 @@ import com.wipro.maverick_bank.entity.CustomerProfile;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class AccountDTO {
 
+	@NotBlank
 	private String accountNumber;
+
+	@NotBlank
 	private String accountType;
+
+	@NotNull
+	@PositiveOrZero
 	private Double balance;
+
+	@NotBlank
 	private String status;
-	private Long accountId;
+
+	@NotNull
 	private Long customerProfileId;
+
+	@NotNull(message = "Account ID is required")
+
+	private Long accountId;
+	
 
 	public AccountDTO() {
 	}

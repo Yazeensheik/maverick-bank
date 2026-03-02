@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import com.wipro.maverick_bank.dto.LoginRequestDTO;
 import com.wipro.maverick_bank.dto.LoginResponseDTO;
 import com.wipro.maverick_bank.entity.User;
+import com.wipro.maverick_bank.exception.ResourceNotFoundException;
 import com.wipro.maverick_bank.repository.UserRepository;
 import com.wipro.maverick_bank.security.jwt.JwtUtil;
-import com.wipro.maverick_bank.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -28,11 +28,12 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository
                 .findByUsername(loginRequest.getUsername())
-                .orElseThrow(() -> new RuntimeException("Invalid username"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Invalid username"));
 
         if (!passwordEncoder.matches(
                 loginRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new ResourceNotFoundException("Invalid password");
         }
 
         String token = jwtUtil.generateToken(
