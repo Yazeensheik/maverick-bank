@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import com.wipro.maverick_bank.entity.User;
 import com.wipro.maverick_bank.exception.ResourceNotFoundException;
 import com.wipro.maverick_bank.repository.RoleRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
+import com.wipro.maverick_bank.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

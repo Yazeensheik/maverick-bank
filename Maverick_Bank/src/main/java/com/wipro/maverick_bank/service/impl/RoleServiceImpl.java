@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.entity.Role;
 import com.wipro.maverick_bank.repository.RoleRepository;
+import com.wipro.maverick_bank.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {

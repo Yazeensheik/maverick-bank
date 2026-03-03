@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ import com.wipro.maverick_bank.entity.Statement;
 import com.wipro.maverick_bank.entity.Transaction;
 import com.wipro.maverick_bank.repository.StatementRepository;
 import com.wipro.maverick_bank.repository.TransactionRepository;
+import com.wipro.maverick_bank.service.StatementService;
 
 @Service
 public class StatementServiceImpl implements StatementService {
