@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handle resource not found errors
+     * Handle Resource Not Found (404)
      */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFound(
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
-                "Resource Not Found",
+                "Not Found",
                 ex.getMessage(),
                 request.getRequestURI()
         );
@@ -51,26 +51,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handle authentication / authorization errors
-     */
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleRuntimeException(
-            RuntimeException ex,
-            HttpServletRequest request) {
-
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),
-                request.getRequestURI()
-        );
-
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Catch-all exception handler
+     * Handle all other exceptions (500)
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(
