@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/v1/accounts")
 @RequiredArgsConstructor
 public class AccountController {
 
@@ -44,6 +44,16 @@ public class AccountController {
 	@GetMapping("/getAll")
 	public ResponseEntity<List<AccountDTO>> getAllAccounts() {
 		return ResponseEntity.ok(accountService.getAllAccounts());
+	}
+	
+	// View accounts by CustomerId
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<List<AccountDTO>> getAccountsByCustomer(
+	        @PathVariable Long customerId) {
+
+	    return ResponseEntity.ok(
+	            accountService.getAccountsByCustomerId(customerId)
+	    );
 	}
 
 	// Update Account
