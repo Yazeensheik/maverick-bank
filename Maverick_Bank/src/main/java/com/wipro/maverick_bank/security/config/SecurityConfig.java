@@ -15,19 +15,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(
+	        HttpSecurity http,
+	        DaoAuthenticationProvider authenticationProvider) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .httpBasic();
+	    http
+	        .csrf(csrf -> csrf.disable())
+	        .authenticationProvider(authenticationProvider) 
+	        .authorizeHttpRequests(auth -> auth
+	                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+	                .anyRequest().authenticated()
+	        )
+	        .httpBasic();
 
-        return http.build();
-    }
+	    return http.build();
+	}
 
     /**
      * 🔥 MOST IMPORTANT PART

@@ -19,7 +19,7 @@ import com.wipro.maverick_bank.service.LoanApplicationService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/loan-aaplications")
+@RequestMapping("/api/loan-applications")
 public class LoanApplicationController {
 
 	private final LoanApplicationService loanApplicationService;
@@ -35,7 +35,7 @@ public class LoanApplicationController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<LoanApplicationDTO> getApplicationByID(@PathVariable Long id) {
 		return ResponseEntity.ok(loanApplicationService.getApplicationById(id));
 	}
@@ -45,7 +45,7 @@ public class LoanApplicationController {
 		return ResponseEntity.ok(loanApplicationService.getAllApplications());
 	}
 
-	@PutMapping("{id}/decision")
+	@PutMapping("/{id}/decision")
 	public ResponseEntity<LoanApprovalDTO> approveOrRejectLoan(@PathVariable Long id,
 			@Valid @RequestBody LoanApprovalDTO approvalDTO) {
 		LoanApprovalDTO response = loanApplicationService.approveOrRejectLoan(id, approvalDTO);
