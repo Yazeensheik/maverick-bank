@@ -22,33 +22,33 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/loan-aaplications")
 public class LoanApplicationController {
 
-	
 	private final LoanApplicationService loanApplicationService;
-	
+
 	public LoanApplicationController(LoanApplicationService loanApplicationService) {
-		this.loanApplicationService=loanApplicationService;
+		this.loanApplicationService = loanApplicationService;
 	}
-	
+
 	@PostMapping("/user/{userId}")
-	public ResponseEntity<LoanApplicationDTO> applyforLoan(@PathVariable Long userId, @Valid @RequestBody LoanApplicationDTO dto){
-		LoanApplicationDTO response= loanApplicationService.applyForLoan(userId, dto);
-		return new ResponseEntity<> (response, HttpStatus.CREATED);
+	public ResponseEntity<LoanApplicationDTO> applyforLoan(@PathVariable Long userId,
+			@Valid @RequestBody LoanApplicationDTO dto) {
+		LoanApplicationDTO response = loanApplicationService.applyForLoan(userId, dto);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("{id}")
-	public ResponseEntity<LoanApplicationDTO> getApplicationByID(@PathVariable Long id){
+	public ResponseEntity<LoanApplicationDTO> getApplicationByID(@PathVariable Long id) {
 		return ResponseEntity.ok(loanApplicationService.getApplicationById(id));
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<LoanApplicationDTO>> getAllApplications(){
+	public ResponseEntity<List<LoanApplicationDTO>> getAllApplications() {
 		return ResponseEntity.ok(loanApplicationService.getAllApplications());
 	}
-	
+
 	@PutMapping("{id}/decision")
-	public ResponseEntity<LoanApprovalDTO> approveOrRejectLoan(@PathVariable Long id, @Valid @RequestBody LoanApprovalDTO approvalDTO){
-		LoanApprovalDTO response=loanApplicationService.approveOrRejectLoan(id, approvalDTO);
+	public ResponseEntity<LoanApprovalDTO> approveOrRejectLoan(@PathVariable Long id,
+			@Valid @RequestBody LoanApprovalDTO approvalDTO) {
+		LoanApprovalDTO response = loanApplicationService.approveOrRejectLoan(id, approvalDTO);
 		return ResponseEntity.ok(response);
 	}
 }
-

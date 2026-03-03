@@ -1,10 +1,11 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.DepositRequestDTO;
@@ -13,6 +14,7 @@ import com.wipro.maverick_bank.dto.TransferRequestDTO;
 import com.wipro.maverick_bank.dto.WithdrawRequestDTO;
 import com.wipro.maverick_bank.entity.Transaction;
 import com.wipro.maverick_bank.repository.TransactionRepository;
+import com.wipro.maverick_bank.service.TransactionService;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {

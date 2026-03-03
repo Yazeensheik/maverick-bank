@@ -2,8 +2,11 @@ package com.wipro.maverick_bank.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
@@ -12,10 +15,9 @@ import com.wipro.maverick_bank.dto.UserDTO;
 import com.wipro.maverick_bank.service.LoanService;
 import com.wipro.maverick_bank.service.UserService;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/api/admin")
+@PreAuthorize("hasRole('ADMIN')") // ADMIN ONLY
 public class AdminController {
 
     private final UserService userService;
@@ -30,59 +32,43 @@ public class AdminController {
        USER MANAGEMENT (ADMIN)
        ========================= */
 
-    /**
-     * Create Customer
-     * ROLE_ADMIN
-     */
     @PostMapping("/users/customer")
     public ResponseEntity<UserDTO> createCustomer(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
-        UserDTO createdUser = userService.createCustomer(request);
+        UserDTO createdUser =
+                userService.createUser(request, "CUSTOMER");
+
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    /**
-     * Create Employee
-     * ROLE_ADMIN
-     */
     @PostMapping("/users/employee")
     public ResponseEntity<UserDTO> createEmployee(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
-        UserDTO createdUser = userService.createEmployee(request);
+        UserDTO createdUser =
+                userService.createUser(request, "EMPLOYEE");
+
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
-    /**
-     * Get User by ID
-     * ROLE_ADMIN
-     */
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
 
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    /**
-     * Get All Users
-     * ROLE_ADMIN
-     */
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
 
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    /**
-     * Deactivate User (Soft delete)
-     * ROLE_ADMIN
-     */
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deactivateUser(@PathVariable Long id) {
+    @PutMapping("/users/{id}/deactivate")
+    public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
 
         userService.deactivateUser(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("User deactivated successfully");
     }
 
     /* =========================
