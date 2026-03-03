@@ -15,41 +15,35 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .httpBasic();
+		
+		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
+				.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll().anyRequest().authenticated())
+				.httpBasic();
 
-        return http.build();
-    }
+		return http.build();
+	}
 
-    /**
-     * 🔥 MOST IMPORTANT PART
-     * Forces Spring Security to use DB-based authentication
-     * with PLAIN TEXT passwords
-     */
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(
-            UserDetailsService userDetailsService) {
+	/**
+	 * 🔥 MOST IMPORTANT PART Forces Spring Security to use DB-based authentication
+	 * with PLAIN TEXT passwords
+	 */
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
 
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
 
-        // ✅ CORRECT way (NO bcrypt, plain text)
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+		// ✅ CORRECT way (NO bcrypt, plain text)
+		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
-        return provider;
-    }
+		return provider;
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+		return configuration.getAuthenticationManager();
+	}
 }
