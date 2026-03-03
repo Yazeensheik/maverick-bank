@@ -2,24 +2,20 @@ package com.wipro.maverick_bank.service;
 
 import java.util.List;
 
-import com.wipro.maverick_bank.dto.AdminCreateUserDTO;
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 
 public interface UserService {
 
-    // Create a new customer user
-    UserDTO createCustomer(CreateUserRequestDTO request);
+    // Create new user (Customer / Employee / Admin)
+    UserDTO createUser(CreateUserRequestDTO request, String roleName);
 
-    // Create a new bank employee user
-    UserDTO createEmployee(CreateUserRequestDTO request);
-
-    // Fetch user details by user id
+    // Fetch single user by ID
     UserDTO getUserById(Long userId);
 
-    // Deactivate a user (soft delete)
+    // Deactivate user (Soft delete)
     void deactivateUser(Long userId);
-    
-    UserDTO createUser(AdminCreateUserDTO dto);
+
+    // Get all users
     List<UserDTO> getAllUsers();
 }
