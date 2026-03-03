@@ -7,6 +7,7 @@ import com.wipro.maverick_bank.dto.UserDTO;
 
 public interface UserService {
 
+
     /**
      * Create a user with a specific role
      * Example roles: ROLE_CUSTOMER, ROLE_EMPLOYEE
@@ -26,5 +27,6 @@ public interface UserService {
     /**
      * Get all users
      */
+
     List<UserDTO> getAllUsers();
 }

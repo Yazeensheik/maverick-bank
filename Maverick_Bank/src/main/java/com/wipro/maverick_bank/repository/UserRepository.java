@@ -10,6 +10,7 @@ import com.wipro.maverick_bank.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+
     // -------------------------------------------------
     // Used during login (AuthService)
     // -------------------------------------------------
@@ -24,4 +25,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // (Optional but recommended) fetch only active users
     // -------------------------------------------------
     Optional<User> findByUsernameAndActiveTrue(String username);
+
 }
