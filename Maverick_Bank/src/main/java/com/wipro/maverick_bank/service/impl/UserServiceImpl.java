@@ -7,9 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
+import com.wipro.maverick_bank.entity.CustomerProfile;
+import com.wipro.maverick_bank.entity.EmployeeProfile;
 import com.wipro.maverick_bank.entity.Role;
 import com.wipro.maverick_bank.entity.User;
 import com.wipro.maverick_bank.exception.ResourceNotFoundException;
+import com.wipro.maverick_bank.repository.CustomerProfileRepository;
+import com.wipro.maverick_bank.repository.EmployeeProfileRepository;
 import com.wipro.maverick_bank.repository.RoleRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
 import com.wipro.maverick_bank.service.UserService;
@@ -23,33 +27,56 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+	@Autowired
+	private CustomerProfileRepository customerProfileRepository;
+	
+	@Autowired
+	private EmployeeProfileRepository employeeProfileRepository;
+    
     // =====================================================
     // CREATE USER (CUSTOMER / EMPLOYEE)
     // =====================================================
     @Override
     public UserDTO createUser(CreateUserRequestDTO request, String roleName) {
 
-        // Check if user already exists
         if (userRepository.existsByUsername(request.getEmail())) {
             throw new RuntimeException("User with this email already exists");
         }
 
-        // Fetch role
-        Role role = roleRepository.findByName(roleName)
+        Role role = roleRepository.findByName("ROLE_" + roleName)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Role " + roleName + " not found"));
 
-        // Create user entity
         User user = new User();
-        user.setUsername(request.getEmail());   // email used as username
-        user.setPassword(request.getPassword()); // PLAIN TEXT PASSWORD
+        user.setUsername(request.getEmail());
+        user.setPassword(request.getPassword());
         user.setRole(role);
         user.setActive(true);
 
-        // Save user
         user = userRepository.save(user);
 
-        // Return DTO
+       
+        if (roleName.equalsIgnoreCase("CUSTOMER")) {
+
+            CustomerProfile profile = new CustomerProfile();
+            profile.setUser(user);
+            profile.setEmail(request.getEmail());
+            profile.setFullName(request.getFullName());
+            profile.setPhone(request.getPhone());
+
+            customerProfileRepository.save(profile);
+
+        } else if (roleName.equalsIgnoreCase("EMPLOYEE")) {
+
+            EmployeeProfile profile = new EmployeeProfile();
+            profile.setUser(user);
+            profile.setEmail(request.getEmail());
+            profile.setFullName(request.getFullName());
+            profile.setPhone(request.getPhone());
+
+            employeeProfileRepository.save(profile);
+        }
+
         return mapToDTO(user);
     }
 
