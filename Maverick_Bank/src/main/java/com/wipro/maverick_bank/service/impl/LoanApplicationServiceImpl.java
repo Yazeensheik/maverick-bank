@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.LoanApplicationDTO;
 import com.wipro.maverick_bank.dto.LoanApprovalDTO;
+import com.wipro.maverick_bank.entity.CustomerProfile;
 import com.wipro.maverick_bank.entity.Loan;
 import com.wipro.maverick_bank.entity.LoanApplication;
 import com.wipro.maverick_bank.entity.User;
+import com.wipro.maverick_bank.repository.CustomerProfileRepository;
 import com.wipro.maverick_bank.repository.LoanApplicationRepository;
 import com.wipro.maverick_bank.repository.LoanRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
@@ -22,39 +24,46 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 	private final LoanApplicationRepository loanApplicationRepository;
 	private final LoanRepository loanRepository;
 	private final UserRepository userRepository;
+	private final CustomerProfileRepository customerProfileRepository;
 
 	public LoanApplicationServiceImpl(
 			LoanApplicationRepository loanApplicationRepository,
 			LoanRepository loanRepository,
-			UserRepository userRepository) {
+			UserRepository userRepository,
+			CustomerProfileRepository customerProfileRepository) {
 		this.loanApplicationRepository = loanApplicationRepository;
 		this.loanRepository = loanRepository;
 		this.userRepository = userRepository;
+		this.customerProfileRepository = customerProfileRepository;
 	}
 
 	@Override
 	public LoanApplicationDTO applyForLoan(Long userId, LoanApplicationDTO dto) {
 
-		Loan loan = loanRepository.findById(dto.getLoanId())
-				.orElseThrow(() -> new RuntimeException("Loan not found"));
+	    Loan loan = loanRepository.findById(dto.getLoanId())
+	            .orElseThrow(() -> new RuntimeException("Loan not found"));
 
-		User user = userRepository.findById(userId)
-				.orElseThrow(() -> new RuntimeException("User not found"));
+	    User user = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("User not found"));
 
-		LoanApplication application = new LoanApplication();
-				application.setLoan(loan);
-				application.setCustomer(user); // or setCustomerProfile if that's your entity
-				application.setAmount(dto.getAmount());
-				application.setPurpose(dto.getPurpose());
-				application.setStatus("PENDING");
-				application.setAppliedDate(LocalDate.now());
-				application.setApprovedDate(null);
-				application.setRemarks(null);
-		
+	    CustomerProfile profile = customerProfileRepository
+	            .findByUser(user)
+	            .orElseThrow(() -> new RuntimeException("Customer profile not found"));
 
-		loanApplicationRepository.save(application);
+	    LoanApplication application = new LoanApplication();
+	    application.setLoan(loan);
+	    application.setCustomer(user);
+	    application.setCustomerProfile(profile); 
+	    application.setAmount(dto.getAmount());
+	    application.setPurpose(dto.getPurpose());
+	    application.setStatus("PENDING");
+	    application.setAppliedDate(LocalDate.now());
+	    application.setApprovedDate(null);
+	    application.setRemarks(null);
 
-		return dto;
+	    loanApplicationRepository.save(application);
+
+	    return dto;
 	}
 
 	@Override

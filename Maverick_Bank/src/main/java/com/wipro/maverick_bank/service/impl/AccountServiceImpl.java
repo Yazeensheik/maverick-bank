@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.wipro.maverick_bank.dto.AccountDTO;
 import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.CustomerProfile;
+import com.wipro.maverick_bank.exception.ResourceNotFoundException;
 import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.CustomerProfileRepository;
 import com.wipro.maverick_bank.service.AccountService;
@@ -35,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
 		// fetch CustomerProfile before saving account
 		CustomerProfile customerProfile = customerProfileRepository.findById(dto.getCustomerProfileId())
-				.orElseThrow(() -> new RuntimeException("CustomerProfile not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("CustomerProfile not found"));
 
 		account.setCustomerProfile(customerProfile);
 
@@ -48,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountDTO getAccountById(Long id) {
 
-		Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+		Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
 		return new AccountDTO(account.getAccountNumber(), account.getAccountType(), account.getBalance(),
 				account.getStatus(), account.getAccountId(), account.getCustomerProfile().getId());
@@ -65,7 +66,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public AccountDTO updateAccount(Long id, AccountDTO dto) {
 
-		Account account = accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+		Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
 		account.setAccountType(dto.getAccountType());
 		account.setBalance(dto.getBalance());

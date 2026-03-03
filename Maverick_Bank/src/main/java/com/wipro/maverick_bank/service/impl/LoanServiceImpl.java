@@ -20,26 +20,27 @@ public class LoanServiceImpl implements LoanService {
 	}
 	
 	@Override
-	public LoanDTO createLoan(LoanDTO loanDTO) {
-		Loan loan=new Loan(
-				loanDTO.getLoanId(),
-				loanDTO.getLoanType(),
-				loanDTO.getInterestRate(),
-				loanDTO.getMinAmount(),
-				loanDTO.getMaxAmount(),
-				loanDTO.getTenureInMonths(), null
-		);
-		
-		Loan savedLoan=loanRepository.save(loan);
-		
-		return new LoanDTO(
-				savedLoan.getLoanId(),
-				savedLoan.getLoanType(),
-				savedLoan.getInterestRate(),
-				savedLoan.getMinAmount(),
-				savedLoan.getMaxAmount(),
-				savedLoan.getTenureInMonths()
-		);
+	public LoanDTO createLoan(LoanDTO dto) {
+
+	    Loan loan = new Loan();
+
+	    loan.setLoanType(dto.getLoanType());
+	    loan.setInterestRate(dto.getInterestRate());
+	    loan.setMinAmount(dto.getMinAmount());
+	    loan.setMaxAmount(dto.getMaxAmount());
+	    loan.setTenureInMonths(dto.getTenureInMonths());
+
+	    Loan savedLoan = loanRepository.save(loan);
+
+	    LoanDTO response = new LoanDTO();
+	    response.setLoanId(savedLoan.getLoanId());
+	    response.setLoanType(savedLoan.getLoanType());
+	    response.setInterestRate(savedLoan.getInterestRate());
+	    response.setMinAmount(savedLoan.getMinAmount());
+	    response.setMaxAmount(savedLoan.getMaxAmount());
+	    response.setTenureInMonths(savedLoan.getTenureInMonths());
+
+	    return response;
 	}
 
 	@Override

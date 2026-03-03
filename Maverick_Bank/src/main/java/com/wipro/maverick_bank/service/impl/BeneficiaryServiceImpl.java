@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.wipro.maverick_bank.dto.BeneficiaryDTO;
 import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.Beneficiary;
+import com.wipro.maverick_bank.exception.ResourceNotFoundException;
 import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.BeneficiaryRepository;
 import com.wipro.maverick_bank.service.BeneficiaryService;
@@ -25,9 +26,8 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	@Override
 	public BeneficiaryDTO addBeneficiary(BeneficiaryDTO dto) {
 
-		
 		Account account = accountRepository.findById(dto.getAccountId())
-				.orElseThrow(() -> new RuntimeException("Account not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
 		Beneficiary beneficiary = new Beneficiary();
 
@@ -48,7 +48,7 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
 	public BeneficiaryDTO getBeneficiaryById(Long id) {
 
 		Beneficiary beneficiary = beneficiaryRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Beneficiary not found"));
+				.orElseThrow(() -> new ResourceNotFoundException("Beneficiary not found"));
 
 		return mapToDTO(beneficiary);
 	}

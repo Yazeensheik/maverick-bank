@@ -7,15 +7,24 @@ import com.wipro.maverick_bank.dto.UserDTO;
 
 public interface UserService {
 
-    // Create new user (Customer / Employee / Admin)
+    /**
+     * Create a user with a specific role
+     * Example roles: ROLE_CUSTOMER, ROLE_EMPLOYEE
+     */
     UserDTO createUser(CreateUserRequestDTO request, String roleName);
 
-    // Fetch single user by ID
+    /**
+     * Get user details by user ID
+     */
     UserDTO getUserById(Long userId);
 
-    // Deactivate user (Soft delete)
+    /**
+     * Deactivate (soft delete) a user
+     */
     void deactivateUser(Long userId);
 
-    // Get all users
+    /**
+     * Get all users
+     */
     List<UserDTO> getAllUsers();
 }

@@ -10,9 +10,18 @@ import com.wipro.maverick_bank.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Used for login (Spring Security)
+    // -------------------------------------------------
+    // Used during login (AuthService)
+    // -------------------------------------------------
     Optional<User> findByUsername(String username);
 
-    // Used to prevent duplicate users during registration
+    // -------------------------------------------------
+    // Used during user creation (UserService)
+    // -------------------------------------------------
     boolean existsByUsername(String username);
+
+    // -------------------------------------------------
+    // (Optional but recommended) fetch only active users
+    // -------------------------------------------------
+    Optional<User> findByUsernameAndActiveTrue(String username);
 }
