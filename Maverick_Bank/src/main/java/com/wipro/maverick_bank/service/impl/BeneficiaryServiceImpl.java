@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,6 +11,7 @@ import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.Beneficiary;
 import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.BeneficiaryRepository;
+import com.wipro.maverick_bank.service.BeneficiaryService;
 
 @Service
 public class BeneficiaryServiceImpl implements BeneficiaryService {

@@ -1,4 +1,4 @@
-package com.wipro.maverick_bank.service;
+package com.wipro.maverick_bank.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.wipro.maverick_bank.entity.CustomerLoan;
 import com.wipro.maverick_bank.entity.LoanApplication;
 import com.wipro.maverick_bank.repository.CustomerLoanRepository;
 import com.wipro.maverick_bank.repository.LoanApplicationRepository;
+import com.wipro.maverick_bank.service.CustomerLoanService;
 
 @Service
 public class CustomerLoanServiceImpl implements CustomerLoanService{

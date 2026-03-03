@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
@@ -23,11 +24,12 @@ public class UserController {
      * Create Customer
      * Accessible by: ADMIN
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/customer")
     public ResponseEntity<UserDTO> createCustomer(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
-        UserDTO user = userService.createCustomer(request);
+        UserDTO user = userService.createUser(request, "CUSTOMER");
         return ResponseEntity.ok(user);
     }
 
@@ -35,11 +37,12 @@ public class UserController {
      * Create Bank Employee
      * Accessible by: ADMIN
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/employee")
     public ResponseEntity<UserDTO> createEmployee(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
-        UserDTO user = userService.createEmployee(request);
+        UserDTO user = userService.createUser(request, "EMPLOYEE");
         return ResponseEntity.ok(user);
     }
 
@@ -47,6 +50,7 @@ public class UserController {
      * Get User by ID
      * Accessible by: ADMIN, EMPLOYEE
      */
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
 
@@ -55,9 +59,10 @@ public class UserController {
     }
 
     /**
-     * Deactivate User
+     * Deactivate User (Soft Delete)
      * Accessible by: ADMIN
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
 
@@ -66,9 +71,10 @@ public class UserController {
     }
 
     /**
-     * ✅ Get All Users
+     * Get All Users
      * Accessible by: ADMIN
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
 
