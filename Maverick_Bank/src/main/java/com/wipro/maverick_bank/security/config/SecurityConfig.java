@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	@Bean
+
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		
@@ -24,6 +25,18 @@ public class SecurityConfig {
 				.httpBasic();
 
 		return http.build();
+		/*
+		 * public SecurityFilterChain securityFilterChain( HttpSecurity http,
+		 * DaoAuthenticationProvider authenticationProvider) throws Exception {
+		 * 
+		 * http .csrf(csrf -> csrf.disable())
+		 * .authenticationProvider(authenticationProvider) .authorizeHttpRequests(auth
+		 * -> auth .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+		 * .anyRequest().authenticated() ) .httpBasic();
+		 * 
+		 * return http.build();
+		 */
+
 	}
 
 	/**
