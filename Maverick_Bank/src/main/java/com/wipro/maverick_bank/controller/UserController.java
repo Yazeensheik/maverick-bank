@@ -21,11 +21,11 @@ public class UserController {
     private UserService userService;
 
     /**
-     * Create Customer
+     * Add Customer
      * Accessible by: ADMIN
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/customer")
+    @PostMapping("/add/customer")
     public ResponseEntity<UserDTO> createCustomer(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
@@ -34,11 +34,11 @@ public class UserController {
     }
 
     /**
-     * Create Bank Employee
+     * Add Bank Employee
      * Accessible by: ADMIN
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/employee")
+    @PostMapping("/add/employee")
     public ResponseEntity<UserDTO> createEmployee(
             @Valid @RequestBody CreateUserRequestDTO request) {
 
@@ -51,7 +51,7 @@ public class UserController {
      * Accessible by: ADMIN, EMPLOYEE
      */
     @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
 
         UserDTO user = userService.getUserById(id);
@@ -59,11 +59,23 @@ public class UserController {
     }
 
     /**
+     * Get All Users
+     * Accessible by: ADMIN
+     */
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+
+        List<UserDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    /**
      * Deactivate User (Soft Delete)
      * Accessible by: ADMIN
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/deactivate")
+    @PutMapping("/deactivate/{id}")
     public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
 
         userService.deactivateUser(id);
@@ -71,14 +83,14 @@ public class UserController {
     }
 
     /**
-     * Get All Users
+     * Permanently Delete User
      * Accessible by: ADMIN
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
 
-        List<UserDTO> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+        userService.deleteUser(id);
+        return ResponseEntity.ok("User deleted successfully");
     }
 }

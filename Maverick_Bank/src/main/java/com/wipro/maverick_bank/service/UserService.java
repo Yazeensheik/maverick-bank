@@ -27,4 +27,9 @@ public interface UserService {
 	 * Get all users
 	 */
 	List<UserDTO> getAllUsers();
+	
+	/**
+	 * Permanently remove a user (Hard Delete)
+	 */
+	void deleteUser(Long userId);
 }

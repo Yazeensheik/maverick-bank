@@ -58,12 +58,19 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request) {
 
+        String path = request.getRequestURI();
+
+        // Allow Swagger related endpoints
+        if (path.contains("swagger") || path.contains("api-docs")) {
+            throw new RuntimeException(ex);
+        }
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Server Error",
                 "Something went wrong. Please contact support.",
-                request.getRequestURI()
+                path
         );
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);

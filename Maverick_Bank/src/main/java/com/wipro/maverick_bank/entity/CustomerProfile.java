@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,63 +18,70 @@ import jakarta.persistence.Table;
 @Table(name = "customer_profiles")
 public class CustomerProfile {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String fullName;
+    private String fullName;
 
-	@Column(unique = true)
-	private String email;
+    @Column(unique = true)
+    private String email;
 
-	private String phone;
+    private String phone;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", nullable = false, unique = true)
-	private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
-	@OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL)
-	private List<Account> accounts;
+    @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Account> accounts;
 
-	@OneToMany(mappedBy = "customerProfile")
-	private List<LoanApplication> loanApplications;
+    @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LoanApplication> loanApplications;
 
-	public CustomerProfile() {
-	}
+    public CustomerProfile() {}
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getFullName() {
-		return fullName;
-	}
+    public String getFullName() {
+        return fullName;
+    }
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public List<LoanApplication> getLoanApplications() {
+        return loanApplications;
+    }
 }
