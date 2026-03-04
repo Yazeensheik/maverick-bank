@@ -17,56 +17,38 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(
-            HttpSecurity http,
-            DaoAuthenticationProvider authenticationProvider) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
+		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
 
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+				// Swagger endpoints
+				.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
 
-            .authenticationProvider(authenticationProvider)
+				// Public APIs (if any)
+				.requestMatchers("/auth/**").permitAll()
 
-            .authorizeHttpRequests(auth -> auth
-                // Swagger endpoints
-                .requestMatchers(
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui.html",
-                        "/v3/api-docs.yaml"
-                ).permitAll()
+				// Other APIs require authentication
+				.anyRequest().authenticated()).httpBasic();
 
-                // All APIs require authentication
-                .anyRequest().authenticated()
-            )
+		return http.build();
+	}
 
-            // Basic Authentication
-            .httpBasic(Customizer.withDefaults());
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
 
-        return http.build();
-    }
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(
-            UserDetailsService userDetailsService) {
+		// Practice project → plain text passwords
+		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+		return provider;
+	}
 
-        // Practice project → plain text passwords
-        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 
-        return provider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-
-        return configuration.getAuthenticationManager();
-    }
+		return configuration.getAuthenticationManager();
+	}
 }
