@@ -18,14 +18,18 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http, DaoAuthenticationProvider authenticationProvider)
-			throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.csrf(csrf -> csrf.disable())
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authenticationProvider(authenticationProvider).authorizeHttpRequests(auth -> auth
-						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll().anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults());
+		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
+
+				// Swagger endpoints
+				.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+
+				// Public APIs (if any)
+				.requestMatchers("/auth/**").permitAll()
+
+				// Other APIs require authentication
+				.anyRequest().authenticated()).httpBasic();
 
 		return http.build();
 	}
@@ -44,6 +48,7 @@ public class SecurityConfig {
 
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+
 		return configuration.getAuthenticationManager();
 	}
 }

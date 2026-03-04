@@ -53,19 +53,26 @@ public class GlobalExceptionHandler {
     /**
      * Handle all other exceptions (500)
      */
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleGenericException(
-//            Exception ex,
-//            HttpServletRequest request) {
-//
-//        ErrorResponse error = new ErrorResponse(
-//                LocalDateTime.now(),
-//                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-//                "Internal Server Error",
-//                "Something went wrong. Please contact support.",
-//                request.getRequestURI()
-//        );
-//
-//        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGenericException(
+            Exception ex,
+            HttpServletRequest request) {
+
+        String path = request.getRequestURI();
+
+        // Allow Swagger related endpoints
+        if (path.contains("swagger") || path.contains("api-docs")) {
+            throw new RuntimeException(ex);
+        }
+
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal Server Error",
+                "Something went wrong. Please contact support.",
+                path
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

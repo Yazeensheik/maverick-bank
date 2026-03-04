@@ -61,12 +61,12 @@ class LoanApplicationServiceTest {
         // Create user
         user = new User();
         user.setUsername("loanuser@test.com");
-        user.setPassword("1234");
+        user.setPassword("Test1234");
         user.setRole(role);
         user.setActive(true);
         userRepository.save(user);
 
-        // Create profile
+        // Create customer profile
         CustomerProfile profile = new CustomerProfile();
         profile.setUser(user);
         profileRepository.save(profile);
@@ -98,5 +98,9 @@ class LoanApplicationServiceTest {
         assertNotNull(result);
         assertEquals(loan.getLoanId(), result.getLoanId());
         assertEquals(500000.0, result.getAmount());
+        assertEquals("House purchase", result.getPurpose());
+
+        // Verify saved in database
+        assertEquals(1, loanApplicationRepository.count());
     }
 }
