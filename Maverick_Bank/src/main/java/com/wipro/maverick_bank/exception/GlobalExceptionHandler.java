@@ -19,17 +19,26 @@ public class GlobalExceptionHandler {
      * Handle validation errors (@Valid)
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationErrors(
-            MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String, Object>> handleValidationErrors(
+            MethodArgumentNotValidException ex,
+            HttpServletRequest request) {
 
-        Map<String, String> errors = new HashMap<>();
+        Map<String, String> validationErrors = new HashMap<>();
 
         ex.getBindingResult().getFieldErrors()
                 .forEach(error ->
-                        errors.put(error.getField(), error.getDefaultMessage()));
+                        validationErrors.put(error.getField(), error.getDefaultMessage()));
 
-        return ResponseEntity.badRequest().body(errors);
+        Map<String, Object> response = new HashMap<>();
+        response.put("timestamp", LocalDateTime.now());
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("error", "Validation Failed");
+        response.put("path", request.getRequestURI());
+        response.put("errors", validationErrors);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 
     /**
      * Handle Resource Not Found (404)
@@ -50,6 +59,27 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+
+    /**
+     * Handle IllegalArgumentException (Bad Request)
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(
+            IllegalArgumentException ex,
+            HttpServletRequest request) {
+
+        ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+
     /**
      * Handle all other exceptions (500)
      */
@@ -60,8 +90,8 @@ public class GlobalExceptionHandler {
 
         String path = request.getRequestURI();
 
-        // Allow Swagger related endpoints
-        if (path.contains("swagger") || path.contains("api-docs")) {
+        // Allow Swagger / OpenAPI endpoints
+        if (path.contains("swagger-ui") || path.contains("api-docs")) {
             throw new RuntimeException(ex);
         }
 
