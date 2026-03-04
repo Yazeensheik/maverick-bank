@@ -1,35 +1,39 @@
 package com.wipro.maverick_bank.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wipro.maverick_bank.dto.StatementRequestDTO;
-import com.wipro.maverick_bank.dto.StatementResponseDTO;
+import com.wipro.maverick_bank.dto.TransactionDTO;
 import com.wipro.maverick_bank.service.StatementService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/statements")
+@RequiredArgsConstructor
 public class StatementController {
 
-    private StatementService statementService;
+    private final StatementService statementService;
 
-    public StatementController(StatementService statementService) {
-        this.statementService = statementService;
+    @GetMapping("/last10/{accountId}")
+    public ResponseEntity<List<TransactionDTO>> getLast10Transactions(@PathVariable Long accountId) {
+        return ResponseEntity.ok(statementService.getLast10Transactions(accountId));
     }
 
-    @PostMapping("/generate")
-    public StatementResponseDTO generateStatement(@RequestBody StatementRequestDTO request) {
-        return statementService.generateStatement(request);
-    }
+    @GetMapping("/date-range")
+    public ResponseEntity<List<TransactionDTO>> getTransactionsBetweenDates(
+            @RequestParam Long accountId,
+            @RequestParam LocalDateTime startDate,
+            @RequestParam LocalDateTime endDate) {
 
-    @GetMapping("/getby/{accountId}")
-    public List<StatementResponseDTO> getStatements(@PathVariable Long accountId) {
-        return statementService.getStatements(accountId);
+        return ResponseEntity.ok(
+                statementService.getTransactionsBetweenDates(accountId, startDate, endDate));
     }
 }

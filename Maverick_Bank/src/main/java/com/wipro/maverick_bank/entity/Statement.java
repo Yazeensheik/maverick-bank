@@ -1,9 +1,7 @@
 package com.wipro.maverick_bank.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,39 +10,28 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "statements")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Statement {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long statementId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long statementId;
 
-	@Column(nullable = false)
-	private LocalDate startDate;
+    private LocalDate startDate;
 
-	@Column(nullable = false)
-	private LocalDate endDate;
+    private LocalDate endDate;
 
-	@Column(nullable = false)
-	private Double totalCredit;
+    private LocalDate generatedDate = LocalDate.now();
 
-	@Column(nullable = false)
-	private Double totalDebit;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
-	@Column(nullable = false)
-	private LocalDateTime generatedDate;
-
-	@ManyToOne
-	@JoinColumn(name = "account_id", nullable=false)
-	private Account account;
-	
 }
