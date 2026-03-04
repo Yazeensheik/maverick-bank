@@ -53,25 +53,25 @@ class LoanApplicationServiceTest {
         loanRepository.deleteAll();
         roleRepository.deleteAll();
 
-        // Create Role
+        // Create role
         Role role = new Role();
         role.setName("CUSTOMER");
         roleRepository.save(role);
 
-        // Create User
+        // Create user
         user = new User();
         user.setUsername("loanuser@test.com");
-        user.setPassword("1234");
+        user.setPassword("Test1234");
         user.setRole(role);
         user.setActive(true);
         userRepository.save(user);
 
-        // Create Customer Profile
+        // Create customer profile
         CustomerProfile profile = new CustomerProfile();
         profile.setUser(user);
         profileRepository.save(profile);
 
-        // Create Loan Product
+        // Create loan
         loan = new Loan();
         loan.setLoanType("HOME_LOAN");
         loan.setInterestRate(8.5);

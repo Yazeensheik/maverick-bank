@@ -32,7 +32,6 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider)
 
             .authorizeHttpRequests(auth -> auth
-
                 // Swagger endpoints
                 .requestMatchers(
                         "/swagger-ui/**",
@@ -41,11 +40,11 @@ public class SecurityConfig {
                         "/v3/api-docs.yaml"
                 ).permitAll()
 
-                // All other APIs require authentication
+                // All APIs require authentication
                 .anyRequest().authenticated()
             )
 
-            // Basic Auth
+            // Basic Authentication
             .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -58,7 +57,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
 
-        // Plain text password (practice project)
+        // Practice project → plain text passwords
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
         return provider;

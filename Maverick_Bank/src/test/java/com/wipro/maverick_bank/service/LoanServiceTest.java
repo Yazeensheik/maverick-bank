@@ -32,18 +32,26 @@ class LoanServiceTest {
     @Test
     void testCreateLoan() {
 
-        LoanDTO dto = new LoanDTO();
-        dto.setLoanType("HOME_LOAN");
-        dto.setInterestRate(8.5);
-        dto.setMinAmount(100000.0);
-        dto.setMaxAmount(5000000.0);
-        dto.setTenureInMonths(240);
+        LoanDTO loanDTO = new LoanDTO(
+                null,
+                "HOME_LOAN",
+                8.5,
+                100000.0,
+                5000000.0,
+                240
+        );
 
-        LoanDTO savedLoan = loanService.createLoan(dto);
+        LoanDTO savedLoan = loanService.createLoan(loanDTO);
 
         assertNotNull(savedLoan);
         assertNotNull(savedLoan.getLoanId());
         assertEquals("HOME_LOAN", savedLoan.getLoanType());
         assertEquals(8.5, savedLoan.getInterestRate());
+        assertEquals(100000.0, savedLoan.getMinAmount());
+        assertEquals(5000000.0, savedLoan.getMaxAmount());
+        assertEquals(240, savedLoan.getTenureInMonths());
+
+        // Verify saved in DB
+        assertEquals(1, loanRepository.count());
     }
 }

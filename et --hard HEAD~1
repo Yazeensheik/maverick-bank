@@ -1,0 +1,83 @@
+[33m06d2a32[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/basic-auth[m[33m, [m[1;32mbackup-branch[m[33m)[m Udated Controller
+[33m44a4f71[m Merge branch 'account-beneficiary-module'
+[33m8d28eb3[m[33m ([m[1;31morigin/account-beneficiary-module[m[33m)[m Added REST controllers and updated DTO
+[33m12ddc63[m Controllers
+[33med505a9[m Controller layer
+[33m42afb84[m Merge branch 'main' of https://github.com/Yazeensheik/maverick-bank into account-beneficiary-module
+[33mcdff7b4[m Before pulling latest main updates
+[33m645c47c[m Applied Validations and Controllers
+[33m65784ed[m Update application properties configuration
+[33mcbae299[m Fixed Beneficiary setter issue and updated service implementation
+[33maca48ef[m Resolved merge-conflict
+[33mc94c71e[m Merge branch 'main' of https://github.com/Yazeensheik/maverick-bank
+[33m155e824[m added validations
+[33mf680f0a[m Fixed service layer tests: added Role/User setup and corrected entity hierarchy for Account and Beneficiary tests
+[33mc780bdd[m Local changes
+[33mcee847a[m My local changes
+[33mcdf8923[m Implemented Spring Boot JUnit 5 tests for AccountService and BeneficiaryService CRUD operations
+[33mb41b576[m fixed errors
+[33m9bacc80[m Updated Account and CustomerProfile mapping and added CustomerProfileRepository
+[33mec903fb[m Added JPA relationship mappings for Account and Beneficiary entities
+[33m3ff3dde[m Update auth module logic
+[33m5d04c6c[m JWT auth module and ignore Eclipse IDE files
+[33m08e1311[m fixes
+[33m161b256[m Merge pull request #7 from Yazeensheik/feature/auth-user
+[33md1060b6[m Update JwtUtil.java
+[33m1330d86[m Add JwtFilter for token validation in requests
+[33m4edeb4c[m Update SecurityConfig.java
+[33mc1b1db3[m Add fields and methods to RoleDTO class
+[33m61cb0f2[m Add fields and methods to CreateUserRequestDTO
+[33m78dab74[m Update LoginRequestDTO.java
+[33m9ba26dc[m Update LoginResponseDTO.java
+[33m74a9da9[m Update UserRepository.java
+[33m0c21e60[m Update EmployeeProfileRepository.java
+[33maf957d9[m Update CustomerProfileRepository.java
+[33m302f44b[m Update RoleRepository.java
+[33m5b45082[m Update EmployeeProfileRepository.java
+[33m107b936[m Add repository annotation and findByUserId method
+[33me7e906e[m Add @Repository annotation to RoleRepository
+[33m4e7a4fb[m Add repository annotation and findByUsername method
+[33m11a3785[m Implement JWT utility methods for token handling
+[33md1f2d52[m Add JwtFilter for processing JWT tokens
+[33m84587a5[m Implement security configuration with JWT filter
+[33m3cdff58[m Refactor EmployeeProfileRepository to extend JpaRepository
+[33m35534bf[m Refactor CustomerProfileRepository to use JpaRepository
+[33m0a43e6d[m Implement CreateUserRequestDTO with username and password
+[33md9e5599[m Add fields and constructors to RoleDTO class
+[33mf3acfed[m Enhance LoginResponseDTO with token, userId, and role
+[33mcd67760[m Implement LoginRequestDTO with username and password
+[33m2352528[m Merge pull request #6 from Yazeensheik/feature/auth-user
+[33ma0e2489[m Implement JWT authentication and user management module
+[33m211b9d4[m Merge pull request #5 from Yazeensheik/feature/auth-user
+[33m33463b7[m Implement authentication and user management module
+[33mf7bd763[m Remove Eclipse workspace files and update gitignore
+[33m46e98de[m Merge branch 'main' of https://github.com/Yazeensheik/maverick-bank
+[33mc904f4f[m modified the project structure
+[33m18b0182[m Auth-User Module
+[33m4b2fe10[m pushing files
+[33ma756b92[m Merged account-beneficiary-module into main
+[33md157b6e[m Merge branch 'loan-admin-module'
+[33m08290ab[m Resolved
+[33ma311c95[m Merge
+[33m381ada5[m Merge pull request #3 from Yazeensheik/feature/auth-user
+[33m3a33edf[m Auth-User Module: Added Service interfaces and Implementations
+[33mdd986fb[m Adding service layer files
+[33m59d94b6[m Service layer
+[33md6ccc4d[m Adding Entity, DTO and Repository files
+[33m7ee0aeb[m Account & Beneficiary Module: Added service interfaces and implemented service layer logic
+[33mc73cd1c[m Done with Mapping
+[33m4ea17e8[m Merge pull request #2 from Yazeensheik/feature/auth-user
+[33m242ae3d[m Added application properties
+[33mb020711[m[33m ([m[1;32mloan-admin-module[m[33m)[m Mappings
+[33m3775f37[m Repositories
+[33m90ee53b[m[33m ([m[1;32mtransaction-reporting-module[m[33m)[m Adding Repository files
+[33m3fa715c[m Added Account-Beneficiary relationship mapping
+[33mb2619da[m Adding Entity and DTO files
+[33m556241f[m Entities and DTOs
+[33m01322cb[m Merge pull request #1 from Yazeensheik/feature/auth-user
+[33mb0d752d[m implemented dto, entity, and repository classes for user and authentication modules
+[33m44ae8df[m[33m ([m[1;32maccount-beneficiary-module[m[33m)[m Added entities,DTOs and repositories for Account and Beneficiary
+[33mc1e6872[m Declared packages
+[33m54c8cf0[m Merge branch 'main' of https://github.com/Yazeensheik/maverick-bank
+[33m513097e[m Maverick Bank Project
+[33m019affb[m Initial commit

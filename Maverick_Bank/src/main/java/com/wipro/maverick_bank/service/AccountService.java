@@ -12,6 +12,8 @@ public interface AccountService {
 
 	List<AccountDTO> getAllAccounts();
 
+	List<AccountDTO> getAccountsByCustomerId(Long customerId);
+
 	AccountDTO updateAccount(Long accountId, AccountDTO accountDTO);
 
 	void deleteAccount(Long accountId);
