@@ -9,44 +9,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wipro.maverick_bank.dto.DepositRequestDTO;
-import com.wipro.maverick_bank.dto.TransactionResponseDTO;
-import com.wipro.maverick_bank.dto.TransferRequestDTO;
-import com.wipro.maverick_bank.dto.WithdrawRequestDTO;
+import com.wipro.maverick_bank.dto.TransactionDTO;
 import com.wipro.maverick_bank.service.TransactionService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/transactions")
+@RequiredArgsConstructor
 public class TransactionController {
 
-    private TransactionService transactionService;
-
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
-    }
+    private final TransactionService transactionService;
 
     @PostMapping("/deposit")
-    public TransactionResponseDTO deposit(@RequestBody DepositRequestDTO request) {
-        return transactionService.deposit(request);
+    public TransactionDTO deposit(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.deposit(dto);
     }
 
     @PostMapping("/withdraw")
-    public TransactionResponseDTO withdraw(@RequestBody WithdrawRequestDTO request) {
-        return transactionService.withdraw(request);
+    public TransactionDTO withdraw(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.withdraw(dto);
     }
 
     @PostMapping("/transfer")
-    public TransactionResponseDTO transfer(@RequestBody TransferRequestDTO request) {
-        return transactionService.transfer(request);
+    public TransactionDTO transfer(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.transfer(dto);
     }
 
-    @GetMapping("/getall/{accountId}")
-    public List<TransactionResponseDTO> getAllTransactions(@PathVariable Long accountId) {
-        return transactionService.getAllTransactions(accountId);
-    }
-
-    @GetMapping("/getby/{accountId}/last10")
-    public List<TransactionResponseDTO> getLast10Transactions(@PathVariable Long accountId) {
-        return transactionService.getLast10Transactions(accountId);
+    @GetMapping("/{accountId}")
+    public List<TransactionDTO> getTransactions(@PathVariable Long accountId) {
+        return transactionService.getTransactionsByAccount(accountId);
     }
 }
