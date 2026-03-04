@@ -2,8 +2,6 @@ package com.wipro.maverick_bank.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import com.wipro.maverick_bank.entity.Loan;
 import com.wipro.maverick_bank.entity.Role;
 import com.wipro.maverick_bank.entity.User;
 import com.wipro.maverick_bank.repository.CustomerProfileRepository;
+import com.wipro.maverick_bank.repository.LoanApplicationRepository;
 import com.wipro.maverick_bank.repository.LoanRepository;
 import com.wipro.maverick_bank.repository.RoleRepository;
 import com.wipro.maverick_bank.repository.UserRepository;
@@ -39,21 +38,27 @@ class LoanApplicationServiceTest {
     @Autowired
     private CustomerProfileRepository profileRepository;
 
+    @Autowired
+    private LoanApplicationRepository loanApplicationRepository;
+
     private User user;
     private Loan loan;
 
     @BeforeEach
     void setup() {
 
+        loanApplicationRepository.deleteAll();
         profileRepository.deleteAll();
         userRepository.deleteAll();
         loanRepository.deleteAll();
         roleRepository.deleteAll();
 
+        // Create Role
         Role role = new Role();
         role.setName("CUSTOMER");
         roleRepository.save(role);
 
+        // Create User
         user = new User();
         user.setUsername("loanuser@test.com");
         user.setPassword("1234");
@@ -61,10 +66,12 @@ class LoanApplicationServiceTest {
         user.setActive(true);
         userRepository.save(user);
 
+        // Create Customer Profile
         CustomerProfile profile = new CustomerProfile();
         profile.setUser(user);
         profileRepository.save(profile);
 
+        // Create Loan Product
         loan = new Loan();
         loan.setLoanType("HOME_LOAN");
         loan.setInterestRate(8.5);
@@ -74,6 +81,9 @@ class LoanApplicationServiceTest {
         loanRepository.save(loan);
     }
 
+    // ============================================
+    // TEST APPLY FOR LOAN
+    // ============================================
     @Test
     void testApplyForLoan() {
 
@@ -88,5 +98,9 @@ class LoanApplicationServiceTest {
         assertNotNull(result);
         assertEquals(loan.getLoanId(), result.getLoanId());
         assertEquals(500000.0, result.getAmount());
+        assertEquals("House purchase", result.getPurpose());
+
+        // Verify saved in database
+        assertEquals(1, loanApplicationRepository.count());
     }
 }

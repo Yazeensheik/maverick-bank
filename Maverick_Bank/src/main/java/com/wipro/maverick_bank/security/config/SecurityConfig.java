@@ -24,14 +24,28 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
+
             .authenticationProvider(authenticationProvider)
+
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                // Swagger endpoints
+                .requestMatchers(
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs.yaml"
+                ).permitAll()
+
+                // All other APIs require authentication
                 .anyRequest().authenticated()
             )
+
+            // Basic Auth
             .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -44,7 +58,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
 
-        // Practice project → plain text passwords
+        // Plain text password (practice project)
         provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
         return provider;
@@ -53,6 +67,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration) throws Exception {
+
         return configuration.getAuthenticationManager();
     }
 }
