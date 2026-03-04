@@ -95,16 +95,21 @@ public class LoanApplicationServiceImpl implements LoanApplicationService {
 	@Override
 	public LoanApprovalDTO approveOrRejectLoan(Long applicationId, LoanApprovalDTO approvalDTO) {
 
-		LoanApplication application = loanApplicationRepository.findById(applicationId)
-				.orElseThrow(() -> new RuntimeException("Loan application not found"));
+	    LoanApplication application = loanApplicationRepository.findById(applicationId)
+	            .orElseThrow(() -> new RuntimeException("Loan application not found"));
 
-		application.setStatus(approvalDTO.getStatus());
-		application.setRemarks(approvalDTO.getRemarks());
-		application.setApprovedDate(LocalDate.now());
+	    application.setStatus(approvalDTO.getStatus());
+	    application.setRemarks(approvalDTO.getRemarks());
+	    application.setApprovedDate(LocalDate.now());
 
-		loanApplicationRepository.save(application);
+	    LoanApplication saved = loanApplicationRepository.save(application);
 
-		return approvalDTO;
+	    LoanApprovalDTO response = new LoanApprovalDTO();
+	    response.setApplicationId(saved.getApplicationId());
+	    response.setStatus(saved.getStatus());
+	    response.setRemarks(saved.getRemarks());
+
+	    return response;
 	}
 
 }
