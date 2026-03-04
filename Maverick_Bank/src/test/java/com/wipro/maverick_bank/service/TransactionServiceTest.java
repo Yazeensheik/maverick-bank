@@ -24,14 +24,14 @@ public class TransactionServiceTest {
     public void testDeposit() {
 
         DepositRequestDTO request = new DepositRequestDTO();
-        request.setAccountId(1L);
-        request.setAmount(1000.0);
+        request.setAccountId(101L);
+        request.setAmount(5000.0);
 
         TransactionResponseDTO response = transactionService.deposit(request);
 
         assertNotNull(response);
         assertNotNull(response.getTransactionId());
-        assertEquals(1000.0, response.getAmount());
+        assertEquals(5000.0, response.getAmount());
         assertEquals("DEPOSIT", response.getTransactionType());
         assertEquals("SUCCESS", response.getStatus());
     }

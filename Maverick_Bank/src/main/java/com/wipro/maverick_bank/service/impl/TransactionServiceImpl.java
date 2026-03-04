@@ -12,7 +12,9 @@ import com.wipro.maverick_bank.dto.DepositRequestDTO;
 import com.wipro.maverick_bank.dto.TransactionResponseDTO;
 import com.wipro.maverick_bank.dto.TransferRequestDTO;
 import com.wipro.maverick_bank.dto.WithdrawRequestDTO;
+import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.Transaction;
+import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.TransactionRepository;
 import com.wipro.maverick_bank.service.TransactionService;
 
@@ -20,15 +22,27 @@ import com.wipro.maverick_bank.service.TransactionService;
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionRepository transactionRepository;
+    private AccountRepository accountRepository;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository,
+                                  AccountRepository accountRepository) {
         this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
     }
 
+    // ========================= DEPOSIT =========================
     @Override
     public TransactionResponseDTO deposit(DepositRequestDTO request) {
 
+        Account account = accountRepository.findById(request.getAccountId())
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        // Update balance
+        account.setBalance(account.getBalance() + request.getAmount());
+        accountRepository.save(account);
+
         Transaction transaction = new Transaction();
+        transaction.setAccount(account);
         transaction.setToAccountId(request.getAccountId());
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType("DEPOSIT");
@@ -41,10 +55,23 @@ public class TransactionServiceImpl implements TransactionService {
         return mapToDTO(transaction);
     }
 
+    // ========================= WITHDRAW =========================
     @Override
     public TransactionResponseDTO withdraw(WithdrawRequestDTO request) {
 
+        Account account = accountRepository.findById(request.getAccountId())
+                .orElseThrow(() -> new RuntimeException("Account not found"));
+
+        if (account.getBalance() < request.getAmount()) {
+            throw new RuntimeException("Insufficient balance");
+        }
+
+        // Update balance
+        account.setBalance(account.getBalance() - request.getAmount());
+        accountRepository.save(account);
+
         Transaction transaction = new Transaction();
+        transaction.setAccount(account);
         transaction.setFromAccountId(request.getAccountId());
         transaction.setAmount(request.getAmount());
         transaction.setTransactionType("WITHDRAW");
@@ -57,10 +84,29 @@ public class TransactionServiceImpl implements TransactionService {
         return mapToDTO(transaction);
     }
 
+    // ========================= TRANSFER =========================
     @Override
     public TransactionResponseDTO transfer(TransferRequestDTO request) {
 
+        Account fromAccount = accountRepository.findById(request.getFromAccountId())
+                .orElseThrow(() -> new RuntimeException("From Account not found"));
+
+        Account toAccount = accountRepository.findById(request.getToAccountId())
+                .orElseThrow(() -> new RuntimeException("To Account not found"));
+
+        if (fromAccount.getBalance() < request.getAmount()) {
+            throw new RuntimeException("Insufficient balance");
+        }
+
+        // Update balances
+        fromAccount.setBalance(fromAccount.getBalance() - request.getAmount());
+        toAccount.setBalance(toAccount.getBalance() + request.getAmount());
+
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
+
         Transaction transaction = new Transaction();
+        transaction.setAccount(fromAccount);
         transaction.setFromAccountId(request.getFromAccountId());
         transaction.setToAccountId(request.getToAccountId());
         transaction.setAmount(request.getAmount());
@@ -74,6 +120,7 @@ public class TransactionServiceImpl implements TransactionService {
         return mapToDTO(transaction);
     }
 
+    // ========================= GET ALL =========================
     @Override
     public List<TransactionResponseDTO> getAllTransactions(Long accountId) {
 
@@ -83,7 +130,7 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> allTransactions = new ArrayList<>();
         allTransactions.addAll(sent);
         allTransactions.addAll(received);
-        
+
         allTransactions.sort(Comparator.comparing(Transaction::getTransactionDate).reversed());
 
         List<TransactionResponseDTO> responseList = new ArrayList<>();
@@ -95,6 +142,7 @@ public class TransactionServiceImpl implements TransactionService {
         return responseList;
     }
 
+    // ========================= LAST 10 =========================
     @Override
     public List<TransactionResponseDTO> getLast10Transactions(Long accountId) {
 
@@ -107,6 +155,7 @@ public class TransactionServiceImpl implements TransactionService {
         return all;
     }
 
+    // ========================= MAPPER =========================
     private TransactionResponseDTO mapToDTO(Transaction t) {
 
         TransactionResponseDTO dto = new TransactionResponseDTO();
