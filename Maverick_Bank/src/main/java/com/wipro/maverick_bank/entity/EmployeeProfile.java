@@ -13,6 +13,9 @@ public class EmployeeProfile {
     private String fullName;
 
     private String department;
+    
+    private String email;
+    private String phone;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
@@ -41,7 +44,29 @@ public class EmployeeProfile {
         this.department = department;
     }
 
-    public User getUser() {
+    
+    
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
         return user;
     }
     

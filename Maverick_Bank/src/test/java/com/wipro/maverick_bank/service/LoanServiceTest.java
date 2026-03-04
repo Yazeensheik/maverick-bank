@@ -43,7 +43,6 @@ class LoanServiceTest {
 
         LoanDTO savedLoan = loanService.createLoan(loanDTO);
 
-        // Assertions
         assertNotNull(savedLoan);
         assertNotNull(savedLoan.getLoanId());
         assertEquals("HOME_LOAN", savedLoan.getLoanType());
@@ -52,7 +51,7 @@ class LoanServiceTest {
         assertEquals(5000000.0, savedLoan.getMaxAmount());
         assertEquals(240, savedLoan.getTenureInMonths());
 
-        // Verify it actually saved in DB
+        // Verify saved in DB
         assertEquals(1, loanRepository.count());
     }
 }
