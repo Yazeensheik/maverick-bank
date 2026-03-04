@@ -14,6 +14,7 @@ import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.TransactionRepository;
 import com.wipro.maverick_bank.service.TransactionService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +25,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountRepository accountRepository;
 
     @Override
+    @Transactional
     public TransactionDTO deposit(TransactionDTO dto) {
 
         Account account = accountRepository.findById(dto.getAccountId())
