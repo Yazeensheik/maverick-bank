@@ -3,52 +3,71 @@ package com.wipro.maverick_bank.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth
+        http
+            .csrf(csrf -> csrf.disable())
 
-				// Swagger endpoints
-				.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
 
-				// Public APIs (if any)
-				.requestMatchers("/auth/**").permitAll()
+            .authorizeHttpRequests(auth -> auth
 
-				// Other APIs require authentication
-				.anyRequest().authenticated()).httpBasic();
+                // 🔓 Frontend Public Pages
+                .requestMatchers(
+                        "/",
+                        "/index.html",
+                        "/login.html",
+                        "/register.html",
+                        "/about.html",
+                        "/contact.html",
+                        "/assets/**",
+                        "/dashboards/**",
+                        "/shared/**",
+                        "/favicon.ico"
+                ).permitAll()
 
-		return http.build();
-	}
+                // 🔓 Swagger URLs
+                .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
 
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+                // 🔓 Authentication APIs
+                .requestMatchers("/auth/**").permitAll()
 
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
+                // 🔐 All other APIs need login
+                .anyRequest().authenticated()
+            )
 
-		// Practice project → plain text passwords
-		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+            .httpBasic(); // Using HTTP Basic Authentication
 
-		return provider;
-	}
+        return http.build();
+    }
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-		return configuration.getAuthenticationManager();
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
 }
