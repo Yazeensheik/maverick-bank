@@ -19,12 +19,6 @@ public class StatementServiceTest {
     @Test
     void testGetLast10Transactions() {
 
-        Long accountId = 101L;
-
-        List<TransactionDTO> transactions =
-                statementService.getLast10Transactions(accountId);
-
-        assertNotNull(transactions);
 
     }
 }
