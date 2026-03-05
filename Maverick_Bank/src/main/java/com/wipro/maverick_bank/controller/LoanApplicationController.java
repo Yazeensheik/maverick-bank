@@ -46,7 +46,7 @@ public class LoanApplicationController {
 		return ResponseEntity.ok(loanApplicationService.getAllApplications());
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE')")
+	//@PreAuthorize("hasRole('EMPLOYEE')")
 	@PutMapping("/{id}/decision")
 	public ResponseEntity<LoanApprovalDTO> approveOrRejectLoan(@PathVariable Long id,
 			@Valid @RequestBody LoanApprovalDTO approvalDTO) {
