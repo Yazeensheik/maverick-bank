@@ -49,3 +49,27 @@ function getAccountsByCustomer(customerId, successCallback, errorCallback) {
 
     xhr.send();
 }
+
+function deleteAccount(accountId, successCallback, errorCallback) {
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("DELETE", "/api/v1/accounts/delete/" + accountId, true);
+
+    xhr.onreadystatechange = function() {
+
+        if (xhr.readyState === 4) {
+
+            if (xhr.status === 200) {
+
+                successCallback();
+
+            } else {
+
+                errorCallback(xhr.responseText);
+            }
+        }
+    };
+
+    xhr.send();
+}

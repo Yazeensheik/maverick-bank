@@ -21,6 +21,12 @@ function loadAccounts() {
                         <td>${account.accountType}</td>
                         <td>${account.balance}</td>
                         <td>${account.status}</td>
+						<td>
+						        <button class="btn btn-danger btn-sm"
+						            onclick="removeAccount(${account.accountId})">
+						            Delete
+						        </button>
+						    </td>
                     </tr>
                 `;
 
@@ -33,6 +39,32 @@ function loadAccounts() {
         function(error) {
 
             alert("Error loading accounts");
+        }
+
+    );
+}
+
+function removeAccount(accountId) {
+
+    if (!confirm("Are you sure you want to delete this account?")) {
+        return;
+    }
+
+    deleteAccount(
+
+        accountId,
+
+        function() {
+
+            document.getElementById("row-" + accountId).remove();
+
+            alert("Account deleted successfully");
+
+        },
+
+        function(error) {
+
+            alert("Error deleting account");
         }
 
     );
