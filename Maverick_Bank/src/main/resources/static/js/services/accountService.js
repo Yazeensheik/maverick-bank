@@ -6,7 +6,7 @@ function createAccount(accountData, successCallback, errorCallback) {
 
     xhr.setRequestHeader("Content-Type", "application/json");
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
 
         if (xhr.readyState === 4) {
 
