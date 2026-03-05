@@ -14,68 +14,69 @@ import jakarta.persistence.Table;
 @Table(name = "statements")
 public class Statement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long statementId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long statementId;
 
-    private Long accountId;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-    private LocalDateTime startDate;
+	private LocalDateTime startDate;
 
-    private LocalDateTime endDate;
+	private LocalDateTime endDate;
 
-    private LocalDateTime generatedDate;
+	private LocalDateTime generatedDate;
 
-    public Statement() {
-    }
+	public Statement() {
+	}
 
-    public Statement(Long statementId, Long accountId,
-                     LocalDateTime startDate, LocalDateTime endDate,
-                     LocalDateTime generatedDate) {
-        this.statementId = statementId;
-        this.accountId = accountId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.generatedDate = generatedDate;
-    }
+	public Statement(Long statementId, Long accountId, LocalDateTime startDate, LocalDateTime endDate,
+			LocalDateTime generatedDate) {
+		this.statementId = statementId;
+		this.account = account;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.generatedDate = generatedDate;
+	}
 
-    public Long getStatementId() {
-        return statementId;
-    }
+	public Long getStatementId() {
+		return statementId;
+	}
 
-    public void setStatementId(Long statementId) {
-        this.statementId = statementId;
-    }
+	public void setStatementId(Long statementId) {
+		this.statementId = statementId;
+	}
 
-    public Long getAccountId() {
-        return accountId;
-    }
+	public Account getAccount() {
+		return account;
+	}
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
 
-    public LocalDateTime getGeneratedDate() {
-        return generatedDate;
-    }
+	public LocalDateTime getGeneratedDate() {
+		return generatedDate;
+	}
 
-    public void setGeneratedDate(LocalDateTime generatedDate) {
-        this.generatedDate = generatedDate;
-    }
+	public void setGeneratedDate(LocalDateTime generatedDate) {
+		this.generatedDate = generatedDate;
+	}
 }

@@ -26,19 +26,22 @@ public class Transaction {
 
     private String referenceNumber;
 
-    private Long accountId;
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
 
     public Transaction() {
     }
 
     public Transaction(Long transactionId, Double amount, String transactionType,
-                       LocalDateTime transactionDate, String referenceNumber, Long accountId) {
+                       LocalDateTime transactionDate, String referenceNumber, Account account) {
         this.transactionId = transactionId;
         this.amount = amount;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.referenceNumber = referenceNumber;
-        this.accountId = accountId;
+        this.account = account;
     }
 
     public Long getTransactionId() {
@@ -81,11 +84,13 @@ public class Transaction {
         this.referenceNumber = referenceNumber;
     }
 
-    public Long getAccountId() {
-        return accountId;
-    }
+	public Account getAccount() {
+		return account;
+	}
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+    
 }

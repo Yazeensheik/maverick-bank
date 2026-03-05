@@ -22,7 +22,7 @@ public class StatementServiceImpl implements StatementService {
     public List<TransactionDTO> generateStatement(StatementDTO dto) {
 
         List<Transaction> transactions =
-                transactionRepository.findByAccountIdAndTransactionDateBetween(
+                transactionRepository.findByAccountAccountIdAndTransactionDateBetween(
                         dto.getAccountId(),
                         dto.getStartDate(),
                         dto.getEndDate()
@@ -34,7 +34,7 @@ public class StatementServiceImpl implements StatementService {
                 t.getTransactionType(),
                 t.getTransactionDate(),
                 t.getReferenceNumber(),
-                t.getAccountId()
+                t.getAccount().getAccountId()
         )).collect(Collectors.toList());
     }
 }

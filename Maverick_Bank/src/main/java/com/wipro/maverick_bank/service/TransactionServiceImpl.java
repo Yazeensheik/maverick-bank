@@ -8,7 +8,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.TransactionDTO;
+import com.wipro.maverick_bank.entity.Account;
 import com.wipro.maverick_bank.entity.Transaction;
+import com.wipro.maverick_bank.exception.ResourceNotFoundException;
+import com.wipro.maverick_bank.repository.AccountRepository;
 import com.wipro.maverick_bank.repository.TransactionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,81 +20,87 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
-    private final TransactionRepository transactionRepository;
+	private final TransactionRepository transactionRepository;
+	private final AccountRepository accountRepository;
 
-    @Override
-    public TransactionDTO deposit(TransactionDTO dto) {
+	@Override
+	public TransactionDTO deposit(TransactionDTO dto) {
 
-        Transaction transaction = new Transaction();
+		Transaction transaction = new Transaction();
 
-        transaction.setAmount(dto.getAmount());
-        transaction.setTransactionType("DEPOSIT");
-        transaction.setTransactionDate(LocalDateTime.now());
-        transaction.setReferenceNumber(UUID.randomUUID().toString());
-        transaction.setAccountId(dto.getAccountId());
+		transaction.setAmount(dto.getAmount());
+		transaction.setTransactionType("DEPOSIT");
+		transaction.setTransactionDate(LocalDateTime.now());
+		transaction.setReferenceNumber(UUID.randomUUID().toString());
+		Account account = accountRepository.findById(dto.getAccountId())
+				.orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
-        transactionRepository.save(transaction);
+		transaction.setAccount(account);
 
-        dto.setTransactionId(transaction.getTransactionId());
-        dto.setTransactionDate(transaction.getTransactionDate());
-        dto.setReferenceNumber(transaction.getReferenceNumber());
+		transactionRepository.save(transaction);
 
-        return dto;
-    }
+		dto.setTransactionId(transaction.getTransactionId());
+		dto.setTransactionDate(transaction.getTransactionDate());
+		dto.setReferenceNumber(transaction.getReferenceNumber());
 
-    @Override
-    public TransactionDTO withdraw(TransactionDTO dto) {
+		return dto;
+	}
 
-        Transaction transaction = new Transaction();
+	@Override
+	public TransactionDTO withdraw(TransactionDTO dto) {
 
-        transaction.setAmount(dto.getAmount());
-        transaction.setTransactionType("WITHDRAW");
-        transaction.setTransactionDate(LocalDateTime.now());
-        transaction.setReferenceNumber(UUID.randomUUID().toString());
-        transaction.setAccountId(dto.getAccountId());
+		Transaction transaction = new Transaction();
 
-        transactionRepository.save(transaction);
+		transaction.setAmount(dto.getAmount());
+		transaction.setTransactionType("WITHDRAW");
+		transaction.setTransactionDate(LocalDateTime.now());
+		transaction.setReferenceNumber(UUID.randomUUID().toString());
+		Account account = accountRepository.findById(dto.getAccountId())
+				.orElseThrow(() -> new ResourceNotFoundException("Account not found"));
 
-        dto.setTransactionId(transaction.getTransactionId());
-        dto.setTransactionDate(transaction.getTransactionDate());
-        dto.setReferenceNumber(transaction.getReferenceNumber());
+		transaction.setAccount(account);
 
-        return dto;
-    }
+		transactionRepository.save(transaction);
 
-    @Override
-    public TransactionDTO transfer(TransactionDTO dto) {
+		dto.setTransactionId(transaction.getTransactionId());
+		dto.setTransactionDate(transaction.getTransactionDate());
+		dto.setReferenceNumber(transaction.getReferenceNumber());
 
-        Transaction transaction = new Transaction();
+		return dto;
+	}
 
-        transaction.setAmount(dto.getAmount());
-        transaction.setTransactionType("TRANSFER");
-        transaction.setTransactionDate(LocalDateTime.now());
-        transaction.setReferenceNumber(UUID.randomUUID().toString());
-        transaction.setAccountId(dto.getAccountId());
+	@Override
+	public TransactionDTO transfer(TransactionDTO dto) {
 
-        transactionRepository.save(transaction);
+		Transaction transaction = new Transaction();
 
-        dto.setTransactionId(transaction.getTransactionId());
-        dto.setTransactionDate(transaction.getTransactionDate());
-        dto.setReferenceNumber(transaction.getReferenceNumber());
+		transaction.setAmount(dto.getAmount());
+		transaction.setTransactionType("TRANSFER");
+		transaction.setTransactionDate(LocalDateTime.now());
+		transaction.setReferenceNumber(UUID.randomUUID().toString());
+		Account account = accountRepository.findById(dto.getAccountId())
+				.orElseThrow(() -> new RuntimeException("Account not found"));
 
-        return dto;
-    }
+		transaction.setAccount(account);
 
-    @Override
-    public List<TransactionDTO> getTransactionsByAccount(Long accountId) {
+		transactionRepository.save(transaction);
 
-        List<Transaction> transactions =
-                transactionRepository.findByAccountIdOrderByTransactionDateDesc(accountId);
+		dto.setTransactionId(transaction.getTransactionId());
+		dto.setTransactionDate(transaction.getTransactionDate());
+		dto.setReferenceNumber(transaction.getReferenceNumber());
 
-        return transactions.stream().map(t -> new TransactionDTO(
-                t.getTransactionId(),
-                t.getAmount(),
-                t.getTransactionType(),
-                t.getTransactionDate(),
-                t.getReferenceNumber(),
-                t.getAccountId()
-        )).collect(Collectors.toList());
-    }
+		return dto;
+	}
+
+	@Override
+	public List<TransactionDTO> getTransactionsByAccount(Long accountId) {
+
+		List<Transaction> transactions = transactionRepository
+				.findByAccountAccountIdOrderByTransactionDateDesc(accountId);
+
+		return transactions.stream()
+				.map(t -> new TransactionDTO(t.getTransactionId(), t.getAmount(), t.getTransactionType(),
+						t.getTransactionDate(), t.getReferenceNumber(), t.getAccount().getAccountId()))
+				.collect(Collectors.toList());
+	}
 }
