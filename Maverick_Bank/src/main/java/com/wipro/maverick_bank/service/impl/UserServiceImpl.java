@@ -3,6 +3,7 @@ package com.wipro.maverick_bank.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	// =====================================================
 	// CREATE USER (CUSTOMER / EMPLOYEE)
 	// =====================================================
@@ -41,7 +45,7 @@ public class UserServiceImpl implements UserService {
 		// Create user entity
 		User user = new User();
 		user.setUsername(request.getEmail()); // email used as username
-		user.setPassword(request.getPassword()); // PLAIN TEXT PASSWORD
+		user.setPassword(passwordEncoder.encode(request.getPassword())); // PLAIN TEXT PASSWORD
 		user.setRole(role);
 		user.setActive(true);
 
