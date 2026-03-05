@@ -1,9 +1,8 @@
 package com.wipro.maverick_bank.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,15 +14,15 @@ public class StatementDTO {
 
     private Long statementId;
 
-    @NotNull(message = "Start date is required")
-    private LocalDate startDate;
-
-    @NotNull(message = "End date is required")
-    private LocalDate endDate;
-
-    private LocalDate generatedDate;
-
     @NotNull(message = "Account ID is required")
     private Long accountId;
+
+    @NotNull(message = "Start date is required")
+    private LocalDateTime startDate;
+
+    @NotNull(message = "End date is required")
+    private LocalDateTime endDate;
+
+    private LocalDateTime generatedDate;
 
 }

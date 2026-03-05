@@ -24,22 +24,22 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/deposit")
-    public ResponseEntity<TransactionDTO> deposit(@Valid @RequestBody TransactionDTO dto) {
-        return ResponseEntity.ok(transactionService.deposit(dto));
+    public TransactionDTO deposit(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.deposit(dto);
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<TransactionDTO> withdraw(@Valid @RequestBody TransactionDTO dto) {
-        return ResponseEntity.ok(transactionService.withdraw(dto));
+    public TransactionDTO withdraw(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.withdraw(dto);
     }
 
     @PostMapping("/transfer")
-    public ResponseEntity<TransactionDTO> transfer(@Valid @RequestBody TransactionDTO dto) {
-        return ResponseEntity.ok(transactionService.transfer(dto));
+    public TransactionDTO transfer(@Valid @RequestBody TransactionDTO dto) {
+        return transactionService.transfer(dto);
     }
 
-    @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<TransactionDTO>> getTransactions(@PathVariable Long accountId) {
-        return ResponseEntity.ok(transactionService.getTransactionsByAccount(accountId));
+    @GetMapping("/{accountId}")
+    public List<TransactionDTO> getTransactions(@PathVariable Long accountId) {
+        return transactionService.getTransactionsByAccount(accountId);
     }
 }
