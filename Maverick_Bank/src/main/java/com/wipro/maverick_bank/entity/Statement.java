@@ -1,48 +1,82 @@
 package com.wipro.maverick_bank.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "statements")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Statement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long statementId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long statementId;
 
-    @Column(nullable = false)
-    private Long accountId;
+	@ManyToOne
+	@JoinColumn(name = "account_id")
+	private Account account;
 
-    @Column(nullable = false)
-    private LocalDate startDate;
+	private LocalDateTime startDate;
 
-    @Column(nullable = false)
-    private LocalDate endDate;
+	private LocalDateTime endDate;
 
-    @Column(nullable = false)
-    private Double totalCredit;
+	private LocalDateTime generatedDate;
 
-    @Column(nullable = false)
-    private Double totalDebit;
+	public Statement() {
+	}
 
-    @Column(nullable = false)
-    private LocalDateTime generatedDate;
+	public Statement(Long statementId, Long accountId, LocalDateTime startDate, LocalDateTime endDate,
+			LocalDateTime generatedDate) {
+		this.statementId = statementId;
+		this.account = account;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.generatedDate = generatedDate;
+	}
+
+	public Long getStatementId() {
+		return statementId;
+	}
+
+	public void setStatementId(Long statementId) {
+		this.statementId = statementId;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public LocalDateTime getGeneratedDate() {
+		return generatedDate;
+	}
+
+	public void setGeneratedDate(LocalDateTime generatedDate) {
+		this.generatedDate = generatedDate;
+	}
 }

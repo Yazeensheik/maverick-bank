@@ -1,19 +1,35 @@
 package com.wipro.maverick_bank.service;
 
+import java.util.List;
+
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
 
 public interface UserService {
 
-    // Create a new customer user
-    UserDTO createCustomer(CreateUserRequestDTO request);
+	/**
+	 * Create a user with a specific role Example roles: ROLE_CUSTOMER,
+	 * ROLE_EMPLOYEE
+	 */
+	UserDTO createUser(CreateUserRequestDTO request, String roleName);
 
-    // Create a new bank employee user
-    UserDTO createEmployee(CreateUserRequestDTO request);
+	/**
+	 * Get user details by user ID
+	 */
+	UserDTO getUserById(Long userId);
 
-    // Fetch user details by user id
-    UserDTO getUserById(Long userId);
+	/**
+	 * Deactivate (soft delete) a user
+	 */
+	void deactivateUser(Long userId);
 
-    // Deactivate a user (soft delete)
-    void deactivateUser(Long userId);
+	/**
+	 * Get all users
+	 */
+	List<UserDTO> getAllUsers();
+	
+	/**
+	 * Permanently remove a user (Hard Delete)
+	 */
+	void deleteUser(Long userId);
 }

@@ -1,0 +1,30 @@
+package com.wipro.maverick_bank.dto;
+
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TransactionDTO {
+
+    private Long transactionId;
+
+    @NotNull(message = "Amount is required")
+    private Double amount;
+
+    @NotNull(message = "Transaction type is required")
+    private String transactionType;
+
+    private LocalDateTime transactionDate;
+
+    private String referenceNumber;
+
+    @NotNull(message = "Account ID is required")
+    private Long accountId;
+
+}

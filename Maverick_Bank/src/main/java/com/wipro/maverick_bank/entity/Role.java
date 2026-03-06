@@ -3,6 +3,7 @@ package com.wipro.maverick_bank.entity;
 import jakarta.persistence.*;
 
 @Entity
+
 @Table(name = "roles")
 public class Role {
 
@@ -31,4 +32,5 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
 }

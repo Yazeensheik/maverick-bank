@@ -2,8 +2,10 @@ package com.wipro.maverick_bank.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,20 +21,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="loans")
+@Table(name = "loans")
 public class Loan {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long loanId;
-	
-	@Column(nullable=false)
-	private String loanType;  //HOME, PERSONAL, EDUCATION
-	private double interestRate;
-	private double minAmount;
-	private double maxAmount;
-	private int tenureInMonths;
-	
-	@OneToMany(mappedBy="loan")
-	private List<LoanApplication> loanApplication;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long loanId;
+
+    @Column(nullable = false)
+    private String loanType; // HOME, PERSONAL, EDUCATION
+
+    private double interestRate;
+
+    private double minAmount;
+
+    private double maxAmount;
+
+    private int tenureInMonths;
+
+    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LoanApplication> loanApplications;
 }

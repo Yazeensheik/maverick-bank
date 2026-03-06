@@ -10,7 +10,7 @@ import com.wipro.maverick_bank.entity.CustomerLoan;
 @Repository
 public interface CustomerLoanRepository extends JpaRepository<CustomerLoan, Long> {
 	
-	List<CustomerLoan> findByCustomer_UserId(Long userId);
+	List<CustomerLoan> findByCustomer_Id(Long userId);
 	List<CustomerLoan> findByStatus(String status);
 
 }

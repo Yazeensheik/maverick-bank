@@ -1,6 +1,15 @@
 package com.wipro.maverick_bank.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -23,8 +32,10 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    public User() {
-    }
+    @OneToOne(mappedBy = "user", cascade = jakarta.persistence.CascadeType.ALL, fetch = FetchType.LAZY)
+    private CustomerProfile customerProfile;
+
+    public User() {}
 
     public Long getId() {
         return id;
@@ -41,7 +52,7 @@ public class User {
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -49,7 +60,7 @@ public class User {
     public boolean isActive() {
         return active;
     }
-    
+
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -57,8 +68,16 @@ public class User {
     public Role getRole() {
         return role;
     }
-    
+
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public CustomerProfile getCustomerProfile() {
+        return customerProfile;
+    }
+
+    public void setCustomerProfile(CustomerProfile customerProfile) {
+        this.customerProfile = customerProfile;
     }
 }
