@@ -24,7 +24,6 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AccountRepository accountRepository;
 
-	// REQUIRED for mapping Account → CustomerProfile
 	@Autowired
 	private CustomerProfileRepository customerProfileRepository;
 
@@ -34,8 +33,7 @@ public class AccountServiceImpl implements AccountService {
 		log.info("Attempting to create account for Customer ID: {}", dto.getCustomerProfileId());
 
 		Account account = new Account();
-
-		account.setAccountNumber(dto.getAccountNumber());
+		account.setAccountNumber(generateAccountNumber());
 		account.setAccountType(dto.getAccountType());
 		account.setBalance(dto.getBalance());
 		account.setStatus(dto.getStatus());
@@ -46,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 					log.warn("CustomerProfile not found with ID: {}", dto.getCustomerProfileId());
 					return new ResourceNotFoundException("CustomerProfile not found");
 				});
-		
+
 		account.setCustomerProfile(customerProfile);
 
 		Account saved = accountRepository.save(account);
@@ -55,6 +53,12 @@ public class AccountServiceImpl implements AccountService {
 
 		return new AccountDTO(saved.getAccountNumber(), saved.getAccountType(), saved.getBalance(), saved.getStatus(),
 				saved.getAccountId(), saved.getCustomerProfile().getId());
+	}
+
+	private String generateAccountNumber() {
+
+		long number = (long) (Math.random() * 900000000000L) + 100000000000L;
+		return String.valueOf(number);
 	}
 
 	@Override
