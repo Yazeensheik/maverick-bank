@@ -215,3 +215,87 @@ if (withdrawForm) {
     });
 
 }
+
+
+
+
+//STATEMENT GENERATION
+document.addEventListener("DOMContentLoaded", function(){
+
+    const btn = document.getElementById("generateStatement");
+
+    if(btn){
+        btn.addEventListener("click", generateStatement);
+    }
+
+});
+
+
+async function generateStatement(){
+
+    const accountId = document.getElementById("statementAccountId").value;
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    if(!accountId || !startDate || !endDate){
+
+        alert("Please fill all fields");
+        return;
+
+    }
+
+    const requestBody = {
+
+        accountId: accountId,
+        startDate: startDate,
+        endDate: endDate
+
+    };
+
+    try{
+
+        const response = await fetch(
+        "http://localhost:8080/api/statements/generate",
+        {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(requestBody)
+
+        });
+
+        const transactions = await response.json();
+
+        const table = document.getElementById("statementTable");
+
+        table.innerHTML = "";
+
+        transactions.forEach(t=>{
+
+            const row = `
+            <tr>
+            <td>${t.transactionId}</td>
+            <td>${t.amount}</td>
+            <td>${t.transactionType}</td>
+            <td>${t.transactionDate}</td>
+            <td>${t.referenceNumber}</td>
+            <td>${t.accountId}</td>
+            </tr>
+            `;
+
+            table.innerHTML += row;
+
+        });
+
+    }
+    catch(error){
+
+        console.error("Statement Error:",error);
+
+    }
+
+}
