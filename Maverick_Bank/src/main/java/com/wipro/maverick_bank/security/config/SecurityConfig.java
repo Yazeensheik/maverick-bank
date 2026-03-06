@@ -39,15 +39,13 @@ public class SecurityConfig {
                         "/pages/**",
                         "/dashboards/**",
                         "/shared/**",
-<<<<<<< HEAD
                         "/favicon.ico",
                         "/modules/**",
                         "/css/**",
-                        "/js/**"
-=======
+                        "/js/**",
                         "/assets/**",
                         "/favicon.ico"
->>>>>>> feature/auth-user
+
                 ).permitAll()
 
                 // Swagger

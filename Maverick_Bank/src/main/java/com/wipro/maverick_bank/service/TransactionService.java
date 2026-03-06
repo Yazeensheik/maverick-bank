@@ -11,6 +11,8 @@ public interface TransactionService {
     TransactionDTO withdraw(TransactionDTO transactionDTO);
 
     TransactionDTO transfer(TransactionDTO transactionDTO);
+    
+    Double getBalance(Long accountId);
 
     List<TransactionDTO> getTransactionsByAccount(Long accountId);
 

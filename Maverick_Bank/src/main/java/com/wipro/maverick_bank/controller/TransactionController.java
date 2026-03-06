@@ -2,7 +2,6 @@ package com.wipro.maverick_bank.controller;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +35,11 @@ public class TransactionController {
     @PostMapping("/transfer")
     public TransactionDTO transfer(@Valid @RequestBody TransactionDTO dto) {
         return transactionService.transfer(dto);
+    }
+    
+    @GetMapping("/balance/{accountId}")
+    public Double getBalance(@PathVariable Long accountId) {
+        return transactionService.getBalance(accountId);
     }
 
     @GetMapping("/{accountId}")

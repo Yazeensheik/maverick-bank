@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function loadTransactions() {
-
+	
     const accountId = document.getElementById("accountId").value;
 
     if (!accountId) {
@@ -16,6 +16,12 @@ async function loadTransactions() {
     }
 
     try {
+		
+		const balanceResponse = await fetch(`http://localhost:8080/api/transactions/balance/${accountId}`);
+		
+		const balance = await balanceResponse.json();
+		
+		document.getElementById("balanceDisplay").innerText = balance;
 
         const response = await fetch(`http://localhost:8080/api/transactions/${accountId}`);
 
@@ -87,7 +93,7 @@ if (transferForm) {
 
             } else {
 
-                alert("Transfer Failed");
+                alert("Transfer Failed: Due to Insufficient funds");
 
             }
 
