@@ -38,7 +38,10 @@ public class SecurityConfig {
                         "/assets/**",
                         "/dashboards/**",
                         "/shared/**",
-                        "/favicon.ico"
+                        "/favicon.ico",
+                        "/modules/**",
+                        "/css/**",
+                        "/js/**"
                 ).permitAll()
 
                 // 🔓 Swagger URLs

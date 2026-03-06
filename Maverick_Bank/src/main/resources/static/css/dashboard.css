@@ -1,1 +1,47 @@
-@charset "UTF-8";
+/* Page background */
+body{
+    background-color:#f4f6f9;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Dashboard title */
+h2{
+    font-weight:600;
+    color:#2c3e50;
+}
+
+/* Dashboard cards */
+.card{
+    border:none;
+    border-radius:10px;
+    transition: all 0.3s ease;
+}
+
+/* Card hover effect */
+.card:hover{
+    transform: translateY(-5px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Card title */
+.card-title{
+    font-size:18px;
+    font-weight:600;
+    color:#34495e;
+}
+
+/* Buttons inside cards */
+.card .btn{
+    margin-top:10px;
+    border-radius:6px;
+}
+
+/* Dashboard spacing */
+.container{
+    max-width:1000px;
+}
+
+/* Row spacing */
+.row{
+    margin-top:20px;
+}

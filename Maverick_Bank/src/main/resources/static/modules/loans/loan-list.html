@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Applications</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+<h2 class="text-center mb-4">Loan Applications</h2>
+
+<table class="table table-bordered table-striped">
+
+<thead class="table-dark">
+<tr>
+<th>ID</th>
+<th>Customer</th>
+<th>Loan Type</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="loanTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+
+async function loadLoans(){
+
+const response = await fetch("/api/loan-applications");
+
+const loans = await response.json();
+
+const tableBody = document.getElementById("loanTableBody");
+
+tableBody.innerHTML = "";
+
+loans.forEach(loan => {
+
+const row = `
+<tr>
+<td>${loan.id}</td>
+<td>${loan.customerId}</td>
+<td>${loan.loanId}</td>
+<td>${loan.amount}</td>
+<td>${loan.status}</td>
+</tr>
+`;
+
+tableBody.innerHTML += row;
+
+});
+
+}
+
+loadLoans();
+
+</script>
 
 </body>
 </html>
