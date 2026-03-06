@@ -1,28 +1,62 @@
-window.CustomerApi = (() => {
-  const accountsByCustomer = (customerProfileId) => Api.get(`/api/v1/accounts/customer/${customerProfileId}`);
-  const accountById = (id) => Api.get(`/api/v1/accounts/getById/${id}`);
-  const createAccount = (payload) => Api.post("/api/v1/accounts/create", payload);
-  const updateAccount = (id, payload) => Api.put(`/api/v1/accounts/update/${id}`, payload);
-  const closeAccount = (id) => Api.del(`/api/v1/accounts/delete/${id}`);
-  const transactions = (accountId) => Api.get(`/api/transactions/${accountId}`);
-  const deposit = (payload) => Api.post("/api/transactions/deposit", payload);
-  const withdraw = (payload) => Api.post("/api/transactions/withdraw", payload);
-  const transfer = (payload) => Api.post("/api/transactions/transfer", payload);
-  const beneficiaries = () => Api.get("/api/v1/beneficiaries/getAll");
-  const addBeneficiary = (payload) => Api.post("/api/v1/beneficiaries/add", payload);
-  const deleteBeneficiary = (id) => Api.del(`/api/v1/beneficiaries/delete/${id}`);
-  const generateStatement = (payload) => Api.post("/api/statements/generate", payload);
-  const availableLoans = () => Api.get("/api/admin/loans");
-  const applyForLoan = (userId, payload) => Api.post(`/api/loan-applications/user/${userId}`, payload);
-  const getLoanApplication = (id) => Api.get(`/api/loan-applications/${id}`);
-  const customerLoans = () => Api.get("/api/customer-loans");
-  const customerLoanById = (id) => Api.get(`/api/customer-loans/${id}`);
-  const customerProfile = (id) => Api.get(`/api/customer-profile/get/${id}`);
-  return {
-    accountsByCustomer, accountById, createAccount, updateAccount, closeAccount,
-    transactions, deposit, withdraw, transfer,
-    beneficiaries, addBeneficiary, deleteBeneficiary,
-    generateStatement, availableLoans, applyForLoan, getLoanApplication,
-    customerLoans, customerLoanById, customerProfile
-  };
-})();
+async function loadCustomersTable() {
+  const body = document.getElementById('customersTableBody');
+  if (!body) return;
+
+  try {
+    const res = await window.customerService.getAllCustomers();
+    const term = (document.getElementById('customerSearch')?.value || '').toLowerCase();
+    const customers = (res.data || []).filter(c => !term || `${c.fullName} ${c.email}`.toLowerCase().includes(term));
+
+    body.innerHTML = customers.map(customer => `
+      <tr>
+        <td>${customer.id}</td>
+        <td>${escapeHtml(customer.fullName)}</td>
+        <td>${escapeHtml(customer.email)}</td>
+        <td>${escapeHtml(customer.phone)}</td>
+        <td>${customer.userId}</td>
+        <td><button class="btn btn-sm btn-outline-danger" onclick="deleteCustomerAction(${customer.id})">Delete</button></td>
+      </tr>
+    `).join('') || '<tr><td colspan="6" class="text-center text-muted">No customers found</td></tr>';
+  } catch (error) {
+    setAlert('Unable to load customers.', 'danger');
+  }
+}
+
+async function deleteCustomerAction(id) {
+  if (!confirm(`Delete customer profile #${id}?`)) return;
+  try {
+    await window.customerService.deleteCustomer(id);
+    setAlert('Customer profile deleted successfully.');
+    loadCustomersTable();
+  } catch (error) {
+    setAlert(error?.response?.data?.message || 'Unable to delete customer profile.', 'danger');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('createCustomerForm');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        fullName: document.getElementById('customerFullName').value.trim(),
+        email: document.getElementById('customerEmail').value.trim(),
+        phone: document.getElementById('customerPhone').value.trim(),
+        userId: Number(document.getElementById('customerUserId').value)
+      };
+
+      try {
+        const res = await window.customerService.createCustomer(payload);
+        setAlert(`Customer profile created successfully with ID ${res.data.id}.`);
+        form.reset();
+      } catch (error) {
+        setAlert(error?.response?.data?.message || 'Unable to create customer profile.', 'danger');
+      }
+    });
+  }
+
+  if (document.getElementById('customersTableBody')) {
+    loadCustomersTable();
+    document.getElementById('customerSearch')?.addEventListener('input', loadCustomersTable);
+  }
+});

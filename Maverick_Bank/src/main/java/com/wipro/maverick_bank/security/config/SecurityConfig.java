@@ -2,6 +2,7 @@ package com.wipro.maverick_bank.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
@@ -28,24 +30,25 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-                // Public frontend pages
+                // Public frontend pages and static resources
                 .requestMatchers(
                         "/",
                         "/index.html",
                         "/login.html",
+                        "/dashboard.html",
                         "/register.html",
                         "/about.html",
                         "/contact.html",
                         "/pages/**",
+                        "/components/**",
+                        "/services/**",
                         "/dashboards/**",
                         "/shared/**",
-                        "/favicon.ico",
                         "/modules/**",
                         "/css/**",
                         "/js/**",
                         "/assets/**",
                         "/favicon.ico"
-
                 ).permitAll()
 
                 // Swagger
@@ -58,11 +61,14 @@ public class SecurityConfig {
                 // Public auth APIs
                 .requestMatchers("/auth/**").permitAll()
 
-                // Everything else requires authentication
+                // All other requests require authentication
                 .anyRequest().authenticated()
             )
 
-            .httpBasic(Customizer.withDefaults());
+            // Basic Auth without browser popup
+            .httpBasic(httpBasic ->
+                httpBasic.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            );
 
         return http.build();
     }
