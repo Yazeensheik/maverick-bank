@@ -10,7 +10,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 public class AccountDTO {
 
-	@NotBlank
 	private String accountNumber;
 
 	@NotBlank
@@ -29,7 +28,6 @@ public class AccountDTO {
 	@NotNull(message = "Account ID is required")
 
 	private Long accountId;
-	
 
 	public AccountDTO() {
 	}
@@ -93,5 +91,4 @@ public class AccountDTO {
 		this.customerProfileId = customerProfileId;
 	}
 
-	
 }

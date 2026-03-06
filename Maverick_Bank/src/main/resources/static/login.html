@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,7 +6,25 @@
 
 <link rel="stylesheet" href="css/login.css">
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login • Maverick Bank</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/forms.css">
 </head>
+<body class="login-page">
+  <div class="login-shell">
+    <div class="login-card card border-0 shadow-lg">
+      <div class="card-body p-4 p-md-5">
+        <div class="text-center mb-4">
+          <div class="brand-mark mx-auto mb-3">MB</div>
+          <h1 class="h3 mb-1">Maverick Bank</h1>
+          <p class="text-muted mb-0">Admin banking portal</p>
+        </div>
 
 <body>
 
@@ -30,5 +49,33 @@
 
 <script src="js/controllers/loginController.js"></script>
 
+        <div id="loginAlert"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="admin@maverickbank.com" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+          </div>
+
+          <button class="btn btn-bank w-100 py-2" type="submit" id="loginBtn">Login</button>
+        </form>
+
+        <div class="demo-box mt-4">
+          <small class="text-muted d-block">Uses HTTP Basic Authentication.</small>
+          <small class="text-muted d-block">This frontend is focused on Admin operations for Users, Customer Profiles, and Employee Profiles.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
+  <script src="/assets/js/config.js"></script>
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
 </body>
 </html>

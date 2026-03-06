@@ -5,7 +5,7 @@ document.getElementById("openAccountForm")
 
         var accountData = {
 
-            accountNumber: document.getElementById("accountNumber").value,
+
             accountType: document.getElementById("accountType").value,
             balance: parseFloat(document.getElementById("balance").value),
             status: document.getElementById("status").value,
