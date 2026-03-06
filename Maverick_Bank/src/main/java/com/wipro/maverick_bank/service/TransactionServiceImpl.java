@@ -19,6 +19,29 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
 
+    // Calculate balance from transactions
+    private double calculateBalance(Long accountId) {
+
+        List<Transaction> transactions = transactionRepository.findByAccountId(accountId);
+
+        double balance = 0;
+
+        for (Transaction t : transactions) {
+
+            if ("DEPOSIT".equals(t.getTransactionType())) {
+                balance += t.getAmount();
+            } 
+            else if ("WITHDRAW".equals(t.getTransactionType()) ||
+                     "TRANSFER".equals(t.getTransactionType())) {
+                balance -= t.getAmount();
+            }
+
+        }
+
+        return balance;
+    }
+
+    // Deposit Money
     @Override
     public TransactionDTO deposit(TransactionDTO dto) {
 
@@ -39,8 +62,15 @@ public class TransactionServiceImpl implements TransactionService {
         return dto;
     }
 
+    // Withdraw Money
     @Override
     public TransactionDTO withdraw(TransactionDTO dto) {
+
+        double balance = calculateBalance(dto.getAccountId());
+
+        if (balance < dto.getAmount()) {
+            throw new RuntimeException("Insufficient Balance");
+        }
 
         Transaction transaction = new Transaction();
 
@@ -59,8 +89,15 @@ public class TransactionServiceImpl implements TransactionService {
         return dto;
     }
 
+    // Transfer Money
     @Override
     public TransactionDTO transfer(TransactionDTO dto) {
+
+        double balance = calculateBalance(dto.getAccountId());
+
+        if (balance < dto.getAmount()) {
+            throw new RuntimeException("Insufficient Balance");
+        }
 
         Transaction transaction = new Transaction();
 
@@ -78,7 +115,13 @@ public class TransactionServiceImpl implements TransactionService {
 
         return dto;
     }
+    
+    @Override
+    public Double getBalance(Long accountId) {
+        return calculateBalance(accountId);
+    }
 
+    // Get Transaction History
     @Override
     public List<TransactionDTO> getTransactionsByAccount(Long accountId) {
 

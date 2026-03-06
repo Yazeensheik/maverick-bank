@@ -36,6 +36,11 @@ public class TransactionController {
     public TransactionDTO transfer(@Valid @RequestBody TransactionDTO dto) {
         return transactionService.transfer(dto);
     }
+    
+    @GetMapping("/balance/{accountId}")
+    public Double getBalance(@PathVariable Long accountId) {
+        return transactionService.getBalance(accountId);
+    }
 
     @GetMapping("/{accountId}")
     public List<TransactionDTO> getTransactions(@PathVariable Long accountId) {

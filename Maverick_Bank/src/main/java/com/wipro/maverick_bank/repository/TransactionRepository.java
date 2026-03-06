@@ -9,6 +9,8 @@ import com.wipro.maverick_bank.entity.Transaction;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
+	List<Transaction> findByAccountId(Long accountId);
+	
     List<Transaction> findByAccountIdOrderByTransactionDateDesc(Long accountId);
 
     List<Transaction> findByAccountIdAndTransactionDateBetween(
