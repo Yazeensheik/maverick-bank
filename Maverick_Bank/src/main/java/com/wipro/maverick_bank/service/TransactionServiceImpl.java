@@ -24,9 +24,9 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountRepository accountRepository;
 
     // Calculate balance from transactions
-    private double calculateBalance( Account account) {
+    private double calculateBalance( Long accountId) {
 
-        List<Transaction> transactions = transactionRepository.findByAccountAccountId(account);
+        List<Transaction> transactions = transactionRepository.findByAccountAccountId(accountId);
 
         double balance = 0;
 

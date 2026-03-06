@@ -16,25 +16,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StatementServiceImpl implements StatementService {
 
-    private final TransactionRepository transactionRepository;
+	private final TransactionRepository transactionRepository;
 
-    @Override
-    public List<TransactionDTO> generateStatement(StatementDTO dto) {
+	@Override
+	public List<TransactionDTO> generateStatement(StatementDTO dto) {
 
-        List<Transaction> transactions =
-                transactionRepository.findByAccountAccountIdAndTransactionDateBetween(
-                        dto.getAccountId(),
-                        dto.getStartDate(),
-                        dto.getEndDate()
-                );
+		List<Transaction> transactions = transactionRepository.findByAccountAccountIdAndTransactionDateBetween(
+				dto.getAccountId(), dto.getStartDate(), dto.getEndDate());
 
-        return transactions.stream().map(t -> new TransactionDTO(
-                t.getTransactionId(),
-                t.getAmount(),
-                t.getTransactionType(),
-                t.getTransactionDate(),
-                t.getReferenceNumber(),
-                t.getAccount().getAccountId()
-        )).collect(Collectors.toList());
-    }
+		return transactions.stream()
+				.map(t -> new TransactionDTO(t.getTransactionId(), t.getAmount(), t.getTransactionType(),
+						t.getTransactionDate(), t.getReferenceNumber(), t.getAccount().getAccountId()))
+				.collect(Collectors.toList());
+	}
 }
