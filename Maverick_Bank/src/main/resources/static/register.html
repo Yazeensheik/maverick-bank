@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Maverick Bank - Register</title>
+<link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+
+<div class="login-container">
+
+<h2>Registration</h2>
+
+<form id="registerForm">
+
+<input type="email" id="email" placeholder="Email" required>
+
+<input type="password" id="password" placeholder="Password" required>
+
+<select id="role" required>
+<option value="">Select Role</option>
+<option value="customer">Customer</option>
+<option value="employee">Employee</option>
+</select>
+
+<button type="submit">Register</button>
+
+<p id="message"></p>
+
+</form>
+
+</div>
+
+<script src="/js/controllers/registerController.js"></script>
+
+</body>
+</html>

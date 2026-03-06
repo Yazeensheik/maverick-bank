@@ -44,21 +44,23 @@ public class SecurityConfig {
                         "/js/**"
                 ).permitAll()
 
-                // 🔓 Swagger URLs
+                // 🔓 Swagger
                 .requestMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                 ).permitAll()
 
-                // 🔓 Authentication APIs
-                .requestMatchers("/auth/**").permitAll()
+                // 🔓 Auth APIs
+                .requestMatchers("/auth/**", "/api/auth/**", "/api/users/login","/api/users/add/customer",
+                		"/api/users/add/employee").permitAll()
 
-                // 🔐 All other APIs need login
+                // 🔐 Everything else requires login
                 .anyRequest().authenticated()
             )
 
-            .httpBasic(); // Using HTTP Basic Authentication
+            // ❌ Disable browser popup login
+            .httpBasic(httpBasic -> httpBasic.disable());
 
         return http.build();
     }

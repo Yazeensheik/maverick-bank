@@ -23,5 +23,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // -------------------------------------------------
     // (Optional but recommended) fetch only active users
     // -------------------------------------------------
-    Optional<User> findByUsernameAndActiveTrue(String username);
+    User findByUsernameAndActiveTrue(String username);
 }
