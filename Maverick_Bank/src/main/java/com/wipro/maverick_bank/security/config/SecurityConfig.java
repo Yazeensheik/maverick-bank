@@ -3,6 +3,7 @@ package com.wipro.maverick_bank.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,7 +28,7 @@ public class SecurityConfig {
 
             .authorizeHttpRequests(auth -> auth
 
-                // 🔓 Frontend Public Pages
+                // Public frontend pages
                 .requestMatchers(
                         "/",
                         "/index.html",
@@ -35,27 +36,28 @@ public class SecurityConfig {
                         "/register.html",
                         "/about.html",
                         "/contact.html",
-                        "/assets/**",
+                        "/pages/**",
                         "/dashboards/**",
                         "/shared/**",
+                        "/assets/**",
                         "/favicon.ico"
                 ).permitAll()
 
-                // 🔓 Swagger URLs
+                // Swagger
                 .requestMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html"
                 ).permitAll()
 
-                // 🔓 Authentication APIs
+                // Public auth APIs
                 .requestMatchers("/auth/**").permitAll()
 
-                // 🔐 All other APIs need login
+                // Everything else requires authentication
                 .anyRequest().authenticated()
             )
 
-            .httpBasic(); // Using HTTP Basic Authentication
+            .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
