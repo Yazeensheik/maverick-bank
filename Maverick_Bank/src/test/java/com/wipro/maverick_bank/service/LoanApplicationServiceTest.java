@@ -88,15 +88,15 @@ class LoanApplicationServiceTest {
     void testApplyForLoan() {
 
         LoanApplicationDTO dto = new LoanApplicationDTO();
-        dto.setLoanId(loan.getLoanId());
+        dto.setLoanType(loan.getLoanType());
         dto.setAmount(500000.0);
         dto.setPurpose("House purchase");
 
         LoanApplicationDTO result =
-                loanApplicationService.applyForLoan(user.getId(), dto);
+                loanApplicationService.applyForLoan(user.getUsername(), dto);
 
         assertNotNull(result);
-        assertEquals(loan.getLoanId(), result.getLoanId());
+        assertEquals(loan.getLoanType(), result.getLoanType());
         assertEquals(500000.0, result.getAmount());
         assertEquals("House purchase", result.getPurpose());
 

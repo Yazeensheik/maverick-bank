@@ -29,10 +29,10 @@ public class LoanApplicationController {
 		this.loanApplicationService = loanApplicationService;
 	}
 
-	@PostMapping("/user/{userId}")
-	public ResponseEntity<LoanApplicationDTO> applyforLoan(@PathVariable Long userId,
+	@PostMapping("/api/loan-applications")
+	public ResponseEntity<LoanApplicationDTO> applyforLoan(@PathVariable String username,
 			@Valid @RequestBody LoanApplicationDTO dto) {
-		LoanApplicationDTO response = loanApplicationService.applyForLoan(userId, dto);
+		LoanApplicationDTO response = loanApplicationService.applyForLoan(username, dto);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 

@@ -1,11 +1,3 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>Maverick Bank Login</title>
-
-<link rel="stylesheet" href="css/login.css">
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,38 +15,21 @@
         <div class="text-center mb-4">
           <div class="brand-mark mx-auto mb-3">MB</div>
           <h1 class="h3 mb-1">Maverick Bank</h1>
-          <p class="text-muted mb-0">Admin banking portal</p>
         </div>
-
-<body>
 
 <div class="login-container">
 
 <h2>Maverick Bank</h2>
 
-<form id="loginForm">
-
-<input type="email" id="username" placeholder="Enter Email" required>
-
-<input type="password" id="password" placeholder="Enter Password" required>
-
-<button type="submit">Login</button>
-<p>New customer? <a href="/register.html">Register here</a></p>
-
-<p id="error"></p>
-
-</form>
-
 </div>
 
-<script src="js/controllers/loginController.js"></script>
 
         <div id="loginAlert"></div>
 
         <form id="loginForm" novalidate>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="admin@maverickbank.com" required>
+            <input type="email" class="form-control" id="username" placeholder="admin@maverickbank.com" required>
           </div>
 
           <div class="mb-3">
@@ -65,17 +40,15 @@
           <button class="btn btn-bank w-100 py-2" type="submit" id="loginBtn">Login</button>
         </form>
 
-        <div class="demo-box mt-4">
-          <small class="text-muted d-block">Uses HTTP Basic Authentication.</small>
-          <small class="text-muted d-block">This frontend is focused on Admin operations for Users, Customer Profiles, and Employee Profiles.</small>
-        </div>
+        
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
   <script src="/assets/js/config.js"></script>
-  <script src="/assets/js/api.js"></script>
-  <script src="/assets/js/auth.js"></script>
+<script src="/assets/js/api.js"></script>
+<script src="/assets/js/utils.js"></script>
+<script src="/assets/js/auth.js"></script>
 </body>
 </html>

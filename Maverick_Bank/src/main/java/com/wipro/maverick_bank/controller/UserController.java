@@ -102,7 +102,7 @@ public class UserController {
      * Get All Users
      * Accessible by: ADMIN
      */
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
 

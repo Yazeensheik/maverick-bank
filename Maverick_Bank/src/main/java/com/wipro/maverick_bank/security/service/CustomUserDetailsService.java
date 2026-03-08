@@ -1,12 +1,12 @@
 package com.wipro.maverick_bank.security.service;
 
-import com.wipro.maverick_bank.entity.User;
-import com.wipro.maverick_bank.repository.UserRepository;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.wipro.maverick_bank.entity.User;
+import com.wipro.maverick_bank.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

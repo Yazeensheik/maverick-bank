@@ -20,96 +20,109 @@ import com.wipro.maverick_bank.service.LoanApplicationService;
 
 @Service
 public class LoanApplicationServiceImpl implements LoanApplicationService {
-	
-	private final LoanApplicationRepository loanApplicationRepository;
-	private final LoanRepository loanRepository;
-	private final UserRepository userRepository;
-	private final CustomerProfileRepository customerProfileRepository;
 
-	public LoanApplicationServiceImpl(
-			LoanApplicationRepository loanApplicationRepository,
-			LoanRepository loanRepository,
-			UserRepository userRepository,
-			CustomerProfileRepository customerProfileRepository) {
-		this.loanApplicationRepository = loanApplicationRepository;
-		this.loanRepository = loanRepository;
-		this.userRepository = userRepository;
-		this.customerProfileRepository = customerProfileRepository;
-	}
+    private final LoanApplicationRepository loanApplicationRepository;
+    private final LoanRepository loanRepository;
+    private final UserRepository userRepository;
+    private final CustomerProfileRepository customerProfileRepository;
 
-	@Override
-	public LoanApplicationDTO applyForLoan(Long userId, LoanApplicationDTO dto) {
+    public LoanApplicationServiceImpl(
+            LoanApplicationRepository loanApplicationRepository,
+            LoanRepository loanRepository,
+            UserRepository userRepository,
+            CustomerProfileRepository customerProfileRepository) {
 
-	    Loan loan = loanRepository.findById(dto.getLoanId())
-	            .orElseThrow(() -> new RuntimeException("Loan not found"));
+        this.loanApplicationRepository = loanApplicationRepository;
+        this.loanRepository = loanRepository;
+        this.userRepository = userRepository;
+        this.customerProfileRepository = customerProfileRepository;
+    }
 
-	    User user = userRepository.findById(userId)
-	            .orElseThrow(() -> new RuntimeException("User not found"));
+    // ================= APPLY FOR LOAN =================
 
-	    CustomerProfile profile = customerProfileRepository
-	            .findByUser(user)
-	            .orElseThrow(() -> new RuntimeException("Customer profile not found"));
+    @Override
+    public LoanApplicationDTO applyForLoan(String username, LoanApplicationDTO dto) {
 
-	    LoanApplication application = new LoanApplication();
-	    application.setLoan(loan);
-	    application.setCustomer(user);
-	    application.setCustomerProfile(profile); 
-	    application.setAmount(dto.getAmount());
-	    application.setPurpose(dto.getPurpose());
-	    application.setStatus("PENDING");
-	    application.setAppliedDate(LocalDate.now());
-	    application.setApprovedDate(null);
-	    application.setRemarks(null);
+        Loan loan = loanRepository.findByLoanType(dto.getLoanType())
+                .orElseThrow(() -> new RuntimeException("Loan type not found"));
 
-	    loanApplicationRepository.save(application);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-	    return dto;
-	}
+        CustomerProfile profile = customerProfileRepository
+                .findByUser(user)
+                .orElseThrow(() -> new RuntimeException("Customer profile not found"));
 
-	@Override
-	public LoanApplicationDTO getApplicationById(Long applicationId) {
+        LoanApplication application = new LoanApplication();
 
-		LoanApplication application = loanApplicationRepository.findById(applicationId)
-				.orElseThrow(() -> new RuntimeException("Loan application not found"));
+        application.setLoan(loan);
+        application.setCustomer(user);
+        application.setCustomerProfile(profile);
+        application.setAmount(dto.getAmount());
+        application.setPurpose(dto.getPurpose());
+        application.setStatus("PENDING");
+        application.setAppliedDate(LocalDate.now());
+        application.setApprovedDate(null);
+        application.setRemarks(null);
 
-		return new LoanApplicationDTO(
-				application.getLoan().getLoanId(),
-				application.getAmount(),
-				application.getPurpose()
-		);
-	}
+        LoanApplication savedApplication = loanApplicationRepository.save(application);
 
-	@Override
-	public List<LoanApplicationDTO> getAllApplications() {
+        return new LoanApplicationDTO(
+                savedApplication.getLoan().getLoanType(),
+                savedApplication.getAmount(),
+                savedApplication.getPurpose()
+        );
+    }
 
-		return loanApplicationRepository.findAll()
-				.stream()
-				.map(app -> new LoanApplicationDTO(
-						app.getLoan().getLoanId(),
-						app.getAmount(),
-						app.getPurpose()
-				))
-				.collect(Collectors.toList());
-	}
+    // ================= GET APPLICATION BY ID =================
 
-	@Override
-	public LoanApprovalDTO approveOrRejectLoan(Long applicationId, LoanApprovalDTO approvalDTO) {
+    @Override
+    public LoanApplicationDTO getApplicationById(Long applicationId) {
 
-	    LoanApplication application = loanApplicationRepository.findById(applicationId)
-	            .orElseThrow(() -> new RuntimeException("Loan application not found"));
+        LoanApplication application = loanApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new RuntimeException("Loan application not found"));
 
-	    application.setStatus(approvalDTO.getStatus());
-	    application.setRemarks(approvalDTO.getRemarks());
-	    application.setApprovedDate(LocalDate.now());
+        return new LoanApplicationDTO(
+                application.getLoan().getLoanType(),
+                application.getAmount(),
+                application.getPurpose()
+        );
+    }
 
-	    LoanApplication saved = loanApplicationRepository.save(application);
+    // ================= GET ALL APPLICATIONS =================
 
-	    LoanApprovalDTO response = new LoanApprovalDTO();
-	    response.setApplicationId(saved.getApplicationId());
-	    response.setStatus(saved.getStatus());
-	    response.setRemarks(saved.getRemarks());
+    @Override
+    public List<LoanApplicationDTO> getAllApplications() {
 
-	    return response;
-	}
+        return loanApplicationRepository.findAll()
+                .stream()
+                .map(app -> new LoanApplicationDTO(
+                        app.getLoan().getLoanType(),
+                        app.getAmount(),
+                        app.getPurpose()
+                ))
+                .collect(Collectors.toList());
+    }
 
+    // ================= APPROVE / REJECT LOAN =================
+
+    @Override
+    public LoanApprovalDTO approveOrRejectLoan(Long applicationId, LoanApprovalDTO approvalDTO) {
+
+        LoanApplication application = loanApplicationRepository.findById(applicationId)
+                .orElseThrow(() -> new RuntimeException("Loan application not found"));
+
+        application.setStatus(approvalDTO.getStatus());
+        application.setRemarks(approvalDTO.getRemarks());
+        application.setApprovedDate(LocalDate.now());
+
+        LoanApplication savedApplication = loanApplicationRepository.save(application);
+
+        LoanApprovalDTO response = new LoanApprovalDTO();
+        response.setApplicationId(savedApplication.getApplicationId());
+        response.setStatus(savedApplication.getStatus());
+        response.setRemarks(savedApplication.getRemarks());
+
+        return response;
+    }
 }

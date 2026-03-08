@@ -82,13 +82,13 @@ public class AdminController {
        LOAN MANAGEMENT (ADMIN)
        ========================= */
 
-    @PostMapping("/loans")
-    public ResponseEntity<LoanDTO> createLoan(
-            @Valid @RequestBody LoanDTO loanDTO) {
-
-        LoanDTO createdLoan = loanService.createLoan(loanDTO);
-        return new ResponseEntity<>(createdLoan, HttpStatus.CREATED);
-    }
+//    @PostMapping("/loans")
+//    public ResponseEntity<LoanDTO> createLoan(
+//            @Valid @RequestBody LoanDTO loanDTO) {
+//
+//        LoanDTO createdLoan = loanService.createLoan(loanDTO);
+//        return new ResponseEntity<>(createdLoan, HttpStatus.CREATED);
+//    }
 
     @GetMapping("/loans")
     public ResponseEntity<List<LoanDTO>> getAllLoans() {
@@ -110,10 +110,10 @@ public class AdminController {
         return ResponseEntity.ok(loanService.updateLoan(id, loanDTO));
     }
 
-    @DeleteMapping("/loans/{id}")
-    public ResponseEntity<Void> deleteLoan(@PathVariable Long id) {
-
-        loanService.deleteLoan(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/loans/{id}")
+//    public ResponseEntity<Void> deleteLoan(@PathVariable Long id) {
+//
+//        loanService.deleteLoan(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

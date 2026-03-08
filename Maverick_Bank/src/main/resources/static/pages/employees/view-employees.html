@@ -60,5 +60,29 @@
   <script src="/services/userService.js"></script>
   <script src="/services/customerService.js"></script>
   <script src="/services/employeeService.js"></script>
+  <script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+  const navbar = document.getElementById("navbar");
+  const sidebar = document.getElementById("sidebar");
+  const footer = document.getElementById("footer");
+
+  if (navbar) {
+    const res = await fetch("/components/navbar.html");
+    navbar.innerHTML = await res.text();
+  }
+
+  if (sidebar) {
+    const res = await fetch("/components/sidebar.html");
+    sidebar.innerHTML = await res.text();
+  }
+
+  if (footer) {
+    const res = await fetch("/components/footer.html");
+    footer.innerHTML = await res.text();
+  }
+
+});
+</script>
 </body>
 </html>

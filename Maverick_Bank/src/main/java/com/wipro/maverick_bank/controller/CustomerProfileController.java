@@ -29,7 +29,7 @@ public class CustomerProfileController {
 	/**
 	 * Create Customer Profile Accessible by: ADMIN
 	 */
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/add")
 	public ResponseEntity<CustomerProfileDTO> createCustomerProfile(@Valid @RequestBody CustomerProfileDTO dto) {
 
@@ -41,7 +41,7 @@ public class CustomerProfileController {
 	/**
 	 * Get Customer Profile by ID Accessible by: ADMIN, EMPLOYEE
 	 */
-	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+	//@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
 	@GetMapping("/get/{id}")
 	public ResponseEntity<CustomerProfileDTO> getCustomerProfileById(@PathVariable Long id) {
 

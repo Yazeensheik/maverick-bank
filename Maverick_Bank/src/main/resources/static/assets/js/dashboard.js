@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     ]);
 
     const users = usersRes.data || [];
-    const customers = customersRes.data || [];
-    const employees = employeesRes.data || [];
+    const customers = users.filter(user => user.role === "CUSTOMER")
+	const employeeUsers = users.filter(user => user.role === "EMPLOYEE");
 
     document.getElementById('usersCount').textContent = users.length;
     document.getElementById('customersCount').textContent = customers.length;
-    document.getElementById('employeesCount').textContent = employees.length;
+    document.getElementById('employeesCount').textContent = employeeUsers.length;
 
     const recentBody = document.getElementById('recentUsersBody');
     recentBody.innerHTML = users.slice(0, 5).map(user => `

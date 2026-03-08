@@ -14,8 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoanApplicationDTO {
 
-	@NotNull(message = "Loan ID is required")
-	private Long loanId;
+	@NotNull(message = "Loan Type is required")
+	private String loanType;
 	
 	@NotNull(message = "Amount is required")
 	@Min(value = 1000, message = "Loan amount must be at least 1000")

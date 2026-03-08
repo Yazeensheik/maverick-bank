@@ -23,8 +23,12 @@ password:password
 .then(response => response.json())
 
 .then(data => {
-	
-	console.log(data);   
+
+console.log(data);
+
+// STORE TOKEN
+localStorage.setItem("token", data.token);
+localStorage.setItem("username", data.username);
 
 let role = data.role.name;
 
@@ -38,10 +42,6 @@ window.location.href="/modules/dashboard/customer-dashboard.html";
 
 else if(role === "EMPLOYEE"){
 window.location.href="/modules/dashboard/employee-dashboard.html";
-}
-
-else{
-document.getElementById("error").innerText="Invalid credentials";
 }
 
 })
