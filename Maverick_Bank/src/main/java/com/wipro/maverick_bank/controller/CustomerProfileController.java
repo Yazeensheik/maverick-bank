@@ -23,67 +23,42 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/customer-profile")
 public class CustomerProfileController {
 
-	@Autowired
-	private CustomerProfileService customerProfileService;
+    @Autowired
+    private CustomerProfileService customerProfileService;
 
-	/**
-	 * Create Customer Profile Accessible by: ADMIN
-	 */
-	//@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/add")
-	public ResponseEntity<CustomerProfileDTO> createCustomerProfile(@Valid @RequestBody CustomerProfileDTO dto) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/add")
+    public ResponseEntity<CustomerProfileDTO> createCustomerProfile(@Valid @RequestBody CustomerProfileDTO dto) {
+        CustomerProfileDTO created = customerProfileService.createCustomerProfile(dto);
+        return ResponseEntity.ok(created);
+    }
 
-		CustomerProfileDTO created = customerProfileService.createCustomerProfile(dto);
+    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+    @GetMapping("/get/{id}")
+    public ResponseEntity<CustomerProfileDTO> getCustomerProfileById(@PathVariable Long id) {
+        CustomerProfileDTO profile = customerProfileService.getCustomerProfileById(id);
+        return ResponseEntity.ok(profile);
+    }
 
-		return ResponseEntity.ok(created);
-	}
+    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+    @GetMapping("/get/all")
+    public ResponseEntity<List<CustomerProfileDTO>> getAllCustomerProfiles() {
+        List<CustomerProfileDTO> profiles = customerProfileService.getAllCustomerProfiles();
+        return ResponseEntity.ok(profiles);
+    }
 
-	/**
-	 * Get Customer Profile by ID Accessible by: ADMIN, EMPLOYEE
-	 */
-	//@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
-	@GetMapping("/get/{id}")
-	public ResponseEntity<CustomerProfileDTO> getCustomerProfileById(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CustomerProfileDTO> updateCustomerProfile(@PathVariable Long id,
+            @Valid @RequestBody CustomerProfileDTO dto) {
+        CustomerProfileDTO updated = customerProfileService.updateCustomerProfile(id, dto);
+        return ResponseEntity.ok(updated);
+    }
 
-		CustomerProfileDTO profile = customerProfileService.getCustomerProfileById(id);
-
-		return ResponseEntity.ok(profile);
-	}
-
-	/**
-	 * Get All Customer Profiles Accessible by: ADMIN
-	 */
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/get/all")
-	public ResponseEntity<List<CustomerProfileDTO>> getAllCustomerProfiles() {
-
-		List<CustomerProfileDTO> profiles = customerProfileService.getAllCustomerProfiles();
-
-		return ResponseEntity.ok(profiles);
-	}
-
-	/**
-	 * Update Customer Profile Accessible by: ADMIN
-	 */
-	@PreAuthorize("hasRole('ADMIN')")
-	@PutMapping("/update/{id}")
-	public ResponseEntity<CustomerProfileDTO> updateCustomerProfile(@PathVariable Long id,
-			@Valid @RequestBody CustomerProfileDTO dto) {
-
-		CustomerProfileDTO updated = customerProfileService.updateCustomerProfile(id, dto);
-
-		return ResponseEntity.ok(updated);
-	}
-
-	/**
-	 * Delete Customer Profile Accessible by: ADMIN
-	 */
-	@PreAuthorize("hasRole('ADMIN')")
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteCustomerProfile(@PathVariable Long id) {
-
-		customerProfileService.deleteCustomerProfile(id);
-
-		return ResponseEntity.ok("Customer profile deleted successfully");
-	}
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCustomerProfile(@PathVariable Long id) {
+        customerProfileService.deleteCustomerProfile(id);
+        return ResponseEntity.ok("Customer profile deleted successfully");
+    }
 }

@@ -9,7 +9,5 @@ import com.wipro.maverick_bank.entity.EmployeeProfile;
 
 @Repository
 public interface EmployeeProfileRepository extends JpaRepository<EmployeeProfile, Long> {
-
     Optional<EmployeeProfile> findByUserId(Long userId);
-
 }
