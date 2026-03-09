@@ -10,142 +10,108 @@
   <link rel="stylesheet" href="/assets/css/forms.css">
   <link rel="stylesheet" href="/assets/css/dashboard.css">
 </head>
-
 <body>
-
-
-<!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-primary">
-<div class="container-fluid">
-<span class="navbar-brand mb-0 h1">Maverick Bank</span>
-
-<a href="/modules/dashboard/account-dashboard.html" class="btn btn-secondary mb-3">← Back to Dashboard</a>
-
-</div>
-</nav>
-
   <div class="app-shell">
-    <aside ></aside>
+    <aside id="sidebar"></aside>
 
+    <div class="app-main">
+      <header id="navbar"></header>
 
-<div class="app-shell">
+      <main class="content-area">
+        <div class="content-header">
+          <div>
+            <h2 class="mb-1">Add Beneficiary</h2>
+            <p class="text-muted mb-0">Add a new beneficiary account</p>
+          </div>
+        </div>
 
-<aside id="sidebar"></aside>
+        <div id="globalAlert"></div>
 
-<div class="app-main">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-xl-6">
+            <div class="panel-card">
+              <h5 class="mb-4">Beneficiary Details</h5>
 
-<header id="navbar"></header>
+              <form id="beneficiaryForm">
+                <div class="mb-3">
+                  <label for="beneficiaryName" class="form-label">Beneficiary Name</label>
+                  <input type="text" class="form-control" id="beneficiaryName" required>
+                </div>
 
-<main class="content-area">
+                <div class="mb-3">
+                  <label for="accountNumber" class="form-label">Account Number</label>
+                  <input type="text" class="form-control" id="accountNumber" required>
+                </div>
 
-<div class="content-header">
-<div>
-<h2 class="mb-1">Add Beneficiary</h2>
-<p class="text-muted mb-0">Add a new beneficiary account</p>
-</div>
-</div>
+                <div class="mb-3">
+                  <label for="bankName" class="form-label">Bank Name</label>
+                  <input type="text" class="form-control" id="bankName" required>
+                </div>
 
-<div id="globalAlert"></div>
+                <div class="mb-3">
+                  <label for="branchName" class="form-label">Branch Name</label>
+                  <input type="text" class="form-control" id="branchName" required>
+                </div>
 
-<div class="row justify-content-center">
-<div class="col-lg-7 col-xl-6">
+                <div class="mb-3">
+                  <label for="ifscCode" class="form-label">IFSC Code</label>
+                  <input type="text" class="form-control" id="ifscCode" required>
+                </div>
 
-<div class="panel-card">
+                <div class="mb-4">
+                  <label for="accountId" class="form-label">Account ID</label>
+                  <input type="number" class="form-control" id="accountId" required>
+                </div>
 
-<h5 class="mb-4">Beneficiary Details</h5>
+                <div class="d-grid">
+                  <button class="btn btn-bank" type="submit">Add Beneficiary</button>
+                </div>
+              </form>
 
-<form id="beneficiaryForm">
+              <div id="message" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </main>
 
-<div class="mb-3">
-<label class="form-label">Beneficiary Name</label>
-<input type="text" class="form-control" id="beneficiaryName" required>
-</div>
+      <footer id="footer"></footer>
+    </div>
+  </div>
 
-<div class="mb-3">
-<label class="form-label">Account Number</label>
-<input type="text" class="form-control" id="accountNumber" required>
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
+  <script src="/assets/js/config.js"></script>
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/utils.js"></script>
+  <script src="/assets/js/auth.js"></script>
 
-<div class="mb-3">
-<label class="form-label">Bank Name</label>
-<input type="text" class="form-control" id="bankName" required>
-</div>
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+        const navbar = document.getElementById("navbar");
+        const sidebar = document.getElementById("sidebar");
+        const footer = document.getElementById("footer");
 
-<div class="mb-3">
-<label class="form-label">Branch Name</label>
-<input type="text" class="form-control" id="branchName" required>
-</div>
+        if (navbar) {
+          const res = await fetch("/components/navbar.html");
+          navbar.innerHTML = await res.text();
+        }
 
-<div class="mb-3">
-<label class="form-label">IFSC Code</label>
-<input type="text" class="form-control" id="ifscCode" required>
-</div>
+        if (sidebar) {
+          const res = await fetch("/components/sidebar.html");
+          sidebar.innerHTML = await res.text();
+        }
 
-<div class="mb-4">
-<label class="form-label">Account ID</label>
-<input type="number" class="form-control" id="accountId" required>
-</div>
+        if (footer) {
+          const res = await fetch("/components/footer.html");
+          footer.innerHTML = await res.text();
+        }
+      } catch (e) {
+        console.error("Layout load failed", e);
+      }
+    });
+  </script>
 
-<div class="d-grid">
-<button class="btn btn-bank" type="submit">Add Beneficiary</button>
-</div>
-
-</form>
-
-<div id="message" class="mt-3"></div>
-
-</div>
-
-</div>
-</div>
-
-</main>
-
-<footer id="footer"></footer>
-
-</div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios@1.6.8/dist/axios.min.js"></script>
-
-<script src="/assets/js/config.js"></script>
-<script src="/assets/js/api.js"></script>
-<script src="/assets/js/utils.js"></script>
-<script src="/assets/js/auth.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", async function () {
-
-try {
-
-const navbar = document.getElementById("navbar");
-const sidebar = document.getElementById("sidebar");
-const footer = document.getElementById("footer");
-
-if (navbar) {
-const res = await fetch("/components/navbar.html");
-navbar.innerHTML = await res.text();
-}
-
-if (sidebar) {
-const res = await fetch("/components/sidebar.html");
-sidebar.innerHTML = await res.text();
-}
-
-if (footer) {
-const res = await fetch("/components/footer.html");
-footer.innerHTML = await res.text();
-}
-
-} catch (e) {
-console.error("Layout load failed", e);
-}
-
-});
-</script>
-
-<script src="/js/services/beneficiaryService.js"></script>
-<script src="/js/controllers/addBeneficiaryController.js"></script>
-
+  <script src="/js/services/beneficiaryService.js"></script>
+  <script src="/js/controllers/addBeneficiaryController.js"></script>
 </body>
 </html>
