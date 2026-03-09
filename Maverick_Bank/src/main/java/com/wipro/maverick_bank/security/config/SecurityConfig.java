@@ -65,6 +65,8 @@ public class SecurityConfig {
                 // 🔓 Auth APIs
                 .requestMatchers("/auth/**", "/api/auth/**", "/api/users/login","/api/users/add/customer",
                 		"/api/users/add/employee").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/loan-applications/**").permitAll()
 
                 // 🔐 Everything else requires login
                 .anyRequest().authenticated()

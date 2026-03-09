@@ -36,8 +36,6 @@ public class CustomerProfile {
     @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LoanApplication> loanApplications;
 
     public CustomerProfile() {}
 
@@ -81,7 +79,5 @@ public class CustomerProfile {
         return accounts;
     }
 
-    public List<LoanApplication> getLoanApplications() {
-        return loanApplications;
-    }
+    
 }

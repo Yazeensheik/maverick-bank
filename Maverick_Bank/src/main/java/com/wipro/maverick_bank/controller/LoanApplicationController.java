@@ -2,9 +2,8 @@ package com.wipro.maverick_bank.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,43 +13,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wipro.maverick_bank.dto.LoanApplicationDTO;
-import com.wipro.maverick_bank.dto.LoanApprovalDTO;
+import com.wipro.maverick_bank.entity.Loan;
+import com.wipro.maverick_bank.repository.LoanRepository;
 import com.wipro.maverick_bank.service.LoanApplicationService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/loan-applications")
 public class LoanApplicationController {
+	
+	@Autowired
+	private LoanRepository loanRepository;
 
-	private final LoanApplicationService loanApplicationService;
+    @Autowired
+    private LoanApplicationService loanApplicationService;
 
-	public LoanApplicationController(LoanApplicationService loanApplicationService) {
-		this.loanApplicationService = loanApplicationService;
-	}
+    @GetMapping("/loans")
+    public ResponseEntity<List<Loan>> getAvailableLoans(){
 
-	@PostMapping("/api/loan-applications")
-	public ResponseEntity<LoanApplicationDTO> applyforLoan(@PathVariable String username,
-			@Valid @RequestBody LoanApplicationDTO dto) {
-		LoanApplicationDTO response = loanApplicationService.applyForLoan(username, dto);
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
-	}
+        List<Loan> loans = loanRepository.findAll();
 
-	@GetMapping("/{id}")
-	public ResponseEntity<LoanApplicationDTO> getApplicationByID(@PathVariable Long id) {
-		return ResponseEntity.ok(loanApplicationService.getApplicationById(id));
-	}
+        return ResponseEntity.ok(loans);
+    }
+    
+    @PostMapping("/apply")
+    public ResponseEntity<LoanApplicationDTO> applyLoan(@RequestBody LoanApplicationDTO dto) {
+        return ResponseEntity.ok(loanApplicationService.applyLoan(dto));
+    }
 
-	@GetMapping
-	public ResponseEntity<List<LoanApplicationDTO>> getAllApplications() {
-		return ResponseEntity.ok(loanApplicationService.getAllApplications());
-	}
+    @GetMapping("/{id}")
+    public ResponseEntity<LoanApplicationDTO> getLoanApplication(@PathVariable Long id) {
+        return ResponseEntity.ok(loanApplicationService.getApplicationById(id));
+    }
+    
+    @GetMapping("/all")
+    public ResponseEntity<List<LoanApplicationDTO>> getAllApplications() {
+        return ResponseEntity.ok(loanApplicationService.getAllApplications());
+    }
+    
+    @PutMapping("/{id}/approve")
+    public ResponseEntity<String> approveLoan(@PathVariable Long id) {
 
-	//@PreAuthorize("hasRole('EMPLOYEE')")
-	@PutMapping("/{id}/decision")
-	public ResponseEntity<LoanApprovalDTO> approveOrRejectLoan(@PathVariable Long id,
-			@Valid @RequestBody LoanApprovalDTO approvalDTO) {
-		LoanApprovalDTO response = loanApplicationService.approveOrRejectLoan(id, approvalDTO);
-		return ResponseEntity.ok(response);
-	}
+        loanApplicationService.approveLoan(id);
+
+        return ResponseEntity.ok("Loan Approved");
+    }
+    
+    @PutMapping("/{id}/reject")
+    public ResponseEntity<String> rejectLoan(@PathVariable Long id) {
+
+        loanApplicationService.rejectLoan(id);
+
+        return ResponseEntity.ok("Loan Rejected");
+    }
 }
