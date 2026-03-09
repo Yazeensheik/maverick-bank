@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wipro.maverick_bank.dto.CreateUserRequestDTO;
-import com.wipro.maverick_bank.dto.LoanDTO;
 import com.wipro.maverick_bank.dto.UserDTO;
-import com.wipro.maverick_bank.service.LoanService;
 import com.wipro.maverick_bank.service.UserService;
 
 import jakarta.validation.Valid;
@@ -28,11 +26,10 @@ import jakarta.validation.Valid;
 public class AdminController {
 
     private final UserService userService;
-    private final LoanService loanService;
+   
 
-    public AdminController(UserService userService, LoanService loanService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.loanService = loanService;
     }
 
     /* =========================
@@ -78,42 +75,5 @@ public class AdminController {
         return ResponseEntity.ok("User deactivated successfully");
     }
 
-    /* =========================
-       LOAN MANAGEMENT (ADMIN)
-       ========================= */
-
-//    @PostMapping("/loans")
-//    public ResponseEntity<LoanDTO> createLoan(
-//            @Valid @RequestBody LoanDTO loanDTO) {
-//
-//        LoanDTO createdLoan = loanService.createLoan(loanDTO);
-//        return new ResponseEntity<>(createdLoan, HttpStatus.CREATED);
-//    }
-
-    @GetMapping("/loans")
-    public ResponseEntity<List<LoanDTO>> getAllLoans() {
-
-        return ResponseEntity.ok(loanService.getAllLoans());
-    }
-
-    @GetMapping("/loans/{id}")
-    public ResponseEntity<LoanDTO> getLoanById(@PathVariable Long id) {
-
-        return ResponseEntity.ok(loanService.getLoanById(id));
-    }
-
-    @PutMapping("/loans/{id}")
-    public ResponseEntity<LoanDTO> updateLoan(
-            @PathVariable Long id,
-            @Valid @RequestBody LoanDTO loanDTO) {
-
-        return ResponseEntity.ok(loanService.updateLoan(id, loanDTO));
-    }
-
-//    @DeleteMapping("/loans/{id}")
-//    public ResponseEntity<Void> deleteLoan(@PathVariable Long id) {
-//
-//        loanService.deleteLoan(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    
 }

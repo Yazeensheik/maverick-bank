@@ -1,44 +1,33 @@
 package com.wipro.maverick_bank.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "loans")
 public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long loanId;
+    private Long id;
 
-    @Column(nullable = false)
-    private String loanType; // HOME, PERSONAL, EDUCATION
+    private String loanType;
+    private Double interestRate;
+    private Double minAmount;
+    private Double maxAmount;
+    private Integer tenure;
 
-    private double interestRate;
-
-    private double minAmount;
-
-    private double maxAmount;
-
-    private int tenureInMonths;
-
-    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LoanApplication> loanApplications;
 }

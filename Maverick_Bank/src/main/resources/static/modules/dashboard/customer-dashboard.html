@@ -17,6 +17,53 @@
 <div class="app-shell">
 
 <aside id="sidebar"></aside>
+<!-- Sidebar -->
+<aside id="sidebar">
+<div class="sidebar p-3">
+
+  <!-- Logo -->
+  <h4 class="text-center mb-4 fw-bold text-success">
+    Maverick Bank
+  </h4>
+
+  <ul class="nav flex-column">
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/customer-dashboard.html">
+        Dashboard
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/account-dashboard.html">
+        Accounts
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/transactions-dashboard.html">
+        Transactions
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/loan/loans.html">
+        Loans
+      </a>
+    </li>
+
+    <hr>
+
+    <li class="nav-item mt-3">
+      <button class="btn btn-outline-danger w-100" onclick="logout()">
+        Logout
+      </button>
+    </li>
+
+  </ul>
+
+</div>
+</aside>
 
 <div class="app-main">
 
@@ -50,6 +97,7 @@
 </div>
 
 <div class="col-md-4">
+<a href="/modules/loan/loans.html" style="text-decoration:none;">
 <div class="stat-card text-center">
 <p class="mb-2">Financial Support</p>
 <h3>Loans</h3>
@@ -98,7 +146,7 @@
 </div>
 
 <div class="col-md-6">
-<a href="/modules/loans/loans.html" class="text-decoration-none">
+<a href="/modules/loan/loans.html" class="text-decoration-none">
 <div class="stat-card text-center h-100">
 <h5>Loans</h5>
 <p class="text-muted mb-0">Manage loan applications</p>
@@ -132,8 +180,11 @@ View Accounts
 Transaction Dashboard
 </a>
 
-<a class="btn btn-outline-primary" href="/modules/loans/loans.html">
+<a class="btn btn-outline-primary" href="/modules/loan/loans.html">
 Loan Services
+<div class="col-md-4">
+<a class="btn btn-outline-primary w-100" href="/modules/loan/apply-loan.html">
+Apply Loan
 </a>
 
 </div>

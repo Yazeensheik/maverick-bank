@@ -1,26 +1,62 @@
 package com.wipro.maverick_bank.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class LoanApplicationDTO {
 
-	@NotNull(message = "Loan Type is required")
-	private String loanType;
-	
-	@NotNull(message = "Amount is required")
-	@Min(value = 1000, message = "Loan amount must be at least 1000")
-	private double amount;
-	
-	@NotBlank(message = "Purpose is required")
-	private String purpose;
+    private Long applicationId;
+    private Long loanId;
+    private Double amount;
+    private String purpose;
+    private String status;
+
+    public LoanApplicationDTO() {}
+
+    public LoanApplicationDTO(Long applicationId, Long loanId, Double amount, String purpose, String status) {
+        this.applicationId = applicationId;
+        this.loanId = loanId;
+        this.amount = amount;
+        this.purpose = purpose;
+        this.status=status;
+    }
+
+    public Long getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Long applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public Long getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(Long loanId) {
+        this.loanId = loanId;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+    
+    
 }
