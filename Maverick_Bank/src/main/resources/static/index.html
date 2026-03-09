@@ -1,99 +1,265 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maverick Bank • Mobile & Digital Banking</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Maverick Bank</title>
-
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
-
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-bank2 me-2"></i>Maverick Bank
+      </a>
 
-<div class="container">
+      <button class="navbar-toggler text-white border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="bi bi-list fs-2 text-white"></i>
+      </button>
 
-<a class="navbar-brand" href="#">Maverick Bank</a>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact Us</a></li>
+          <li class="nav-item">
+            <a href="/login.html" class="btn btn-login">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<div>
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="hero-left">
+            <div class="hero-tag">
+              <i class="bi bi-shield-lock"></i>
+              <span>Secure Mobile & Digital Banking</span>
+            </div>
 
-<a href="login.html" class="btn btn-outline-light me-2">Login</a>
+            <h1>MOBILE<br>BANKING</h1>
 
-<a href="register.html" class="btn btn-warning">Register</a>
+            <p>
+              Manage accounts, transactions, beneficiaries, loans, and statements through a professional digital banking experience built for customers, employees, and administrators.
+            </p>
 
-</div>
+            <div class="hero-actions">
+              <a href="/login.html" class="btn btn-start">GET STARTED</a>
+              <a href="#services" class="btn btn-outline-hero">Explore More</a>
+            </div>
 
-</div>
+            <div class="hero-features">
+              <div class="hero-feature">
+                <i class="bi bi-credit-card-2-front"></i>
+                <div>
+                  <strong>Account Access</strong>
+                  <span>Open and manage banking accounts with ease.</span>
+                </div>
+              </div>
 
-</nav>
+              <div class="hero-feature">
+                <i class="bi bi-arrow-left-right"></i>
+                <div>
+                  <strong>Secure Transfers</strong>
+                  <span>Deposit, withdraw, and transfer safely.</span>
+                </div>
+              </div>
 
-<!-- Hero Section -->
-<div class="container text-center mt-5">
+              <div class="hero-feature">
+                <i class="bi bi-cash-stack"></i>
+                <div>
+                  <strong>Loan Services</strong>
+                  <span>Apply, review, and manage banking loans.</span>
+                </div>
+              </div>
 
-<h1 class="display-4">Welcome to Maverick Bank</h1>
+              <div class="hero-feature">
+                <i class="bi bi-file-earmark-text"></i>
+                <div>
+                  <strong>Statements</strong>
+                  <span>Generate reports and transaction history instantly.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<p class="lead mt-3">
-Secure, Fast and Reliable Digital Banking
-</p>
+        <div class="col-lg-6">
+          <div class="hero-right">
+            <div class="device-stage">
+              <div class="coin c1"></div>
+              <div class="coin c2"></div>
+              <div class="coin c3"></div>
 
-<div class="mt-4">
+              <div class="phone">
+                <div class="phone-screen">TRANSACTION</div>
+              </div>
 
-<a href="login.html" class="btn btn-success btn-lg me-3">
-Login
-</a>
+              <div class="shield">
+                <i class="bi bi-lock-fill"></i>
+              </div>
 
-<a href="register.html" class="btn btn-warning btn-lg">
-Register
-</a>
+              <div class="ground"></div>
 
-</div>
+              <div class="laptop">
+                <div class="laptop-screen">
+                  <i class="bi bi-bank"></i>
+                </div>
+                <div class="keyboard"></div>
+                <div class="laptop-base"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Core Banking Services</h2>
+        <p>Everything you need in one secure banking platform for day-to-day operations and customer financial services.</p>
+      </div>
 
-<!-- Features Section -->
-<div class="container mt-5">
+      <div class="row g-4">
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-credit-card"></i></div>
+            <h5>Account Management</h5>
+            <p>Create, view, and manage customer accounts through a structured banking flow.</p>
+          </div>
+        </div>
 
-<div class="row text-center">
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-arrow-left-right"></i></div>
+            <h5>Transaction Processing</h5>
+            <p>Handle deposits, withdrawals, and transfers with secure validation.</p>
+          </div>
+        </div>
 
-<div class="col-md-4">
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-person-hearts"></i></div>
+            <h5>Beneficiaries</h5>
+            <p>Manage trusted beneficiaries for smooth transfer operations.</p>
+          </div>
+        </div>
 
-<h4>Secure Banking</h4>
-<p>Your transactions are fully protected.</p>
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-cash-stack"></i></div>
+            <h5>Loan Management</h5>
+            <p>Support loan application, review, approval, and tracking workflows.</p>
+          </div>
+        </div>
 
-</div>
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+            <h5>Statements & Reports</h5>
+            <p>Generate statements and review complete transaction history instantly.</p>
+          </div>
+        </div>
 
-<div class="col-md-4">
+        <div class="col-md-6 col-xl-4">
+          <div class="service-card reveal">
+            <div class="service-icon"><i class="bi bi-shield-check"></i></div>
+            <h5>Role-Based Security</h5>
+            <p>Separate secure access for admin, employee, and customer users.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h4>Loan Services</h4>
-<p>Apply and track loans easily.</p>
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="about-box reveal">
+            <h3>About Maverick Bank</h3>
+            <p>
+              Maverick Bank is designed to provide a modern digital banking platform that feels secure, professional, and easy to use.
+            </p>
+            <p>
+              The platform supports customers, employees, and administrators with role-based dashboards and banking modules for accounts, transactions, beneficiaries, loans, and reports.
+            </p>
 
-</div>
+            <div class="about-list">
+              <div class="about-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Modern banking landing page and secure login flow</span>
+              </div>
+              <div class="about-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Enterprise-style dashboard experience</span>
+              </div>
+              <div class="about-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Fast digital operations with secure access</span>
+              </div>
+              <div class="about-item">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Professional UI for real-world project presentation</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div class="col-md-4">
+        <div class="col-lg-6">
+          <div class="about-visual reveal">
+            <div class="ring r1"></div>
+            <div class="ring r2"></div>
+            <div class="ring r3"></div>
+            <div class="about-center">
+              <i class="bi bi-bank"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h4>24/7 Access</h4>
-<p>Bank anytime, anywhere.</p>
+  <section class="cta" id="contact">
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2>Start your banking journey today</h2>
+        <p>
+          Access Maverick Bank’s secure platform and experience a smarter way to manage digital banking operations.
+        </p>
+        <a href="/login.html" class="btn btn-light btn-lg px-4 fw-bold rounded-pill">Login to Dashboard</a>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <footer class="footer">
+    <div class="container">
+      © 2026 Maverick Bank • Secure Mobile & Digital Banking Platform
+    </div>
+  </footer>
 
-</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-</div>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.14 });
 
-<!-- Footer -->
-<footer class="bg-dark text-light text-center p-3 mt-5">
-
-<p>© 2026 Maverick Bank | Digital Banking System</p>
-
-</footer>
-
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
