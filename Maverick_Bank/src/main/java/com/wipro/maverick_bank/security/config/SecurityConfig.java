@@ -71,6 +71,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/transactions/**").permitAll()
                 .requestMatchers("/api/statements/**").permitAll()
 
+                .requestMatchers("/api/v1/accounts/**").permitAll()
+                .requestMatchers("/api/v1/beneficiaries**").permitAll()
+
                 // 🔐 Everything else requires login
                 .anyRequest().authenticated()
             )
