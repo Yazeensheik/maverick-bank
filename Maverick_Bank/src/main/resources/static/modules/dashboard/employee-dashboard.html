@@ -12,10 +12,54 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside id="sidebar"></aside>
+    <aside>
+    <div class="sidebar p-3">
+
+  <!-- Logo -->
+  <h4 class="text-center mb-4 fw-bold text-success">
+    Maverick Bank
+  </h4>
+
+  <ul class="nav flex-column">
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/employee-dashboard.html">
+        Dashboard
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/accounts/account-list.html">
+        View Accounts
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/transactions-dashboard.html">
+        Transactions
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/loan/loans.html">
+        Loans
+      </a>
+    </li>
+
+
+
+    <li class="nav-item mt-3">
+      <button class="btn btn-outline-danger w-100" onclick="logout()">
+        Logout
+      </button>
+    </li>
+
+  </ul>
+
+</div>
+</aside>
 
     <div class="app-main">
-      <header id="navbar"></header>
 
       <main class="content-area">
         <div class="content-header">
@@ -59,7 +103,7 @@
 
               <div class="row g-3">
                 <div class="col-md-6">
-                  <a href="/dashboard.html#customers/view-customers" class="text-decoration-none">
+                  <a href="/pages/customers/view-customers.html" class="text-decoration-none">
                     <div class="stat-card text-center h-100">
                       <h5>Customers</h5>
                       <p class="text-muted mb-0">View customer profiles</p>
@@ -68,7 +112,7 @@
                 </div>
 
                 <div class="col-md-6">
-                  <a href="/dashboard.html#employees/view-employees" class="text-decoration-none">
+                  <a href="/pages/employees/view-employees.html" class="text-decoration-none">
                     <div class="stat-card text-center h-100">
                       <h5>Employees</h5>
                       <p class="text-muted mb-0">View employee profiles</p>
@@ -86,7 +130,7 @@
                 </div>
 
                 <div class="col-md-6">
-                  <a href="/dashboard.html#transactions/history" class="text-decoration-none">
+                  <a href="/modules/transactions/history.html" class="text-decoration-none">
                     <div class="stat-card text-center h-100">
                       <h5>Transactions</h5>
                       <p class="text-muted mb-0">View transaction history</p>
@@ -119,11 +163,11 @@
             <div class="panel-card h-100">
               <h5 class="mb-3">Quick Actions</h5>
               <div class="d-grid gap-2">
-                <a class="btn btn-bank" href="/dashboard.html#customers/view-customers">View Customers</a>
-                <a class="btn btn-outline-primary" href="/dashboard.html#employees/view-employees">View Employees</a>
-                <a class="btn btn-outline-primary" href="/dashboard.html#accounts/view-accounts">View Accounts</a>
-                <a class="btn btn-outline-primary" href="/dashboard.html#transactions/history">Transaction History</a>
-                <a class="btn btn-outline-primary" href="/dashboard.html#beneficiaries/list">Beneficiaries</a>
+                <a class="btn btn-bank" href="/pages/customers/view-customers.html">View Customers</a>
+                <a class="btn btn-outline-primary" href="/pages/employees/view-employees.html">View Employees</a>
+                <a class="btn btn-outline-primary" href="/modules/accounts/account-list.html">View Accounts</a>
+                <a class="btn btn-outline-primary" href="/modules/transactions/history.html">Transaction History</a>
+                <a class="btn btn-outline-primary" href="/modules/beneficiaries/list.html">Beneficiaries</a>
                 <a class="btn btn-outline-primary" href="/modules/loan/employee-loans.html">Loan Requests</a>
               </div>
             </div>
@@ -141,66 +185,6 @@
   <script src="/assets/js/utils.js"></script>
   <script src="/assets/js/auth.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-      try {
-        const navbar = document.getElementById("navbar");
-        const sidebar = document.getElementById("sidebar");
-        const footer = document.getElementById("footer");
-
-        if (navbar) {
-          const res = await fetch("/components/navbar.html");
-          navbar.innerHTML = await res.text();
-
-          const badge =
-            navbar.querySelector(".user-chip") ||
-            navbar.querySelector(".user-badge") ||
-            navbar.querySelector(".profile-chip") ||
-            navbar.querySelector(".badge");
-
-          if (badge) {
-            badge.textContent = "Employee";
-          }
-
-          const subtitle =
-            navbar.querySelector(".navbar-subtitle") ||
-            navbar.querySelector(".text-muted");
-
-          if (subtitle) {
-            subtitle.textContent = "Secure employee dashboard";
-          }
-        }
-
-        if (sidebar) {
-          const res = await fetch("/components/sidebar.html");
-          sidebar.innerHTML = await res.text();
-
-          const brandTitle =
-            sidebar.querySelector(".brand-copy h5") ||
-            sidebar.querySelector(".sidebar-brand-text h5");
-
-          if (brandTitle) {
-            brandTitle.textContent = "Maverick Bank";
-          }
-
-          const brandSub =
-            sidebar.querySelector(".brand-copy p") ||
-            sidebar.querySelector(".sidebar-brand-text p") ||
-            sidebar.querySelector(".text-muted");
-
-          if (brandSub) {
-            brandSub.textContent = "Employee Panel";
-          }
-        }
-
-        if (footer) {
-          const res = await fetch("/components/footer.html");
-          footer.innerHTML = await res.text();
-        }
-      } catch (e) {
-        console.error("Layout load failed", e);
-      }
-    });
-  </script>
+  
 </body>
 </html>

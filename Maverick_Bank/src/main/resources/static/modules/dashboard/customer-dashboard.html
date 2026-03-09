@@ -14,37 +14,50 @@
 <body>
   <div class="app-shell">
     <aside id="sidebar">
-    <div class="sidebar-wrap">
-	<div class="sidebar-brand">
-		<div class="brand-mark">MB</div>
-		<div>
-			<div class="fw-bold">Maverick Bank</div>
-			
-		</div>
-	</div>
+    <div class="sidebar p-3">
 
-	<nav class="sidebar-nav">
-		<a href="/modules/dashboard/customer-dashboard.html">Dashboard</a>
-		
-		<div class="menu-title">Accounts</div>
+  <!-- Logo -->
+  <h4 class="text-center mb-4 fw-bold text-success">
+    Maverick Bank
+  </h4>
 
-		<a href="/modules/accounts/open-account.html">Open Account</a> <a
-			href="/modules/accounts/account-list.html">View Accounts</a>
+  <ul class="nav flex-column">
 
-		<div class="menu-title">Beneficiaries</div>
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/customer-dashboard.html">
+        Dashboard
+      </a>
+    </li>
 
-		<a href="/modules/beneficiaries/add-beneficiary.html">Add
-			Beneficiary</a> <a href="/modules/beneficiaries/list.html">View
-			Beneficiaries</a>
-		
-		<div class="menu-title">Loans</div>	
-		<a href="/modules/loan/apply-loan.html">Apply Loan</a> 
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/accounts/account-list.html">
+        View Accounts
+      </a>
+    </li>
 
-		<div class="menu-title">Session</div>
-		<a href="#" onclick="logout(); return false;">Logout</a>
-	</nav>
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/dashboard/transactions-dashboard.html">
+        Transactions
+      </a>
+    </li>
+
+    <li class="nav-item mb-2">
+      <a class="nav-link" href="/modules/loan/loans.html">
+        Loans
+      </a>
+    </li>
+
+
+
+    <li class="nav-item mt-3">
+      <button class="btn btn-outline-danger w-100" onclick="logout()">
+        Logout
+      </button>
+    </li>
+
+  </ul>
+
 </div>
-    
     </aside>
 
     <div class="app-main">
