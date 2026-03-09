@@ -1,104 +1,123 @@
-function selectLoan(loanId){
-
-document.getElementById("loanId").value = loanId;
-
+function selectLoan(loanId) {
+  document.getElementById("loanId").value = loanId;
 }
 
-function getLoan(){
+async function getLoan() {
+  const id = document.getElementById("searchId").value;
+  const table = document.getElementById("loanTable");
 
-let id = document.getElementById("searchId").value;
+  if (!id) {
+    alert("Enter Application ID");
+    return;
+  }
 
-fetch("http://localhost:8080/api/loan-applications/" + id)
+  try {
+    const response = await fetch("http://localhost:8080/api/loan-applications/" + id);
 
-.then(response => response.json())
+    if (!response.ok) {
+      throw new Error("Loan application not found");
+    }
 
-.then(data => {
+    const data = await response.json();
 
-let table = document.getElementById("loanTable");
-
-table.innerHTML = `
-<tr>
-<td>${data.loanId}</td>
-<td>${data.amount}</td>
-<td>${data.purpose}</td>
-<td>${data.status}</td>
-</tr>
-`;
-
-});
-
-}
-window.onload = loadLoans;
-
-function loadLoans(){
-
-fetch("http://localhost:8080/api/loan-applications/loans")
-.then(response => response.json())
-.then(data => {
-
-let table = document.getElementById("loanList");
-
-table.innerHTML="";
-
-data.forEach(loan => {
-
-	let row = `
-	<tr>
-	<td>${loan.id}</td>
-	<td>${loan.loanType}</td>
-	<td>${loan.interestRate}%</td>
-	<td>
-	<button class="btn btn-success"
-	onclick="selectLoan(${loan.id})">
-	Apply
-	</button>
-	</td>
-	</tr>
-	`;
-table.innerHTML += row;
-
-});
-
-});
-
+    table.innerHTML = `
+      <tr>
+        <td>${data.loanType || data.loanId || "-"}</td>
+        <td>${data.amount || "-"}</td>
+        <td>${data.purpose || "-"}</td>
+        <td>${data.status || "-"}</td>
+      </tr>
+    `;
+  } catch (error) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="text-center text-danger">No loan application found</td>
+      </tr>
+    `;
+    console.error(error);
+  }
 }
 
-function applyLoan(){
+async function loadLoans() {
+  const table = document.getElementById("loanList");
 
-let loanData = {
+  try {
+    const response = await fetch("http://localhost:8080/api/loan-applications/loans");
 
-loanId: document.getElementById("loanId").value,
-amount: document.getElementById("amount").value,
-purpose: document.getElementById("purpose").value
+    if (!response.ok) {
+      throw new Error("Failed to load loans");
+    }
 
-};
+    const data = await response.json();
 
-fetch("http://localhost:8080/api/loan-applications/apply",{
+    table.innerHTML = "";
 
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body: JSON.stringify(loanData)
-
-})
-
-.then(response => response.json())
-
-.then(data => {
-
-alert("Loan Applied Successfully!");
-
-/* Automatically show application ID */
-
-document.getElementById("searchId").value = data.applicationId;
-
-})
-
-.catch(error => {
-console.error(error);
-});
-
+    data.forEach(loan => {
+      const row = `
+        <tr>
+          <td>${loan.id}</td>
+          <td>${loan.loanType}</td>
+          <td>${loan.interestRate}%</td>
+          <td>
+            <button class="btn btn-success btn-sm" onclick="selectLoan(${loan.id})">
+              Apply
+            </button>
+          </td>
+        </tr>
+      `;
+      table.innerHTML += row;
+    });
+  } catch (error) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="4" class="text-center text-danger">Failed to load loans</td>
+      </tr>
+    `;
+    console.error(error);
+  }
 }
+
+async function applyLoan() {
+  const loanData = {
+    loanId: document.getElementById("loanId").value,
+    amount: document.getElementById("amount").value,
+    purpose: document.getElementById("purpose").value
+  };
+
+  if (!loanData.loanId || !loanData.amount || !loanData.purpose) {
+    alert("Fill all fields");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:8080/api/loan-applications/apply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(loanData)
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to apply loan");
+    }
+
+    const data = await response.json();
+
+    alert("Loan Applied Successfully!");
+
+    document.getElementById("searchId").value = data.applicationId || "";
+    document.getElementById("applyMessage").textContent =
+      "Loan applied successfully. Application ID: " + (data.applicationId || "");
+
+    document.getElementById("amount").value = "";
+    document.getElementById("purpose").value = "";
+  } catch (error) {
+    console.error(error);
+    alert("Loan application failed");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadLoans();
+});

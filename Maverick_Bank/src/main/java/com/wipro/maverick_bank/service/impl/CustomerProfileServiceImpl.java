@@ -83,6 +83,15 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
         customerProfileRepository.delete(profile);
     }
 
+    @Override
+    public CustomerProfileDTO getMyCustomerProfile(String username) {
+
+        CustomerProfile profile = customerProfileRepository.findByUserUsername(username)
+                .orElseThrow(() -> new RuntimeException("Customer profile not found for logged-in user"));
+
+        return mapToDTO(profile);
+    }
+
     private CustomerProfileDTO mapToDTO(CustomerProfile profile) {
 
         CustomerProfileDTO dto = new CustomerProfileDTO();
@@ -92,7 +101,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
         dto.setEmail(profile.getEmail());
         dto.setPhone(profile.getPhone());
 
-        if(profile.getUser() != null) {
+        if (profile.getUser() != null) {
             dto.setUserId(profile.getUser().getId());
         }
 

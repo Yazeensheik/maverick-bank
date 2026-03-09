@@ -1,4 +1,3 @@
-
 package com.wipro.maverick_bank.repository;
 
 import java.util.Optional;
@@ -12,8 +11,7 @@ import com.wipro.maverick_bank.entity.User;
 @Repository
 public interface CustomerProfileRepository extends JpaRepository<CustomerProfile, Long> {
 
-	//Optional<CustomerProfile> findByEmail(String email);
-	Optional<CustomerProfile> findByUser(User user);
+    Optional<CustomerProfile> findByUser(User user);
 
-
+    Optional<CustomerProfile> findByUserUsername(String username);
 }

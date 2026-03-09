@@ -35,12 +35,12 @@
   padding: 24px 20px;
   box-shadow: 0 10px 24px rgba(37, 99, 235, 0.20);
   color: #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.24);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.24);
 }
 
 .stat-card p {
@@ -66,7 +66,7 @@
 
 .stat-card .text-muted,
 .stat-card p.text-muted {
-  color: rgba(255, 255, 255, 0.86) !important;
+  color: rgba(255, 255, 255, 0.88) !important;
   font-size: 0.98rem;
 }
 
@@ -85,18 +85,25 @@
   font-size: 1.02rem;
   font-weight: 600;
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.20);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-bank:hover {
   color: #ffffff;
   transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.24);
 }
 
 .btn-outline-primary {
   border-radius: 14px;
   padding: 12px 18px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+  transform: translateY(-1px);
 }
 
 .table {
@@ -112,6 +119,42 @@
 .table tbody td {
   color: #0f172a;
   border-color: #eef2f7;
+}
+
+/* Employee dashboard cards */
+.text-decoration-none .stat-card {
+  cursor: pointer;
+}
+
+.text-decoration-none:hover {
+  text-decoration: none !important;
+}
+
+/* Quick action buttons spacing */
+.d-grid.gap-2 > .btn,
+.d-grid.gap-2 > a.btn {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Better card balance */
+.row.g-4 > [class*="col-"] .panel-card.h-100 {
+  height: 100%;
+}
+
+/* Better readability inside blue action cards */
+.stat-card.text-center h5,
+.stat-card.text-center p {
+  text-align: center;
+}
+
+/* Slight rounded look for input-heavy panels too */
+.form-control,
+.form-select {
+  border-radius: 14px;
+  min-height: 46px;
 }
 
 @media (max-width: 991px) {

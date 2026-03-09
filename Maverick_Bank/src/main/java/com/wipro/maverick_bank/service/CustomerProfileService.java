@@ -15,4 +15,6 @@ public interface CustomerProfileService {
     CustomerProfileDTO updateCustomerProfile(Long id, CustomerProfileDTO dto);
 
     void deleteCustomerProfile(Long id);
+
+    CustomerProfileDTO getMyCustomerProfile(String username);
 }

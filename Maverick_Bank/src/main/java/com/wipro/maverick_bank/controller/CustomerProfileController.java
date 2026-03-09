@@ -1,5 +1,6 @@
 package com.wipro.maverick_bank.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,42 +24,49 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/customer-profile")
 public class CustomerProfileController {
 
-    @Autowired
-    private CustomerProfileService customerProfileService;
+	@Autowired
+	private CustomerProfileService customerProfileService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/add")
-    public ResponseEntity<CustomerProfileDTO> createCustomerProfile(@Valid @RequestBody CustomerProfileDTO dto) {
-        CustomerProfileDTO created = customerProfileService.createCustomerProfile(dto);
-        return ResponseEntity.ok(created);
-    }
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/add")
+	public ResponseEntity<CustomerProfileDTO> createCustomerProfile(@Valid @RequestBody CustomerProfileDTO dto) {
+		CustomerProfileDTO created = customerProfileService.createCustomerProfile(dto);
+		return ResponseEntity.ok(created);
+	}
 
-    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
-    @GetMapping("/get/{id}")
-    public ResponseEntity<CustomerProfileDTO> getCustomerProfileById(@PathVariable Long id) {
-        CustomerProfileDTO profile = customerProfileService.getCustomerProfileById(id);
-        return ResponseEntity.ok(profile);
-    }
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+	@GetMapping("/get/{id}")
+	public ResponseEntity<CustomerProfileDTO> getCustomerProfileById(@PathVariable Long id) {
+		CustomerProfileDTO profile = customerProfileService.getCustomerProfileById(id);
+		return ResponseEntity.ok(profile);
+	}
 
-    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
-    @GetMapping("/get/all")
-    public ResponseEntity<List<CustomerProfileDTO>> getAllCustomerProfiles() {
-        List<CustomerProfileDTO> profiles = customerProfileService.getAllCustomerProfiles();
-        return ResponseEntity.ok(profiles);
-    }
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')")
+	@GetMapping("/get/all")
+	public ResponseEntity<List<CustomerProfileDTO>> getAllCustomerProfiles() {
+		List<CustomerProfileDTO> profiles = customerProfileService.getAllCustomerProfiles();
+		return ResponseEntity.ok(profiles);
+	}
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update/{id}")
-    public ResponseEntity<CustomerProfileDTO> updateCustomerProfile(@PathVariable Long id,
-            @Valid @RequestBody CustomerProfileDTO dto) {
-        CustomerProfileDTO updated = customerProfileService.updateCustomerProfile(id, dto);
-        return ResponseEntity.ok(updated);
-    }
+	@PreAuthorize("hasRole('CUSTOMER')")
+	@GetMapping("/me")
+	public ResponseEntity<CustomerProfileDTO> getMyCustomerProfile(Principal principal) {
+		CustomerProfileDTO profile = customerProfileService.getMyCustomerProfile(principal.getName());
+		return ResponseEntity.ok(profile);
+	}
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCustomerProfile(@PathVariable Long id) {
-        customerProfileService.deleteCustomerProfile(id);
-        return ResponseEntity.ok("Customer profile deleted successfully");
-    }
+	@PreAuthorize("hasRole('ADMIN')")
+	@PutMapping("/update/{id}")
+	public ResponseEntity<CustomerProfileDTO> updateCustomerProfile(@PathVariable Long id,
+			@Valid @RequestBody CustomerProfileDTO dto) {
+		CustomerProfileDTO updated = customerProfileService.updateCustomerProfile(id, dto);
+		return ResponseEntity.ok(updated);
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteCustomerProfile(@PathVariable Long id) {
+		customerProfileService.deleteCustomerProfile(id);
+		return ResponseEntity.ok("Customer profile deleted successfully");
+	}
 }

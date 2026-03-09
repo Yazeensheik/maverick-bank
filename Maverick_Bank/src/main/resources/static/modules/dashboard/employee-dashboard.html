@@ -12,54 +12,52 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside>
-    <div class="sidebar p-3">
 
-  <!-- Logo -->
-  <h4 class="text-center mb-4 fw-bold text-success">
-    Maverick Bank
-  </h4>
+    <aside id="sidebar">
+      <div class="sidebar p-3">
 
-  <ul class="nav flex-column">
+        <h4 class="text-center mb-4 fw-bold text-white">
+          Maverick Bank
+        </h4>
 
-    <li class="nav-item mb-2">
-      <a class="nav-link" href="/modules/dashboard/employee-dashboard.html">
-        Dashboard
-      </a>
-    </li>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="/modules/dashboard/employee-dashboard.html">
+              Dashboard
+            </a>
+          </li>
 
-    <li class="nav-item mb-2">
-      <a class="nav-link" href="/modules/accounts/account-list.html">
-        View Accounts
-      </a>
-    </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="/modules/accounts/account-list.html">
+              View Accounts
+            </a>
+          </li>
 
-    <li class="nav-item mb-2">
-      <a class="nav-link" href="/modules/dashboard/transactions-dashboard.html">
-        Transactions
-      </a>
-    </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="/modules/dashboard/transactions-dashboard.html">
+              Transactions
+            </a>
+          </li>
 
-    <li class="nav-item mb-2">
-      <a class="nav-link" href="/modules/loan/loans.html">
-        Loans
-      </a>
-    </li>
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="/modules/loan/employee-loans.html">
+              Loans
+            </a>
+          </li>
 
+          <li class="nav-item mt-3">
+            <button class="btn btn-outline-danger w-100" onclick="logout()">
+              Logout
+            </button>
+          </li>
+        </ul>
 
-
-    <li class="nav-item mt-3">
-      <button class="btn btn-outline-danger w-100" onclick="logout()">
-        Logout
-      </button>
-    </li>
-
-  </ul>
-
-</div>
-</aside>
+      </div>
+    </aside>
 
     <div class="app-main">
+
+      <header id="navbar"></header>
 
       <main class="content-area">
         <div class="content-header">
@@ -185,6 +183,25 @@
   <script src="/assets/js/utils.js"></script>
   <script src="/assets/js/auth.js"></script>
 
-  
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+        const navbar = document.getElementById("navbar");
+        const footer = document.getElementById("footer");
+
+        if (navbar) {
+          const res = await fetch("/components/navbar.html");
+          navbar.innerHTML = await res.text();
+        }
+
+        if (footer) {
+          const res = await fetch("/components/footer.html");
+          footer.innerHTML = await res.text();
+        }
+      } catch (e) {
+        console.error("Layout load failed", e);
+      }
+    });
+  </script>
 </body>
 </html>

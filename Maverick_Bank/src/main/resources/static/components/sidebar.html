@@ -1,29 +1,123 @@
-<div class="sidebar-wrap">
-	<div class="sidebar-brand">
-		<div class="brand-mark">MB</div>
-		<div>
-			<div class="fw-bold">Maverick Bank</div>
-			<small>Admin Panel</small>
-		</div>
-	</div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidebar</title>
+</head>
+<body>
+  <div class="sidebar p-3">
 
-	<nav class="sidebar-nav">
-		<a href="/modules/dashboard/admin-dashboard.html">Dashboard</a>
-		<div class="menu-title">Users</div>
-		<a href="/pages/users/create-user.html">Create User</a> <a
-			href="/pages/users/view-users.html">View Users</a>
+    <h4 class="text-center mb-4 fw-bold text-white">
+      Maverick Bank
+    </h4>
 
-		<div class="menu-title">Customers</div>
-		<a href="/pages/customers/create-customer.html">Create Customer</a> <a
-			href="/pages/customers/view-customers.html">View Customers</a>
+    <ul class="nav flex-column">
 
-		<div class="menu-title">Employees</div>
-		<a href="/pages/employees/create-employee.html">Create Employee</a> <a
-			href="/pages/employees/view-employees.html">View Employees</a>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/dashboard/admin-dashboard.html">
+          Dashboard
+        </a>
+      </li>
+
 
 		
 
-		<div class="menu-title">Session</div>
-		<a href="#" onclick="logout(); return false;">Logout</a>
-	</nav>
-</div>
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Users</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/users/create-user.html">
+          Create User
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/users/view-users.html">
+          View Users
+        </a>
+      </li>
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Customers</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/customers/create-customer.html">
+          Create Customer
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/customers/view-customers.html">
+          View Customers
+        </a>
+      </li>
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Employees</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/employees/create-employee.html">
+          Create Employee
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/pages/employees/view-employees.html">
+          View Employees
+        </a>
+      </li>
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Accounts</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/accounts/open-account.html">
+          Open Account
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/accounts/account-list.html">
+          View Accounts
+        </a>
+      </li>
+
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Beneficiaries</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/beneficiaries/add-beneficiary.html">
+          Add Beneficiary
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/beneficiaries/list.html">
+          View Beneficiaries
+        </a>
+      </li>
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Loans</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/loan/loans.html">
+          View Loans
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="/modules/loan/apply-loan.html">
+          Apply Loan
+        </a>
+      </li>
+
+      <li class="nav-item mt-3 mb-1">
+        <small class="text-uppercase text-secondary fw-semibold">Session</small>
+      </li>
+      <li class="nav-item mb-2">
+        <a class="nav-link" href="#" onclick="logout()">
+          Logout
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</body>
+</html>
