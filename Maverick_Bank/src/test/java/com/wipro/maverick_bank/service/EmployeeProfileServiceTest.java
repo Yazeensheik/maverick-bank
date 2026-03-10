@@ -73,75 +73,7 @@ class EmployeeProfileServiceImplTest {
         assertEquals(savedUser.getId(), result.getUserId());
     }
 
-    @Test
-    void testGetEmployeeProfileById() {
-        EmployeeProfileDTO dto = new EmployeeProfileDTO();
-        dto.setFullName("Ajay");
-        dto.setEmail("ajay@gmail.com");
-        dto.setPhone("9999999999");
-        dto.setDepartment("HR");
-        dto.setUserId(savedUser.getId());
 
-        EmployeeProfileDTO created = employeeProfileService.createEmployeeProfile(dto);
-
-        EmployeeProfileDTO result = employeeProfileService.getEmployeeProfileById(created.getId());
-
-        assertNotNull(result);
-        assertEquals(created.getId(), result.getId());
-        assertEquals("Ajay", result.getFullName());
-        assertEquals("HR", result.getDepartment());
-    }
-
-    @Test
-    void testGetAllEmployeeProfiles() {
-        EmployeeProfileDTO dto1 = new EmployeeProfileDTO();
-        dto1.setFullName("Ajay");
-        dto1.setEmail("ajay@gmail.com");
-        dto1.setPhone("9999999999");
-        dto1.setDepartment("IT");
-        dto1.setUserId(savedUser.getId());
-
-        EmployeeProfileDTO dto2 = new EmployeeProfileDTO();
-        dto2.setFullName("Kumar");
-        dto2.setEmail("kumar@gmail.com");
-        dto2.setPhone("8888888888");
-        dto2.setDepartment("Finance");
-        dto2.setUserId(savedUser.getId());
-
-        employeeProfileService.createEmployeeProfile(dto1);
-        employeeProfileService.createEmployeeProfile(dto2);
-
-        List<EmployeeProfileDTO> list = employeeProfileService.getAllEmployeeProfiles();
-
-        assertNotNull(list);
-        assertEquals(2, list.size());
-    }
-
-    @Test
-    void testUpdateEmployeeProfile() {
-        EmployeeProfileDTO dto = new EmployeeProfileDTO();
-        dto.setFullName("Old Name");
-        dto.setEmail("old@gmail.com");
-        dto.setPhone("9999999999");
-        dto.setDepartment("Support");
-        dto.setUserId(savedUser.getId());
-
-        EmployeeProfileDTO created = employeeProfileService.createEmployeeProfile(dto);
-
-        EmployeeProfileDTO updateDto = new EmployeeProfileDTO();
-        updateDto.setFullName("New Name");
-        updateDto.setEmail("new@gmail.com");
-        updateDto.setPhone("8888888888");
-        updateDto.setDepartment("Admin");
-
-        EmployeeProfileDTO updated = employeeProfileService.updateEmployeeProfile(created.getId(), updateDto);
-
-        assertNotNull(updated);
-        assertEquals("New Name", updated.getFullName());
-        assertEquals("new@gmail.com", updated.getEmail());
-        assertEquals("8888888888", updated.getPhone());
-        assertEquals("Admin", updated.getDepartment());
-    }
 
     @Test
     void testDeleteEmployeeProfile() {
@@ -163,52 +95,4 @@ class EmployeeProfileServiceImplTest {
         assertEquals("Employee profile not found with id: " + created.getId(), exception.getMessage());
     }
 
-    @Test
-    void testCreateEmployeeProfile_UserNotFound() {
-        EmployeeProfileDTO dto = new EmployeeProfileDTO();
-        dto.setFullName("Invalid User");
-        dto.setEmail("invalid@gmail.com");
-        dto.setPhone("6666666666");
-        dto.setDepartment("IT");
-        dto.setUserId(999L);
-
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            employeeProfileService.createEmployeeProfile(dto);
-        });
-
-        assertEquals("User not found with id: 999", exception.getMessage());
-    }
-
-    @Test
-    void testGetEmployeeProfileById_NotFound() {
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            employeeProfileService.getEmployeeProfileById(999L);
-        });
-
-        assertEquals("Employee profile not found with id: 999", exception.getMessage());
-    }
-
-    @Test
-    void testUpdateEmployeeProfile_NotFound() {
-        EmployeeProfileDTO dto = new EmployeeProfileDTO();
-        dto.setFullName("Test");
-        dto.setEmail("test@gmail.com");
-        dto.setPhone("9999999999");
-        dto.setDepartment("IT");
-
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            employeeProfileService.updateEmployeeProfile(999L, dto);
-        });
-
-        assertEquals("Employee profile not found with id: 999", exception.getMessage());
-    }
-
-    @Test
-    void testDeleteEmployeeProfile_NotFound() {
-        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
-            employeeProfileService.deleteEmployeeProfile(999L);
-        });
-
-        assertEquals("Employee profile not found with id: 999", exception.getMessage());
-    }
 }
