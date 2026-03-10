@@ -13,10 +13,10 @@
 <body>
 
   <div class="app-shell">
-    <aside id="sidebar"></aside>
+    <aside ></aside>
 
     <div class="app-main">
-      <header id="navbar"></header>
+      <header ></header>
 
       <main class="content-area">
         <div class="content-header">
@@ -28,7 +28,7 @@
 
         <div id="globalAlert"></div>
 
-       <!--  <div class="panel-card mb-4">
+       <div class="panel-card mb-4">
           <h5 class="mb-3">Available Loans</h5>
 
           <div class="table-responsive">
@@ -44,9 +44,9 @@
               <tbody id="loanList"></tbody>
             </table>
           </div>
-        </div> -->
+        </div> 
 
-       <!--  <div class="row g-4">
+        <div class="row g-4">
           <div class="col-md-6">
             <div class="panel-card h-100">
               <h5 class="mb-3">Apply Loan</h5>
@@ -70,7 +70,7 @@
 
               <p class="mt-3 text-success mb-0" id="applyMessage"></p>
             </div>
-          </div> -->
+          </div>
 
           <div class="col-md-6">
             <div class="panel-card h-100">
@@ -115,33 +115,7 @@
   <script src="/assets/js/utils.js"></script>
   <script src="/assets/js/auth.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-      try {
-        const navbar = document.getElementById("navbar");
-        const sidebar = document.getElementById("sidebar");
-        const footer = document.getElementById("footer");
-
-        if (navbar) {
-          const res = await fetch("/components/navbar.html");
-          navbar.innerHTML = await res.text();
-        }
-
-        if (sidebar) {
-          const res = await fetch("/components/sidebar.html");
-          sidebar.innerHTML = await res.text();
-        }
-
-        if (footer) {
-          const res = await fetch("/components/footer.html");
-          footer.innerHTML = await res.text();
-        }
-      } catch (e) {
-        console.error("Layout load failed", e);
-      }
-    });
-  </script>
-
+  
   <script src="/modules/loan/loanDashboard.js"></script>
 </body>
 </html>

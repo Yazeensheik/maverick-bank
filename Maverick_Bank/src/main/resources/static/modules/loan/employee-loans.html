@@ -48,7 +48,7 @@
 
     <div class="app-main">
 
-      <header id="navbar"></header>
+
 
       <main class="content-area">
 
@@ -96,26 +96,7 @@
   <script src="/assets/js/utils.js"></script>
   <script src="/assets/js/auth.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-      try {
-        const navbar = document.getElementById("navbar");
-        const footer = document.getElementById("footer");
-
-        if (navbar) {
-          const res = await fetch("/components/navbar.html");
-          navbar.innerHTML = await res.text();
-        }
-
-        if (footer) {
-          const res = await fetch("/components/footer.html");
-          footer.innerHTML = await res.text();
-        }
-      } catch (e) {
-        console.error("Layout load failed", e);
-      }
-    });
-  </script>
+  
 
   <script src="/modules/loan/employeeLoans.js"></script>
 </body>
