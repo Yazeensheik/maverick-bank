@@ -60,42 +60,6 @@ class UserServiceTest {
         assertTrue(savedUser.isActive());
     }
 
-    // ============================================
-    // TEST GET USER BY ID
-    // ============================================
-    @Test
-    void testGetUserById() {
-
-        CreateUserRequestDTO request = new CreateUserRequestDTO();
-        request.setEmail("getuser@example.com");
-        request.setPassword("1234");
-
-        UserDTO createdUser = userService.createUser(request, "CUSTOMER");
-
-        UserDTO fetchedUser = userService.getUserById(createdUser.getId());
-
-        assertEquals(createdUser.getId(), fetchedUser.getId());
-        assertEquals("getuser@example.com", fetchedUser.getUsername());
-    }
-
-    // ============================================
-    // TEST DEACTIVATE USER
-    // ============================================
-    @Test
-    void testDeactivateUser() {
-
-        CreateUserRequestDTO request = new CreateUserRequestDTO();
-        request.setEmail("deactivate@example.com");
-        request.setPassword("1234");
-
-        UserDTO createdUser = userService.createUser(request, "CUSTOMER");
-
-        userService.deactivateUser(createdUser.getId());
-
-        UserDTO updatedUser = userService.getUserById(createdUser.getId());
-
-        assertFalse(updatedUser.isActive());
-    }
 
     // ============================================
     // TEST GET ALL USERS

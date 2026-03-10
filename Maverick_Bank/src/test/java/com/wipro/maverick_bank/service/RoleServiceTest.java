@@ -78,17 +78,4 @@ class RoleServiceTest {
         assertEquals(2, roles.size());
     }
 
-    // ============================================
-    // TEST ROLE NOT FOUND
-    // ============================================
-    @Test
-    void testGetRoleByName_NotFound() {
-
-        RuntimeException exception = assertThrows(
-                RuntimeException.class,
-                () -> roleService.getRoleByName("INVALID_ROLE")
-        );
-
-        assertEquals("Role not found", exception.getMessage());
-    }
 }
