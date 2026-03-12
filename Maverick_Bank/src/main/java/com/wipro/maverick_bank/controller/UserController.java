@@ -64,7 +64,7 @@ public class UserController {
      * Add Customer
      * Accessible by: ADMIN
      */
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/customer")
     public ResponseEntity<UserDTO> createCustomer(
             @Valid @RequestBody CreateUserRequestDTO request) {
@@ -77,7 +77,7 @@ public class UserController {
      * Add Bank Employee
      * Accessible by: ADMIN
      */
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add/employee")
     public ResponseEntity<UserDTO> createEmployee(
             @Valid @RequestBody CreateUserRequestDTO request) {
@@ -102,7 +102,7 @@ public class UserController {
      * Get All Users
      * Accessible by: ADMIN
      */
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
 
