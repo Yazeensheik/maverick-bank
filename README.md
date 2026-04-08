@@ -87,7 +87,3 @@ http://localhost:8080
 ## Author
 
 Developed as part of a **Full Stack Banking System project** using Spring Boot and modern web technologies.
-
----
-
-If you'd like, I can also give you a **version that looks more impressive on GitHub (with badges, icons, and screenshots)** while still staying short.
